@@ -17,9 +17,12 @@ import android.os.StrictMode;
 import android.telephony.TelephonyManager;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
+import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface_;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
+import com.chinatelecom.xjdh.utils.Update;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -107,5 +110,16 @@ public class AppContext extends Application {
 			}
 		}
 		return isRunning;
+	}
+
+	public Update getUpdateInfo() {
+		Update u = null;
+		ApiRestClientInterface mApiClient = new ApiRestClientInterface_(this);
+		try {
+			u = mApiClient.getUpdateInfo();
+		} catch (Exception e) {
+			L.e("get update info", e.toString());
+		}
+		return u;
 	}
 }

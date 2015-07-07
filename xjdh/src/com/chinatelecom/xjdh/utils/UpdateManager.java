@@ -9,9 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -24,10 +21,10 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -36,14 +33,11 @@ import android.widget.Toast;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppContext_;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
 /**
  * 应用程序更新工具包
  */
 public class UpdateManager {
-
 	private static final int DOWN_NOSDCARD = 0;
 	private static final int DOWN_UPDATE = 1;
 	private static final int DOWN_OVER = 2;
@@ -131,7 +125,6 @@ public class UpdateManager {
 			return;
 		}
 		this.mContext = context;
-		final AsyncHttpClient mClient = new AsyncHttpClient();
 		getCurrentVersion();
 		if (isShowMsg) {
 			if (mProDialog == null) {
@@ -140,13 +133,6 @@ public class UpdateManager {
 				mProDialog.setIndeterminate(true);
 				mProDialog.setCancelable(true);
 				mProDialog.show();
-				mProDialog.setOnCancelListener(new OnCancelListener() {
-
-					@Override
-					public void onCancel(DialogInterface dialog) {
-						mClient.cancelRequests(mContext, true);
-					}
-				});
 			} else if (mProDialog.isShowing() || (latestOrFailDialog != null && latestOrFailDialog.isShowing()))
 				return;
 		}
@@ -179,38 +165,21 @@ public class UpdateManager {
 			}
 		};
 
-		mClient.get(URLs.UPDATE_VERSION, new JsonHttpResponseHandler() {
+		new Thread(new Runnable() {
 
 			@Override
-			public void onFailure(Throwable e, JSONObject errorResponse) {
-				Log.e("update_apk", e.getMessage());
-				handler.sendEmptyMessage(0);
-				super.onFailure(e, errorResponse);
-			}
-
-			@Override
-			public void onSuccess(JSONObject response) {
-				super.onSuccess(response);
+			public void run() {
+				Update u = AppContext_.getInstance().getUpdateInfo();
 				Message msg = new Message();
-				try {
-					int versionCode = response.getInt("version_code");
-					String versionName = response.getString("version_name");
-					String downloadUrl = response.getString("download_url");
-					String updateLog = response.getString("update_log");
-					Update u = new Update();
-					u.setVersionCode(versionCode);
-					u.setVersionName(versionName);
-					u.setDownloadUrl(downloadUrl);
-					u.setUpdateLog(updateLog);
+				if (u != null) {
 					msg.what = 1;
 					msg.obj = u;
-				} catch (JSONException e) {
-					Log.e("update_apk", e.getMessage());
+				} else {
+					msg.what = 0;
 				}
 				handler.sendMessage(msg);
 			}
-
-		});
+		}).start();
 	}
 
 	/**

@@ -273,8 +273,8 @@ public class UserDetailActivity extends BaseActivity {
 		if (isSuccess) {
 			if (userDetailListItem.getId() == 7) {
 				PreferenceUtils.setPrefString(this, PreferenceConstants.PASSWORD, CryptoUtils.MD5(userDetailListItem.getColumnVal(), true));
+				userDetailListItem.setColumnVal("");
 			}
-			userDetailListItem.setColumnVal("");
 			listItems.set(userDetailListItem.getId() - 1, userDetailListItem);
 			mUserDetailAdapter.notifyDataSetChanged();
 			try {

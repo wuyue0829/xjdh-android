@@ -7,7 +7,6 @@ import org.androidannotations.annotations.rest.Post;
 import org.androidannotations.annotations.rest.RequiresHeader;
 import org.androidannotations.annotations.rest.Rest;
 import org.androidannotations.api.rest.RestClientHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.ResourceHttpMessageConverter;
@@ -19,6 +18,7 @@ import org.springframework.web.client.RestClientException;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.rest.interceptor.HttpBasicAuthenticatorInterceptor;
 import com.chinatelecom.xjdh.utils.URLs;
+import com.chinatelecom.xjdh.utils.Update;
 
 @Rest(rootUrl = URLs.URL_API_HOST + "/api", converters = { MappingJacksonHttpMessageConverter.class, StringHttpMessageConverter.class,
 		FormHttpMessageConverter.class, ResourceHttpMessageConverter.class, ByteArrayHttpMessageConverter.class }, interceptors = { HttpBasicAuthenticatorInterceptor.class })
@@ -55,4 +55,8 @@ public interface ApiRestClientInterface extends RestClientHeaders {
 	@Post("/modifyuserimage")
 	@RequiresHeader({ "Authorization", "Content-Type" })
 	ApiResponse modifyuserimage(MultiValueMap<String, Object> multiValueMap) throws RestClientException;
+
+	@Get(URLs.UPDATE_VERSION)
+	@RequiresHeader(value = {})
+	Update getUpdateInfo() throws RestClientException;
 }
