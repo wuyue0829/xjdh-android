@@ -60,11 +60,11 @@
     <color name="viewfinder_laser">#ffcc0000</color>
     <!-- Android standard ICS color -->
     <color name="viewfinder_mask">#60000000</color>
-    <!-- pandora -->
+    <!-- xjdh -->
     <color name="footer_bg">#f1f1f1</color>
     <color name="header_bg">#c91300</color>
     <color name="main_bg_color">#c91300</color>
-    <color name="widget_bar_text_color">#c91300</color>
+    <color name="widget_bar_text_color">#f88b00</color>
     <color name="list_item_sub_title">#999999</color>
     <color name="list_item_select_color">#f0f0f0</color>
     <color name="primarytext" type="color">#de000000</color>

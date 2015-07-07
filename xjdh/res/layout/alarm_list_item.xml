@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/space_10" >
+
+    <TextView
+        android:id="@+id/tv_list_item_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="@dimen/space_10"
+        android:singleLine="true"
+        android:text="subtitle"
+        android:textColor="@color/list_item_sub_title"
+        android:textSize="@dimen/text_size_18" />
+
+    <TextView
+        android:id="@+id/tv_list_item_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_list_item_area"
+        android:layout_below="@+id/tv_list_item_area"
+        android:layout_marginTop="@dimen/space_5"
+        android:maxLines="5"
+        android:text="title"
+        android:textSize="@dimen/text_size_18" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_list_item_area"
+        android:layout_below="@id/tv_list_item_content"
+        android:layout_marginTop="@dimen/space_5"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="状态："
+            android:textColor="@color/list_item_sub_title" />
+
+        <TextView
+            android:id="@+id/tv_list_item_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_5"
+            android:layout_marginRight="@dimen/space_5"
+            android:background="@color/blue"
+            android:text="已处理"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_list_item_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="2014-09-18"
+            android:textColor="@color/list_item_sub_title" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_list_item_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/icon_level1" />
+
+</RelativeLayout>

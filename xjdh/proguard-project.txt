@@ -18,3 +18,84 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-optimizationpasses 5
+-dontusemixedcaseclassnames
+-dontskipnonpubliclibraryclasses
+-dontpreverify
+-keepdirectories
+-verbose
+-renamesourcefileattribute SourceFile
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+-keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,*Annotation*,EnclosingMethod
+-keep public class * { public protected *;}
+-keepclassmembernames class * {java.lang.Class class$(java.lang.String); java.lang.Class class$(java.lang.String, boolean);}
+-keepclassmembernames class * {com.common.license.LicenseService licenseService; com.common.license.LicenseSessionStore licenseSessionStore;}
+-keepclassmembers enum * {public static **[] values(); public static ** valueOf(java.lang.String);}
+-keepclassmembers class * implements java.io.Serializable { static final long serialVersionUID; private static final java.io.ObjectStreamField[] serialPersistentFields; private void writeObject(java.io.ObjectOutputStream); private void readObject(java.io.ObjectInputStream); java.lang.Object writeReplace(); java.lang.Object readResolve();}
+-keep @org.springframework.beans.factory.annotation.Service class *
+-keep @org.springframework.stereotype.Controller class *
+-keepclassmembers class * { @org.springframework.beans.factory.annotation.Autowired *; }
+
+-libraryjars libs/android-async-http-1.4.4.jar
+-libraryjars libs/android-validation-komensky-0.9.3-SNAPSHOT.jar
+-libraryjars libs/androidannotations-api-3.3.1.jar
+-libraryjars libs/baidumapapi_v3_5_0.jar
+-libraryjars libs/jackson-core-asl-1.9.13.jar
+-libraryjars libs/jackson-mapper-asl-1.9.13.jar
+-libraryjars libs/locSDK_5.2.jar
+-libraryjars libs/mpchartlib.jar
+-libraryjars libs/ormlite-android-4.43.jar
+-libraryjars libs/ormlite-core-4.43.jar
+-libraryjars libs/spring-android-auth-1.0.1.RELEASE.jar
+-libraryjars libs/spring-android-core-1.0.1.RELEASE.jar
+-libraryjars libs/spring-android-rest-template-1.0.1.RELEASE.jar
+-libraryjars libs/universal-image-loader-1.9.3-with-sources.jar
+
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Application
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep public class * extends android.content.ContentProvider
+-keep public class * extends android.app.backup.BackupAgentHelper
+-keep public class * extends android.preference.Preference
+-keep public class com.android.vending.licensing.ILicensingService
+-keep class com.viewpagerindicator.** {*;}
+-keep class org.codehaus.** {*;}
+
+-keepattributes JavascriptInterface
+
+-keepclasseswithmembernames class * {
+	native <methods>;
+}
+-keepclasseswithmembers class * {
+	public <init>(android.content.Context, android.util.AttributeSet);
+}
+-keepclasseswithmembers class * {
+	public <init>(android.content.Context, android.util.AttributeSet, int);
+}
+-keepclassmembers class * extends android.app.Activity {
+	public void *(android.view.View);
+}
+-keepclassmembers enum * {
+	public static **[] values();
+	public static ** valueOf(java.lang.String);
+}
+-keep class * implements android.os.Parcelable {
+	public static final android.os.Parcelable$Creator *;
+}
+-keep class android.support.v4.app.** { *; }
+-keep interface android.support.v4.app.** { *; }
+-keep class android.support.v7.app.** { *; }
+-keep interface android.support.v7.app.** { *; }
+-keep class android.support.v7.** { *; }
+-keep interface android.support.v7.** { *; }
+-keep public class * extends android.support.v7.widget.SearchView {
+   public <init>(android.content.Context);
+   public <init>(android.content.Context, android.util.AttributeSet);
+}
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}    
+-dontwarn com.baidu.**
+
+-dontwarn org.springframework.**
+-dontwarn org.codehaus.**

@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/img_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:layout_alignParentRight="true"
             android:clickable="true"
             android:src="@drawable/icon_myprogressdialog_e_close" />
@@ -31,12 +31,13 @@
         android:layout_gravity="center"
         android:gravity="center_horizontal" >
 
-        <ImageView
+        <ProgressBar
             android:id="@+id/img_rotate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
-            android:src="@drawable/loading" />
+            android:indeterminate="false"
+            android:indeterminateDrawable="@drawable/progressbar_animation" />
 
         <ImageView
             android:id="@+id/img_icon"
@@ -57,6 +58,6 @@
         android:paddingTop="20.0dip"
         android:text="玩命加载中，请稍候..."
         android:textColor="#ffffffff"
-        android:textSize="15.0dip" />
+        android:textSize="@dimen/text_size_15" />
 
 </LinearLayout>

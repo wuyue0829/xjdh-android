@@ -1,9 +1,14 @@
 package com.chinatelecom.xjdh.app;
 
+import java.util.List;
+
 import org.androidannotations.annotations.EApplication;
 
 import android.annotation.TargetApi;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -11,6 +16,7 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.telephony.TelephonyManager;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
@@ -47,6 +53,7 @@ public class AppContext extends Application {
 			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyDeath().build());
 		}
 		initImageLoader(getApplicationContext());
+		SDKInitializer.initialize(this);
 	}
 
 	public static void initImageLoader(Context context) {
@@ -64,5 +71,41 @@ public class AppContext extends Application {
 
 	public String getPhoneImei() {
 		return mTelephonyMgr.getDeviceId();
+	}
+
+	public static boolean isApplicationBackground(final Context context) {
+		ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningTaskInfo> tasks = am.getRunningTasks(1);
+		if (!tasks.isEmpty()) {
+			ComponentName topActivity = tasks.get(0).topActivity;
+			if (!topActivity.getPackageName().equals(context.getPackageName())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 用来判断服务是否运行.
+	 * 
+	 * @param context
+	 * @param className
+	 *            判断的服务名字
+	 * @return true 在运行 false 不在运行
+	 */
+	public static boolean isServiceRunning(Context mContext, String className) {
+		boolean isRunning = false;
+		ActivityManager activityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+		List<ActivityManager.RunningServiceInfo> serviceList = activityManager.getRunningServices(100);
+		if (!(serviceList.size() > 0)) {
+			return false;
+		}
+		for (int i = 0; i < serviceList.size(); i++) {
+			if (serviceList.get(i).service.getClassName().equals(className) == true) {
+				isRunning = true;
+				break;
+			}
+		}
+		return isRunning;
 	}
 }

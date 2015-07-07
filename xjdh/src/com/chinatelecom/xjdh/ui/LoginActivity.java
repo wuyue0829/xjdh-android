@@ -1,7 +1,5 @@
 package com.chinatelecom.xjdh.ui;
 
-import java.io.IOException;
-
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
@@ -9,8 +7,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.Dialog;
@@ -22,15 +18,15 @@ import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.LoginResponse;
 import com.chinatelecom.xjdh.bean.OauthParam;
 import com.chinatelecom.xjdh.bean.OauthRespose;
+import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
+import com.chinatelecom.xjdh.rest.client.OauthRestClientInterface;
 import com.chinatelecom.xjdh.utils.CryptoUtils;
-import com.chinatelecom.xjdh.utils.DialogUtil;
+import com.chinatelecom.xjdh.utils.DialogUtils;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
-import com.chinateltecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinateltecom.xjdh.rest.client.OauthRestClientInterface;
 
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends BaseActivity {
@@ -45,7 +41,6 @@ public class LoginActivity extends BaseActivity {
 	OauthRestClientInterface mOauthClient;
 	@RestService
 	ApiRestClientInterface mApiClient;
-	OauthRespose mOauthResp;
 	Dialog loginDlg;
 
 	String mAccount;
@@ -53,12 +48,13 @@ public class LoginActivity extends BaseActivity {
 
 	@AfterViews
 	void initData() {
+		mAccountEt.setText(PreferenceUtils.getPrefString(this, PreferenceConstants.ACCOUNT, ""));
 		mActionBar.hide();
 	}
 
 	@Click(R.id.btn_login)
 	void onLoginClicked() {
-		loginDlg = DialogUtil.createLoadingDialog(this, null);
+		loginDlg = DialogUtils.createLoadingDialog(this, null);
 		loginDlg.show();
 		mAccount = mAccountEt.getText().toString();
 		mPassword = mPasswordEt.getText().toString();
@@ -86,7 +82,7 @@ public class LoginActivity extends BaseActivity {
 		} catch (Exception e) {
 			L.e(e.toString());
 		}
-		loginResult(new LoginResponse(1, "", ""));
+		loginResult(new LoginResponse(-1, "", ""));
 	}
 
 	@UiThread
@@ -96,22 +92,22 @@ public class LoginActivity extends BaseActivity {
 		if (resp.getRet() == 0) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
-				mOauthResp = mapper.readValue(resp.getResponse(), OauthRespose.class);
+				OauthRespose mOauthResp = mapper.readValue(resp.getResponse(), OauthRespose.class);
 				PreferenceUtils.setPrefString(this, PreferenceConstants.ACCESSTOKEN, mOauthResp.getAccess_token());
 				PreferenceUtils.setPrefInt(this, PreferenceConstants.EXPIRES, mOauthResp.getExpires());
 				PreferenceUtils.setPrefInt(this, PreferenceConstants.EXPIRE_IN, mOauthResp.getExpires_in());
 				PreferenceUtils.setPrefString(this, PreferenceConstants.REFRESHTOKEN, mOauthResp.getRefresh_token());
 				mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, mOauthResp.getAccess_token());
 				save2Preferences();
-				MainActivity_.intent(this).start();
+				MainActivity_.intent(this).isDoLogin(false).start();
+				finish();
 				return;
-			} catch (JsonParseException e) {
-				L.e(e.toString());
-			} catch (JsonMappingException e) {
-				L.e(e.toString());
-			} catch (IOException e) {
+			} catch (Exception e) {
 				L.e(e.toString());
 			}
+		} else if (resp.getRet() == 2) {
+			T.showLong(this, "账户名或密码有误");
+			return;
 		}
 		T.showShort(this, "登陆失败");
 	}

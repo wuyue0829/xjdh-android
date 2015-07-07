@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -73,26 +72,14 @@ public class BaseActivity extends ActionBarActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			finish();
-			return true;
-			// if (!this.getClass().equals(MainActivity_.class)) {
-			// finish();
-			// return true;
-			// } else {
-			// return super.onOptionsItemSelected(item);
-			// }
+			if (!this.getClass().equals(MainActivity_.class)) {
+				finish();
+				return true;
+			} else {
+				return super.onOptionsItemSelected(item);
+			}
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return super.onCreateOptionsMenu(menu);
 	}
 }

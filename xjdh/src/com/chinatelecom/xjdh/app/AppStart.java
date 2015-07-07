@@ -52,12 +52,13 @@ public class AppStart extends BaseActivity {
 	 */
 	private void redirectTo() {
 		String password = PreferenceUtils.getPrefString(this, PreferenceConstants.PASSWORD, "");
-		String accessToken = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
-		if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(accessToken)) {
-			MainActivity_.intent(this).start();
+		String account = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCOUNT, "");
+		if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(account)) {
+			MainActivity_.intent(this).isDoLogin(true).start();
 		} else {
 			LoginActivity_.intent(this).start();
 		}
 		finish();
 	}
+
 }

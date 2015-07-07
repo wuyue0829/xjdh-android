@@ -2,8 +2,11 @@
 <resources>
 
     <string name="app_name">新疆动环监控</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">设置</string>
     <string name="login_prompt">登录中</string>
+    <string name="feedback_msg">App不好用，有意见、建议，反馈一下，帮助我们做的更好。</string>
+    <string name="network_err_msg">您的网络好像出问题了，请连接网络重新试试...</string>
+    <string name="network_down">网络连接已断开</string>
+    <string name="network_up">网络连接已恢复</string>
 
 </resources>
