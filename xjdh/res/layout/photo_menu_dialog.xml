@@ -10,7 +10,7 @@
         android:id="@+id/btn_photo"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_10"
+        android:layout_marginTop="@dimen/space_5"
         android:padding="@dimen/space_10"
         android:text="拍照" />
 

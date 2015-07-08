@@ -19,9 +19,9 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -153,7 +153,9 @@ public class UpdateManager {
 					if (mUpdate != null) {
 						if (curVersionCode < mUpdate.getVersionCode()) {
 							apkUrl = mUpdate.getDownloadUrl();
-							updateMsg = mUpdate.getUpdateLog();
+							updateMsg = "版本：" + mUpdate.getVersionName() + "\r\n";
+							updateMsg += "更新日志：\r\n" + mUpdate.getUpdateLog();
+							updateMsg += "\r\n更新时间：" + StringUtils.friendly_time(mUpdate.getUpdateDatetime());
 							showNoticeDialog();
 						} else if (isShowMsg) {
 							showLatestOrFailDialog(DIALOG_TYPE_LATEST);
@@ -298,12 +300,17 @@ public class UpdateManager {
 				}
 
 				File ApkFile = new File(apkFilePath);
-
 				// 是否已下载更新文件
 				if (ApkFile.exists()) {
-					downloadDialog.dismiss();
-					installApk();
-					return;
+					PackageInfo packageInfo = getApkFileInfo(apkFilePath);
+					if (packageInfo != null) {
+						if (mUpdate.getVersionCode() == packageInfo.versionCode && mUpdate.getVersionName().equals(packageInfo.versionName)) {
+							downloadDialog.dismiss();
+							installApk();
+							return;
+						}
+					}
+					ApkFile.delete();
 				}
 
 				// 输出临时下载文件
@@ -378,5 +385,11 @@ public class UpdateManager {
 		Intent i = new Intent(Intent.ACTION_VIEW);
 		i.setDataAndType(Uri.parse("file://" + apkfile.toString()), "application/vnd.android.package-archive");
 		mContext.startActivity(i);
+	}
+
+	public PackageInfo getApkFileInfo(String filePath) {
+		PackageManager pm = mContext.getPackageManager();
+		PackageInfo info = pm.getPackageArchiveInfo(filePath, PackageManager.GET_ACTIVITIES);
+		return info;
 	}
 }

@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 			T.showLong(this, "网络未连接，无法登陆");
 		}
 		pDialog = new ProgressDialog(this);
-		pDialog.setCancelable(false);
+		pDialog.setCancelable(true);
 		pDialog.setMessage("正在验证登录，请稍后...");
 
 		if (isDoLogin) {

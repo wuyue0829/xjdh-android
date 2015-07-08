@@ -37,7 +37,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Highlight;
-import com.github.mikephil.charting.utils.LargeValueFormatter;
+//import com.github.mikephil.charting.utils.LargeValueFormatter;
 
 @EActivity(R.layout.activity_barchart)
 public class ChartActivity extends BaseActivity {
@@ -72,7 +72,7 @@ public class ChartActivity extends BaseActivity {
 		xLabels.setTypeface(mTf);
 		YAxis leftAxis = mBarChart.getAxisLeft();
 		leftAxis.setTypeface(mTf);
-		leftAxis.setValueFormatter(new LargeValueFormatter());
+		//leftAxis.setValueFormatter(new LargeValueFormatter());
 		leftAxis.setDrawGridLines(false);
 		leftAxis.setSpaceTop(30f);
 		mBarChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {

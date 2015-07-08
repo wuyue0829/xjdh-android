@@ -3,6 +3,7 @@ package com.chinatelecom.xjdh.app;
 import java.util.List;
 
 import org.androidannotations.annotations.EApplication;
+import org.androidannotations.annotations.rest.RestService;
 
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
@@ -18,7 +19,6 @@ import android.telephony.TelephonyManager;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface_;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
@@ -112,9 +112,11 @@ public class AppContext extends Application {
 		return isRunning;
 	}
 
+	@RestService
+	ApiRestClientInterface mApiClient;
+
 	public Update getUpdateInfo() {
-		Update u = null;
-		ApiRestClientInterface mApiClient = new ApiRestClientInterface_(this);
+		Update u = null;// = new ApiRestClientInterface_(this);
 		try {
 			u = mApiClient.getUpdateInfo();
 		} catch (Exception e) {
