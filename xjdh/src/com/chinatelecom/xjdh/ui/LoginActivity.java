@@ -9,7 +9,7 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.text.TextUtils;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -21,7 +21,6 @@ import com.chinatelecom.xjdh.bean.OauthRespose;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.rest.client.OauthRestClientInterface;
 import com.chinatelecom.xjdh.utils.CryptoUtils;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
@@ -41,7 +40,7 @@ public class LoginActivity extends BaseActivity {
 	OauthRestClientInterface mOauthClient;
 	@RestService
 	ApiRestClientInterface mApiClient;
-	Dialog loginDlg;
+	ProgressDialog pDialog;
 
 	String mAccount;
 	String mPassword;
@@ -54,8 +53,9 @@ public class LoginActivity extends BaseActivity {
 
 	@Click(R.id.btn_login)
 	void onLoginClicked() {
-		loginDlg = DialogUtils.createLoadingDialog(this, null);
-		loginDlg.show();
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage("正在登录，请稍后...");
+		pDialog.show();
 		mAccount = mAccountEt.getText().toString();
 		mPassword = mPasswordEt.getText().toString();
 		if (TextUtils.isEmpty(mAccount) && TextUtils.isEmpty(mPassword)) {
@@ -87,8 +87,8 @@ public class LoginActivity extends BaseActivity {
 
 	@UiThread
 	void loginResult(LoginResponse resp) {
-		if (loginDlg != null && loginDlg.isShowing())
-			loginDlg.dismiss();
+		if (pDialog != null && pDialog.isShowing())
+			pDialog.dismiss();
 		if (resp.getRet() == 0) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {

@@ -8,5 +8,6 @@
     <string name="network_err_msg">您的网络好像出问题了，请连接网络重新试试...</string>
     <string name="network_down">网络连接已断开</string>
     <string name="network_up">网络连接已恢复</string>
+    <string name="progress_loading_msg">加载数据中...</string>
 
 </resources>

@@ -21,6 +21,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -100,7 +101,7 @@ public class AlarmListFragment extends Fragment {
 	LinearLayout footerView;
 	TextView footerMsg;
 	LinearLayout footerLoading;
-	Dialog pDialog;
+	ProgressDialog pDialog;
 
 	private static final int MENU_FILTER_ID = Menu.FIRST;
 	private HashMap<String, String> alarmLevelList = new LinkedHashMap<String, String>();
@@ -149,7 +150,8 @@ public class AlarmListFragment extends Fragment {
 				getData(false);
 			}
 		});
-		pDialog = DialogUtils.createLoadingDialog(getActivity(), null);
+		pDialog = new ProgressDialog(getActivity());
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 	}
 
 	@Override

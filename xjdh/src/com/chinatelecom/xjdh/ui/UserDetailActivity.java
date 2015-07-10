@@ -68,8 +68,7 @@ public class UserDetailActivity extends BaseActivity {
 	UserInfo mUserInfo;
 	List<UserDetailListItem> listItems = new ArrayList<UserDetailListItem>();
 	UserDetailListAdapter mUserDetailAdapter;
-	Dialog pDialog;
-	ProgressDialog uploadProgressDialog;
+	ProgressDialog pDialog, uploadProgressDialog;
 	public static final int CAPTURE_PICTURE = 1;// 调用相机拍照
 	public static final int PICK_PICTURE = 2; // 从相册中选择图片
 	public static final int RESULT_PICTURE = 3;// 剪切返回结果
@@ -79,7 +78,8 @@ public class UserDetailActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, ""));
 		setTitle("用户中心");
-		pDialog = DialogUtils.createLoadingDialog(this, null);
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 		uploadProgressDialog = new ProgressDialog(this);
 		uploadProgressDialog.setMessage("正在上传...");
 	}

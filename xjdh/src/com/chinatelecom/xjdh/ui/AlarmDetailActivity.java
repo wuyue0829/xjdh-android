@@ -13,6 +13,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
@@ -60,14 +61,15 @@ public class AlarmDetailActivity extends BaseActivity {
 	AlarmItem alarmItem;
 	@RestService
 	ApiRestClientInterface mApiClient;
-	Dialog pDialog;
+	ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
-		pDialog = DialogUtils.createLoadingDialog(this, null);
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 	}
 
 	@AfterViews

@@ -10,7 +10,7 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.widget.TextView;
 
@@ -19,7 +19,6 @@ import com.chinatelecom.xjdh.bean.AlarmChartsItem;
 import com.chinatelecom.xjdh.bean.AlarmChartsResp;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
@@ -37,6 +36,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Highlight;
+
 //import com.github.mikephil.charting.utils.LargeValueFormatter;
 
 @EActivity(R.layout.activity_barchart)
@@ -50,13 +50,14 @@ public class ChartActivity extends BaseActivity {
 	HorizontalBarChart mBarChart;
 	String[] ALARM_CHART_LABELS = new String[] { "一级告警", "二级告警", "三级告警", "四级告警" };
 	ArrayList<String> xVals = new ArrayList<String>();
-	Dialog pDialog;
+	ProgressDialog pDialog;
 	private Typeface mTf;
 
 	@AfterViews
 	void bindData() {
 		setTitle("报表");
-		pDialog = DialogUtils.createLoadingDialog(this, null);
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, ""));
 		mBarChart.setDescription("");
 		mBarChart.setLogEnabled(false);
@@ -72,7 +73,7 @@ public class ChartActivity extends BaseActivity {
 		xLabels.setTypeface(mTf);
 		YAxis leftAxis = mBarChart.getAxisLeft();
 		leftAxis.setTypeface(mTf);
-		//leftAxis.setValueFormatter(new LargeValueFormatter());
+		// leftAxis.setValueFormatter(new LargeValueFormatter());
 		leftAxis.setDrawGridLines(false);
 		leftAxis.setSpaceTop(30f);
 		mBarChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {

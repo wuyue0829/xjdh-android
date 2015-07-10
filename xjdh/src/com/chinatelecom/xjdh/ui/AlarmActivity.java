@@ -22,7 +22,7 @@ import org.codehaus.jackson.type.TypeReference;
 
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -45,6 +45,7 @@ import android.widget.TextView;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.adapter.AlarmListAdapter;
+import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.AlarmItem;
 import com.chinatelecom.xjdh.bean.AlarmResp;
 import com.chinatelecom.xjdh.bean.ApiResponse;
@@ -57,7 +58,6 @@ import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.service.ScheduleService;
 import com.chinatelecom.xjdh.service.ScheduleService.onNewAlarmServiceListener;
 import com.chinatelecom.xjdh.service.ScheduleService_;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 import com.chinatelecom.xjdh.utils.FileUtils;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
@@ -94,11 +94,10 @@ public class AlarmActivity extends BaseActivity {
 	EditText mEtEndDatetime;
 	@RestService
 	ApiRestClientInterface mApiClient;
-
 	LinearLayout footerView;
 	TextView footerMsg;
 	LinearLayout footerLoading;
-	Dialog pDialog;
+	ProgressDialog pDialog;
 
 	private static final int MENU_FILTER_ID = Menu.FIRST;
 	private HashMap<String, String> alarmLevelList = new LinkedHashMap<String, String>();
@@ -142,7 +141,9 @@ public class AlarmActivity extends BaseActivity {
 			}
 		});
 		if (pDialog == null) {
-			pDialog = DialogUtils.createLoadingDialog(this, null);
+			pDialog = new ProgressDialog(this);
+			pDialog.setMessage("加载数据中...");
+			pDialog.setCancelable(true);
 		}
 	}
 
@@ -516,8 +517,13 @@ public class AlarmActivity extends BaseActivity {
 
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
 		ScheduleService_.SetRequestParams("", "", "", "", "", "", "", "", "", "", "");
+		if (AppManager.getAppManager().getActivityStackSize() > 1) {
+			super.onDestroy();
+		} else {
+			MainActivity_.intent(this).start();
+			super.onDestroy();
+		}
 	}
 
 	@ItemClick(R.id.lv_alarm)

@@ -11,6 +11,7 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +35,7 @@ public class FeedBackActivity extends BaseActivity {
 	EditText mEtFeedBack;
 	@ViewById(R.id.btn_feedback_submit)
 	Button mBtnFeedBackSubmit;
-	Dialog pDialog;
+	ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,8 @@ public class FeedBackActivity extends BaseActivity {
 	@AfterViews
 	void bindData() {
 		setTitle("意见反馈");
-		pDialog = DialogUtils.createLoadingDialog(this, "玩命提交中，请稍等片刻......");
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 	}
 
 	@Click(R.id.btn_feedback_submit)

@@ -76,8 +76,6 @@ public class ScheduleService extends Service implements EventHandler {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
-		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
 		mNotificationIntent = new Intent(this, AlarmActivity_.class);
 		mNotificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	}
@@ -116,6 +114,8 @@ public class ScheduleService extends Service implements EventHandler {
 		public void run() {
 			L.i("ScheduleService timer task run");
 			String latestId = "-1";
+			String token = PreferenceUtils.getPrefString(getApplicationContext(), PreferenceConstants.ACCESSTOKEN, "");
+			mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
 			try {
 				ApiResponse apiResp = mApiClient.getAlarmList(citycode, countycode, substationId, roomId, level, model, startdatetime, enddatetime, "0",
 						String.valueOf(1), "-1");
@@ -126,7 +126,7 @@ public class ScheduleService extends Service implements EventHandler {
 						AlarmItem alarmItem = alarmResp.getAlarmlist()[0];
 						latestId = alarmItem.getId();
 						if (Double.parseDouble(alarmItem.getId()) > currentMaxAlarmId) {
-							if (currentMaxAlarmId != 0 && !AppManager.getAppManager().currentActivity().getClass().equals(AlarmActivity_.class)) {
+							if (currentMaxAlarmId != 0 && !AppManager.getAppManager().isCurrentActivity(AlarmActivity_.class)) {
 								sendAlarmNotification(alarmItem);
 							}
 							currentMaxAlarmId = Double.parseDouble(alarmItem.getId());

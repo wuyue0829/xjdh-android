@@ -51,6 +51,17 @@ public class AppManager {
 		return activity;
 	}
 
+	public boolean isCurrentActivity(Class<?> cls) {
+		Activity a = null;
+		if (activityStack != null)
+			if (activityStack.size() > 0)
+				a = activityStack.lastElement();
+		if (a != null) {
+			return a.getClass().equals(cls);
+		}
+		return false;
+	}
+
 	/**
 	 * 结束当前Activity（堆栈中最后一个压入的）
 	 */
@@ -104,5 +115,9 @@ public class AppManager {
 			System.exit(0);
 		} catch (Exception e) {
 		}
+	}
+
+	public int getActivityStackSize() {
+		return activityStack.size();
 	}
 }

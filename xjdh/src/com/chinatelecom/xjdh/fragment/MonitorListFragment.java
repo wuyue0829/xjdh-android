@@ -14,7 +14,7 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -28,7 +28,6 @@ import com.chinatelecom.xjdh.bean.CityItem;
 import com.chinatelecom.xjdh.bean.CountyItem;
 import com.chinatelecom.xjdh.bean.SubstationItem;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 import com.chinatelecom.xjdh.utils.FileUtils;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
@@ -47,7 +46,7 @@ public class MonitorListFragment extends Fragment {
 	private SubstationListAdapter mSubstationAdapter;
 	@RestService
 	ApiRestClientInterface mApiClient;
-	Dialog pDialog;
+	ProgressDialog pDialog;
 
 	public static MonitorListFragment newInstance() {
 		MonitorListFragment fragment = new MonitorListFragment_();
@@ -60,8 +59,8 @@ public class MonitorListFragment extends Fragment {
 		setHasOptionsMenu(true);
 		String token = PreferenceUtils.getPrefString(getActivity(), PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
-
-		pDialog = DialogUtils.createLoadingDialog(getActivity(), null);
+		pDialog = new ProgressDialog(getActivity());
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 	}
 
 	@AfterViews

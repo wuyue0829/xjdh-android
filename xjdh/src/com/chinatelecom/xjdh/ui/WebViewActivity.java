@@ -10,7 +10,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
@@ -24,7 +24,6 @@ import android.widget.TextView;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppContext;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 
 @EActivity(R.layout.webview)
 public class WebViewActivity extends BaseActivity {
@@ -36,13 +35,15 @@ public class WebViewActivity extends BaseActivity {
 	String originalUrl;
 	@Extra
 	String title;
-	Dialog pDialog;
+	ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTitle(title);
-		pDialog = DialogUtils.createLoadingDialog(this, null);
+
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 	}
 
 	@SuppressLint("SetJavaScriptEnabled")

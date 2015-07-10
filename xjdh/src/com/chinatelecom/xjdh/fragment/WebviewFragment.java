@@ -8,7 +8,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.net.Uri;
@@ -23,13 +23,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 
 @EFragment(R.layout.webview)
 public class WebviewFragment extends Fragment {
 	@ViewById(R.id.webview_main)
 	WebView webview;
-	Dialog pDialog;
+	ProgressDialog pDialog;
 	static String originalUrl;
 
 	public static WebviewFragment newInstance(String originalUrl) {
@@ -41,7 +40,8 @@ public class WebviewFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		pDialog = DialogUtils.createLoadingDialog(getActivity(), null);
+		pDialog = new ProgressDialog(getActivity());
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 	}
 
 	@Override

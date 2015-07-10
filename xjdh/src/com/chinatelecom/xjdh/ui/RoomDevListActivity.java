@@ -17,7 +17,7 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -28,7 +28,6 @@ import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.DevItem;
 import com.chinatelecom.xjdh.bean.DevTypeItem;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
@@ -51,14 +50,16 @@ public class RoomDevListActivity extends BaseActivity {
 	List<DevTypeItem> mDevTypeList = new ArrayList<>();
 	List<Map<String, Object>> listItem = new ArrayList<Map<String, Object>>();
 	SimpleAdapter mDevTypeAdapter;
-	Dialog pDialog;
+	ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
-		pDialog = DialogUtils.createLoadingDialog(this, null);
+
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 	}
 
 	@AfterViews

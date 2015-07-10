@@ -12,6 +12,7 @@ import org.androidannotations.annotations.ViewById;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
@@ -46,12 +47,13 @@ public class RealtimeActivity extends BaseActivity {
 	@Extra("devTypeItem")
 	DevTypeItem devTypeItem;
 	WebviewFragmentAdapter mPagerAdapter;
-	Dialog pDialog;
+	ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		pDialog = DialogUtils.createLoadingDialog(this, null);
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 	}
 
 	@AfterViews

@@ -15,6 +15,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
@@ -46,7 +47,7 @@ public class MonitorActivity extends BaseActivity {
 	private SubstationListAdapter mSubstationAdapter;
 	@RestService
 	ApiRestClientInterface mApiClient;
-	Dialog pDialog;
+	ProgressDialog pDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,8 @@ public class MonitorActivity extends BaseActivity {
 		setTitle("实时监控");
 		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
-		pDialog = DialogUtils.createLoadingDialog(this, null);
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 	}
 
 	@AfterViews
