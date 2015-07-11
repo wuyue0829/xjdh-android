@@ -16,8 +16,11 @@ import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.ui.FeedBackActivity_;
 import com.chinatelecom.xjdh.ui.LoginActivity_;
 import com.chinatelecom.xjdh.utils.DialogUtils;
+import com.chinatelecom.xjdh.utils.FileUtils;
+import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
+import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.UpdateManager;
 
 @PreferenceScreen(R.xml.preferences)
@@ -38,9 +41,16 @@ public class SettingFragment extends PreferenceFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				mExitDialog.dismiss();
+
 				String account = PreferenceUtils.getPrefString(getActivity(), PreferenceConstants.ACCOUNT, "");
 				PreferenceUtils.clearPreference(getActivity(), PreferenceManager.getDefaultSharedPreferences(getActivity()));
 				PreferenceUtils.setPrefString(getActivity(), PreferenceConstants.ACCOUNT, account);
+				try {
+					FileUtils.setToData(getActivity(), SharedConst.FILE_AREA_JSON, new byte[] {});
+					FileUtils.setToData(getActivity(), SharedConst.FILE_MODEL_JSON, new byte[] {});
+				} catch (Exception e) {
+					L.e(e.toString());
+				}
 				AppManager.getAppManager().finishAllActivity();
 				LoginActivity_.intent(getActivity()).start();
 				getActivity().finish();

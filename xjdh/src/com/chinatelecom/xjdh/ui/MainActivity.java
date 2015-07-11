@@ -218,22 +218,29 @@ public class MainActivity extends BaseActivity implements EventHandler {
 
 	@Background
 	void getFilterData() {
-		try {
-			ApiResponse apiResp = mApiClient.getAreaData();
-			if (apiResp.getRet() == 0) {
-				FileUtils.setToData(this, SharedConst.FILE_AREA_JSON, apiResp.getData().getBytes());
+		int retryTimes = 0;
+		while (retryTimes++ < 5) {
+			try {
+				ApiResponse apiResp = mApiClient.getAreaData();
+				if (apiResp.getRet() == 0) {
+					FileUtils.setToData(this, SharedConst.FILE_AREA_JSON, apiResp.getData().getBytes());
+					break;
+				}
+			} catch (Exception e) {
+				L.e(e.toString());
 			}
-		} catch (Exception e) {
-			L.e(e.toString());
 		}
-
-		try {
-			ApiResponse apiResp = mApiClient.getDevModelData();
-			if (apiResp.getRet() == 0) {
-				FileUtils.setToData(this, SharedConst.FILE_MODEL_JSON, apiResp.getData().getBytes());
+		retryTimes = 0;
+		while (retryTimes++ < 5) {
+			try {
+				ApiResponse apiResp = mApiClient.getDevModelData();
+				if (apiResp.getRet() == 0) {
+					FileUtils.setToData(this, SharedConst.FILE_MODEL_JSON, apiResp.getData().getBytes());
+					break;
+				}
+			} catch (Exception e) {
+				L.e(e.toString());
 			}
-		} catch (Exception e) {
-			L.e(e.toString());
 		}
 	}
 
