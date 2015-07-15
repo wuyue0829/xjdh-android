@@ -11,7 +11,6 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -30,7 +29,6 @@ import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.adapter.WebviewFragmentAdapter;
 import com.chinatelecom.xjdh.bean.DevItem;
 import com.chinatelecom.xjdh.bean.DevTypeItem;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.URLs;

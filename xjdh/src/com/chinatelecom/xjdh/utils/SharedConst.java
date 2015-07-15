@@ -32,6 +32,7 @@ public class SharedConst {
 			put("liebert-ups", "力博特UPS");
 			put("liebert-ac", "力博特空调");
 			put("motivator", "油机");
+			put("smd_device", "采集板");
 		}
 	};
 }

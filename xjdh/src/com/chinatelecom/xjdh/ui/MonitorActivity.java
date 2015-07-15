@@ -14,7 +14,6 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +27,6 @@ import com.chinatelecom.xjdh.bean.CityItem;
 import com.chinatelecom.xjdh.bean.CountyItem;
 import com.chinatelecom.xjdh.bean.SubstationItem;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 import com.chinatelecom.xjdh.utils.FileUtils;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;

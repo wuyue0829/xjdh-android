@@ -12,11 +12,11 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.UiThread;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -25,7 +25,6 @@ import com.chinatelecom.xjdh.bean.AlarmItem;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.DevTypeItem;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
@@ -106,6 +105,8 @@ public class AlarmDetailActivity extends BaseActivity {
 		} else {
 			tvAlarmDetailModel.setText("其他设备类型");
 		}
+		if (modelKey.equalsIgnoreCase("smd_device"))
+			btnMonitor.setVisibility(View.GONE);
 		tvAlarmDetailRoom.setText(alarmItem.getRoom_name());
 		if (alarmItem.getStatus().equalsIgnoreCase("unsloved")) {
 			tvAlarmDetailStatus.setText("未处理");

@@ -182,8 +182,8 @@ public class AlarmActivity extends BaseActivity {
 						modelList.addAll(l);
 						List<String> models = new ArrayList<>();
 						models.add("所有类型");
-						for (int index = modelList.size(); index > 0; --index) {
-							models.add(modelList.get(index - 1).getVal());
+						for (int index = 0; index < modelList.size(); index++) {
+							models.add(modelList.get(index).getVal());
 						}
 						mModelAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, models);
 						mModelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
