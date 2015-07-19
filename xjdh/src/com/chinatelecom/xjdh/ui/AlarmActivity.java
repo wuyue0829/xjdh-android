@@ -98,7 +98,7 @@ public class AlarmActivity extends BaseActivity {
 	TextView footerMsg;
 	LinearLayout footerLoading;
 	ProgressDialog pDialog;
-
+	
 	private static final int MENU_FILTER_ID = Menu.FIRST;
 	private HashMap<String, String> alarmLevelList = new LinkedHashMap<String, String>();
 	private List<CityItem> cityList = new ArrayList<CityItem>(0);
@@ -202,7 +202,7 @@ public class AlarmActivity extends BaseActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_FILTER_ID, 0, "筛选").setIcon(R.drawable.icon_filter).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		menu.add(0, MENU_FILTER_ID, 0, "").setIcon(R.drawable.icon_filter).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
 	}
 

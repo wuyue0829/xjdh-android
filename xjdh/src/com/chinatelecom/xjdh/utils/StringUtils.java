@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
  */
 public class StringUtils {
 	private final static Pattern emailer = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
+	private final static Pattern mobiler = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
 	private final static ThreadLocal<SimpleDateFormat> dateFormater = new ThreadLocal<SimpleDateFormat>() {
 		@Override
 		protected SimpleDateFormat initialValue() {
@@ -152,6 +153,18 @@ public class StringUtils {
 		if (email == null || email.trim().length() == 0)
 			return false;
 		return emailer.matcher(email).matches();
+	}
+
+	/**
+	 * 判断是不是一个合法的手机号码
+	 * 
+	 * @param mobile
+	 * @return
+	 */
+	public static boolean isMobile(String mobile) {
+		if (mobile == null || mobile.trim().length() == 0)
+			return false;
+		return mobiler.matcher(mobile).matches();
 	}
 
 	/**

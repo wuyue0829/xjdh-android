@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -20,8 +21,10 @@ public class BaseActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mActionBar = getSupportActionBar();
+		mActionBar.setDisplayShowCustomEnabled(true);
 		mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		mActionBar.setCustomView(R.layout.actionbar_title);
+		mActionBar.setCustomView(getLayoutInflater().inflate(R.layout.actionbar_title, null), new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
+				ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER));
 		if (!this.getClass().equals(MainActivity_.class)) {
 			mActionBar.setDisplayHomeAsUpEnabled(true);
 			mActionBar.setDisplayShowHomeEnabled(false);

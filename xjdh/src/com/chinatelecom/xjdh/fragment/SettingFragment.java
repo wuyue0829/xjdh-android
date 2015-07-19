@@ -57,7 +57,6 @@ public class SettingFragment extends PreferenceFragment {
 			}
 		});
 		mExitDialog.setButton2("取消", new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				mExitDialog.dismiss();

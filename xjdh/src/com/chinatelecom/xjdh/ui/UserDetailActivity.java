@@ -49,12 +49,12 @@ import com.chinatelecom.xjdh.bean.UserDetailListItem;
 import com.chinatelecom.xjdh.bean.UserInfo;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.utils.CryptoUtils;
-import com.chinatelecom.xjdh.utils.DialogUtils;
 import com.chinatelecom.xjdh.utils.FileUtils;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
+import com.chinatelecom.xjdh.utils.StringUtils;
 import com.chinatelecom.xjdh.utils.T;
 
 @EActivity(R.layout.activity_user_detail)
@@ -229,6 +229,7 @@ public class UserDetailActivity extends BaseActivity {
 			etColumnVal.setMinLines(3);
 		} else if (userDetailListItem.getId() == 7) {
 			etColumnVal.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+			etColumnVal.setMinEms(6);
 		}
 		builder.setView(dialogView);
 		builder.setNegativeButton("取消", null);
@@ -238,6 +239,34 @@ public class UserDetailActivity extends BaseActivity {
 		dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				switch (userDetailListItem.getId()) {
+				case 2:
+					if (etColumnVal.getText().toString().length() < 2) {
+						T.showLong(getApplicationContext(), "姓名至少2个字符");
+						return;
+					}
+					break;
+				case 5:
+					if (!StringUtils.isEmail(etColumnVal.getText().toString())) {
+						T.showLong(getApplicationContext(), "请输入合法的邮箱地址");
+						return;
+					}
+				case 7:
+					if (etColumnVal.getText().toString().length() < 6) {
+						T.showLong(getApplicationContext(), "密码最少6个字符");
+						return;
+					}
+					break;
+				case 4:
+					if (!StringUtils.isMobile(etColumnVal.getText().toString())) {
+						T.showLong(getApplicationContext(), "请输入合法的手机号码");
+						return;
+					}
+					break;
+				default:
+					break;
+				}
+
 				userDetailListItem.setColumnVal(etColumnVal.getText().toString());
 				uploadProgressDialog.show();
 				uploadData();

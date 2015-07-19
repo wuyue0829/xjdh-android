@@ -63,7 +63,7 @@ public class LocationDemo extends BaseActivity {
 					MapStatus.Builder mapStatusBuilder = new MapStatus.Builder();
 					mapStatusBuilder.overlook(0);
 					mapStatusBuilder.rotate(0);
-					mBaiduMap.setMapStatus(MapStatusUpdateFactory.newMapStatus(mapStatusBuilder.build()));
+					mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(mapStatusBuilder.build()));
 					break;
 				case FOLLOWING:
 					requestLocButton.setImageResource(R.drawable.main_icon_compass);

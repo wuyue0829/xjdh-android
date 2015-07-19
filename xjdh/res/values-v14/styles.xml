@@ -8,7 +8,7 @@
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
         <!-- API 14 theme customizations can go here. -->
-        <item name="actionMenuTextColor">@color/red</item>
+        <item name="actionMenuTextColor">@color/white</item>
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="android:windowAnimationStyle">@style/activityAnimation</item>
     </style>

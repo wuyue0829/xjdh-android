@@ -1,7 +1,7 @@
 <resources>
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
-        <item name="android:actionMenuTextColor">@color/red</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="android:windowAnimationStyle">@style/activityAnimation</item>
     </style>
@@ -10,7 +10,7 @@
     <style name="AppTheme" parent="AppBaseTheme">
 
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <item name="homeAsUpIndicator">@drawable/common_btn_back_normal</item>
+        <item name="homeAsUpIndicator">@drawable/icon_back</item>
     </style>
 
     <style name="Widget.Styled.ActionBar" parent="@android:style/Widget.ActionBar">
@@ -29,9 +29,6 @@
     <style name="AppTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/white</item>
     </style>
-
-
-    
 
     <style name="qZonePublishProgressStyle">
         <item name="android:maxWidth">30.0dip</item>
