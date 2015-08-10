@@ -180,9 +180,9 @@ public class ScheduleService extends Service implements EventHandler {
 			mNotificationBuilder.setTicker(alarmItem.getSubject());
 			mNotificationBuilder.setContentText(alarmItem.getSubject());
 		} else {
-			mNotificationBuilder.setContentTitle("收到" + totalCount + "条新的告警");
-			mNotificationBuilder.setContentText("最新告警:" + alarmItem.getSubject());
-			mNotificationBuilder.setTicker("最新告警:" + alarmItem.getSubject());
+			mNotificationBuilder.setContentTitle("收到 " + totalCount + " 条新的告警");
+			mNotificationBuilder.setContentText("最新告警：" + alarmItem.getSubject());
+			mNotificationBuilder.setTicker("最新告警：" + alarmItem.getSubject());
 			mNotificationBuilder.setNumber(totalCount);
 		}
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, mNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);

@@ -76,5 +76,6 @@
     <drawable name="transparent_background">#20000000</drawable>
 
     <color name="ads_bg">#dddddd</color>
+    <color name="cut_off_line">#1f000000</color>
 
 </resources>

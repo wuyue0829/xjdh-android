@@ -23,6 +23,7 @@ import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
+import com.chinatelecom.xjdh.utils.StringUtils;
 import com.chinatelecom.xjdh.utils.T;
 
 @EActivity(R.layout.activity_feedback)
@@ -51,6 +52,10 @@ public class FeedBackActivity extends BaseActivity {
 
 	@Click(R.id.btn_feedback_submit)
 	void onBtnFeedBackClicked() {
+		if (StringUtils.isEmpty(mEtFeedBack.getText().toString())) {
+			T.showShort(this, "请填写反馈信息...");
+			return;
+		}
 		if (AppContext.getInstance().isNetworkConnected()) {
 			uploadFeedBack();
 			pDialog.show();

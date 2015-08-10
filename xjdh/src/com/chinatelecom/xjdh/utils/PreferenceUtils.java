@@ -5,6 +5,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
+/**
+ * 偏好处理包
+ * @author peter
+ * @version 1.1
+ * @created 2015-07-08
+ */
 public class PreferenceUtils {
 	public static String getPrefString(Context context, String key, final String defaultValue) {
 		final SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);

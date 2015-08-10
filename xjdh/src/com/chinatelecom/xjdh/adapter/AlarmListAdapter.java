@@ -4,11 +4,11 @@ import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chinatelecom.xjdh.R;
@@ -25,7 +25,6 @@ public class AlarmListAdapter extends BaseAdapter {
 		public TextView area;
 		public TextView date;
 		public TextView status;
-		public ImageView level;
 	}
 
 	public AlarmListAdapter(Context context) {
@@ -64,7 +63,6 @@ public class AlarmListAdapter extends BaseAdapter {
 			listItemView.date = (TextView) convertView.findViewById(R.id.tv_list_item_date);
 			listItemView.area = (TextView) convertView.findViewById(R.id.tv_list_item_area);
 			listItemView.status = (TextView) convertView.findViewById(R.id.tv_list_item_status);
-			listItemView.level = (ImageView) convertView.findViewById(R.id.iv_list_item_level);
 			convertView.setTag(listItemView);
 		} else {
 			listItemView = (ListItemView) convertView.getTag();
@@ -83,27 +81,24 @@ public class AlarmListAdapter extends BaseAdapter {
 			listItemView.status.setText("处理完成");
 			listItemView.status.setBackgroundColor(Color.GREEN);
 		}
-		int resId = R.drawable.icon_level1;
+		Drawable drawableLevel = null;
 		switch (alarmItem.getLevel()) {
 		case 1:
-			resId = R.drawable.icon_level1;
+		default:
+			drawableLevel = context.getResources().getDrawable(R.drawable.icon_level1);
 			break;
 		case 2:
-			resId = R.drawable.icon_level2;
-
+			drawableLevel = context.getResources().getDrawable(R.drawable.icon_level2);
 			break;
 		case 3:
-			resId = R.drawable.icon_level3;
-
+			drawableLevel = context.getResources().getDrawable(R.drawable.icon_level3);
 			break;
 		case 4:
-			resId = R.drawable.icon_level4;
-
-			break;
-		default:
+			drawableLevel = context.getResources().getDrawable(R.drawable.icon_level4);
 			break;
 		}
-		listItemView.level.setImageResource(resId);
+		drawableLevel.setBounds(0, 0, drawableLevel.getMinimumWidth(), drawableLevel.getMinimumHeight());
+		listItemView.area.setCompoundDrawables(null, null, drawableLevel, null);
 		return convertView;
 	}
 

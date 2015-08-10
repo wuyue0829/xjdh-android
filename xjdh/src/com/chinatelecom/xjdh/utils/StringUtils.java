@@ -11,6 +11,9 @@ import java.util.regex.Pattern;
 /**
  * 字符串操作工具包
  * 
+ * @author peter
+ * @version 1.1
+ * @created 2015-07-08
  */
 public class StringUtils {
 	private final static Pattern emailer = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");

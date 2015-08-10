@@ -1,7 +1,8 @@
 package com.chinatelecom.xjdh.utils;
 
 public class URLs {
-	public final static String HOST = "xjdh.jimglobal.com";// "192.168.191.1";//
+	public final static String HOST = "xjdh.jimglobal.com";// "192.168.1.105";//
+	public final static String API_VERSION = "v1";
 	public final static String HTTP = "http://";
 	public final static String HTTPS = "https://";
 	public final static String URL_API_HOST = HTTP + HOST;

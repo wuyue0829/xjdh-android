@@ -26,10 +26,10 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 
-@EActivity(R.layout.activity_monitor)
+@EActivity(R.layout.normal_list_view)
 public class RoomListActivity extends BaseActivity {
 
-	@ViewById(R.id.lv_substation)
+	@ViewById(R.id.lv_items)
 	ListView mLvRoom;
 	@ViewById(R.id.tv_refresh)
 	TextView mTvRefresh;
@@ -63,7 +63,7 @@ public class RoomListActivity extends BaseActivity {
 		mLvRoom.setAdapter(mRoomAdapter);
 	}
 
-	@ItemClick(R.id.lv_substation)
+	@ItemClick(R.id.lv_items)
 	void onRoomItemClicked(int pos) {
 		RoomDevListActivity_.intent(this).mRoomCode(mRoomList.get(pos).getCode()).mRoomName(mRoomList.get(pos).getName()).start();
 	}

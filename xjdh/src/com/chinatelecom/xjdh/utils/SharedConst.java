@@ -33,6 +33,16 @@ public class SharedConst {
 			put("liebert-ac", "力博特空调");
 			put("motivator", "油机");
 			put("smd_device", "采集板");
+			put("motor_battery", "油机启动电池");
+		}
+	};
+	public static int MESG_TYPE_PERSONAL = 1;
+	public static int MESG_TYPE_SYSTEM = 2;
+	public static final Map<Integer, String> CONTENT_MAP = new HashMap<Integer, String>() {
+		private static final long serialVersionUID = 3188956071119862143L;
+		{
+			put(MESG_TYPE_PERSONAL, "个人消息");
+			put(MESG_TYPE_SYSTEM, "系统消息");
 		}
 	};
 }

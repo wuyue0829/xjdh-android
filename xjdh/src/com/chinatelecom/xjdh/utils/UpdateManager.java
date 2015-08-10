@@ -36,6 +36,10 @@ import com.chinatelecom.xjdh.app.AppContext_;
 
 /**
  * 应用程序更新工具包
+ * 
+ * @author peter
+ * @version 1.1
+ * @created 2015-07-08
  */
 public class UpdateManager {
 	private static final int DOWN_NOSDCARD = 0;

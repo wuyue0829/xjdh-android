@@ -3,8 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.chinatelecom.xjdh.ui.MainActivity" >
+    tools:context="com.chinatelecom.xjdh.ui.MainActivity_" >
 
     <GridView
         android:id="@+id/main_gridview"

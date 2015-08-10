@@ -8,6 +8,13 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+/**
+ * 加密解密库
+ * 
+ * @author peter
+ * @version 1.1
+ * @created 2015-07-08
+ */
 public class CryptoUtils {
 	private final static String HEX = "0123456789ABCDEF";
 

@@ -2,12 +2,15 @@ package com.chinatelecom.xjdh.ui;
 
 import java.util.ArrayList;
 
+import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.chinatelecom.xjdh.R;
@@ -30,7 +33,31 @@ public class BaseActivity extends ActionBarActivity {
 			mActionBar.setDisplayShowHomeEnabled(false);
 			mActionBar.setHomeButtonEnabled(true);
 		}
+		// if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+		// setTranslucentStatus(true);
+		// }
+		//
+		// // create our manager instance after the content view is set
+		// SystemBarTintManager tintManager = new SystemBarTintManager(this);
+		// // enable status bar tint
+		// tintManager.setStatusBarTintEnabled(true);
+		// // enable navigation bar tint
+		// tintManager.setNavigationBarTintEnabled(true);
+		//
 		AppManager.getAppManager().addActivity(this);
+	}
+
+	@TargetApi(19)
+	private void setTranslucentStatus(boolean on) {
+		Window win = getWindow();
+		WindowManager.LayoutParams winParams = win.getAttributes();
+		final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+		if (on) {
+			winParams.flags |= bits;
+		} else {
+			winParams.flags &= ~bits;
+		}
+		win.setAttributes(winParams);
 	}
 
 	void setTitle(String title) {

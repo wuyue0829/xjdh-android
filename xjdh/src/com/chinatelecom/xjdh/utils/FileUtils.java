@@ -14,6 +14,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 
+/**
+ * 文件处理工具包
+ * 
+ * @author peter
+ * @version 1.1
+ * @created 2015-07-08
+ */
 public class FileUtils {
 	public static String getFromAssets(Context ctx, String fileName) {
 		String Result = "";

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -21,13 +22,17 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppContext;
 
 @EFragment(R.layout.webview)
 public class WebviewFragment extends Fragment {
 	@ViewById(R.id.webview_main)
 	WebView webview;
+	@ViewById(R.id.tv_webview_reload)
+	TextView mTvWebviewReload;
 	ProgressDialog pDialog;
 	static String originalUrl;
 
@@ -85,6 +90,18 @@ public class WebviewFragment extends Fragment {
 				return response;
 			}
 
+			@Override
+			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+				webview.setVisibility(View.GONE);
+				mTvWebviewReload.setVisibility(View.VISIBLE);
+				if (AppContext.getInstance().isNetworkConnected()) {
+					mTvWebviewReload.setText("网络好像出问题了，点击重试");
+				} else {
+					mTvWebviewReload.setText("加载失败，点击重试");
+				}
+				super.onReceivedError(view, errorCode, description, failingUrl);
+			}
+
 			private WebResourceResponse getWebResourceResponseFromAsset(String mimeType, String fileName) {
 				try {
 					return getUtf8EncodedWebResourceResponse(mimeType, getActivity().getAssets().open(fileName));
@@ -107,15 +124,12 @@ public class WebviewFragment extends Fragment {
 				return true;
 			}
 		});
+		loadWebviewContent();
+	}
+
+	@Click(R.id.tv_webview_reload)
+	void loadWebviewContent() {
 		webview.loadUrl(originalUrl);
 		pDialog.show();
 	}
-
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
-		if (webview != null)
-			webview.loadUrl(originalUrl);
-	}
-
 }

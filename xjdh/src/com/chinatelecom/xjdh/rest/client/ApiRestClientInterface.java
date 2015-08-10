@@ -20,7 +20,7 @@ import com.chinatelecom.xjdh.rest.interceptor.HttpBasicAuthenticatorInterceptor;
 import com.chinatelecom.xjdh.utils.URLs;
 import com.chinatelecom.xjdh.utils.Update;
 
-@Rest(rootUrl = URLs.URL_API_HOST + "/api", converters = { MappingJacksonHttpMessageConverter.class, StringHttpMessageConverter.class,
+@Rest(rootUrl = URLs.URL_API_HOST + "/api/" + URLs.API_VERSION, converters = { MappingJacksonHttpMessageConverter.class, StringHttpMessageConverter.class,
 		FormHttpMessageConverter.class, ResourceHttpMessageConverter.class, ByteArrayHttpMessageConverter.class }, interceptors = { HttpBasicAuthenticatorInterceptor.class })
 @RequiresHeader("Authorization")
 public interface ApiRestClientInterface extends RestClientHeaders {
@@ -59,4 +59,7 @@ public interface ApiRestClientInterface extends RestClientHeaders {
 	@Get(URLs.UPDATE_VERSION)
 	@RequiresHeader(value = {})
 	Update getUpdateInfo() throws RestClientException;
+
+	@Get("/getmessage?msgtype={msgType}")
+	ApiResponse getMessage(String msgType) throws RestClientException;
 }

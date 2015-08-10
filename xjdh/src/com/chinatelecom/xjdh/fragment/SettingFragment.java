@@ -41,7 +41,6 @@ public class SettingFragment extends PreferenceFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				mExitDialog.dismiss();
-
 				String account = PreferenceUtils.getPrefString(getActivity(), PreferenceConstants.ACCOUNT, "");
 				PreferenceUtils.clearPreference(getActivity(), PreferenceManager.getDefaultSharedPreferences(getActivity()));
 				PreferenceUtils.setPrefString(getActivity(), PreferenceConstants.ACCOUNT, account);

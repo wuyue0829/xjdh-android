@@ -23,6 +23,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.baidu.mapapi.search.sug.a;
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.DevItem;
@@ -34,10 +35,10 @@ import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.URLs;
 
-@EActivity(R.layout.activity_monitor)
+@EActivity(R.layout.normal_list_view)
 public class RoomDevListActivity extends BaseActivity {
 
-	@ViewById(R.id.lv_substation)
+	@ViewById(R.id.lv_items)
 	ListView mLvDevType;
 	@ViewById(R.id.tv_refresh)
 	TextView mTvRefresh;
@@ -101,7 +102,9 @@ public class RoomDevListActivity extends BaseActivity {
 		mDevTypeAdapter.notifyDataSetChanged();
 	}
 
-	@ItemClick(R.id.lv_substation)
+	private static String[] WEBVIEW_MODEL = { "ad", "di", "imem12", "motor_battery" };
+
+	@ItemClick(R.id.lv_items)
 	void onRoomItemClicked(int pos) {
 		List<DevItem> devList = Arrays.asList(mDevTypeList.get(pos).getDevlist());
 		String[] dataId = new String[devList.size()];
@@ -109,8 +112,9 @@ public class RoomDevListActivity extends BaseActivity {
 			DevItem devItem = devList.get(i);
 			dataId[i] = devItem.getData_id();
 		}
-		if (mDevTypeList.get(pos).getType().equalsIgnoreCase("ad") || mDevTypeList.get(pos).getType().equalsIgnoreCase("di")
-				|| mDevTypeList.get(pos).getType().equalsIgnoreCase("imem12")) {
+		if (Arrays.asList(WEBVIEW_MODEL).contains(mDevTypeList.get(pos).getType())) {
+			// if (mDevTypeList.get(pos).getType().equalsIgnoreCase("ad") || mDevTypeList.get(pos).getType().equalsIgnoreCase("di")
+			// || mDevTypeList.get(pos).getType().equalsIgnoreCase("imem12"))
 			WebViewActivity_
 					.intent(this)
 					.originalUrl(

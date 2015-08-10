@@ -34,11 +34,11 @@ import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 
-@EActivity(R.layout.activity_monitor)
+@EActivity(R.layout.normal_list_view)
 public class MonitorActivity extends BaseActivity {
-	@ViewById(R.id.lv_substation)
+	@ViewById(R.id.lv_items)
 	ListView mLvSubstation;
-	@ViewById(R.id.tv_refresh)
+	@ViewById(R.id.tv_new_message)
 	TextView mTvRefresh;
 	private List<CityItem> cityList = new ArrayList<CityItem>(0);
 	private List<SubstationItem> mSubstationList = new ArrayList<SubstationItem>();
@@ -132,7 +132,7 @@ public class MonitorActivity extends BaseActivity {
 		getData();
 	}
 
-	@ItemClick(R.id.lv_substation)
+	@ItemClick(R.id.lv_items)
 	void onSustationListViewClicked(SubstationItem item) {
 		RoomListActivity_.intent(this).substationItem(item).start();
 	}

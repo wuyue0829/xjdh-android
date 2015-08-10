@@ -96,9 +96,8 @@ public class AlarmActivity extends BaseActivity {
 	ApiRestClientInterface mApiClient;
 	LinearLayout footerView;
 	TextView footerMsg;
-	LinearLayout footerLoading;
 	ProgressDialog pDialog;
-	
+
 	private static final int MENU_FILTER_ID = Menu.FIRST;
 	private HashMap<String, String> alarmLevelList = new LinkedHashMap<String, String>();
 	private List<CityItem> cityList = new ArrayList<CityItem>(0);
@@ -130,12 +129,10 @@ public class AlarmActivity extends BaseActivity {
 		mAlarmListAdapter = new AlarmListAdapter(this, alarmList);
 		footerView = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.listview_footer, null);
 		footerMsg = (TextView) footerView.findViewById(R.id.footer_msg);
-		footerLoading = (LinearLayout) footerView.findViewById(R.id.footer_loading);
 		footerMsg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				footerLoading.setVisibility(View.VISIBLE);
-				footerMsg.setVisibility(View.GONE);
+				footerMsg.setText("加载中....");
 				pDialog.show();
 				getData(false);
 			}
@@ -490,14 +487,10 @@ public class AlarmActivity extends BaseActivity {
 		if (!isLoadAll) {
 			footerMsg.setText("点击加载更多");
 			footerMsg.setClickable(true);
-			footerLoading.setVisibility(View.GONE);
-			footerMsg.setVisibility(View.VISIBLE);
 		} else {
 			T.showLong(this, "已经加载全部");
 			footerMsg.setText("已经加载全部");
 			footerMsg.setClickable(false);
-			footerLoading.setVisibility(View.GONE);
-			footerMsg.setVisibility(View.VISIBLE);
 		}
 		if (isSuccess) {
 			mAlarmListAdapter.notifyDataSetChanged();
