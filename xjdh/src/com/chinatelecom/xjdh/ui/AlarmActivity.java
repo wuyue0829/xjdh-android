@@ -97,7 +97,6 @@ public class AlarmActivity extends BaseActivity {
 	LinearLayout footerView;
 	TextView footerMsg;
 	ProgressDialog pDialog;
-
 	private static final int MENU_FILTER_ID = Menu.FIRST;
 	private HashMap<String, String> alarmLevelList = new LinkedHashMap<String, String>();
 	private List<CityItem> cityList = new ArrayList<CityItem>(0);
@@ -199,7 +198,7 @@ public class AlarmActivity extends BaseActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_FILTER_ID, 0, "").setIcon(R.drawable.icon_filter).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		menu.add(0, MENU_FILTER_ID, 0, "筛选").setIcon(R.drawable.icon_filter).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -212,13 +211,12 @@ public class AlarmActivity extends BaseActivity {
 				long latest = Long.parseLong(latestId);
 				long currentMax = alarmList.size() > 0 ? Long.parseLong(alarmList.get(0).getId()) : 0;
 				updateTvRefreshVisibility(latest > currentMax);
-				L.i("Refreshing alarm latestId:" + latestId + " currentMax:" + currentMax);
+				// L.i("Refreshing alarm latestId:" + latestId + " currentMax:" + currentMax);
 			}
 		});
 		mLvAlarm.addFooterView(footerView);
 		mLvAlarm.setAdapter(mAlarmListAdapter);
 		mSrlAlarm.setOnRefreshListener(new OnRefreshListener() {
-
 			@Override
 			public void onRefresh() {
 				mSrlAlarm.setRefreshing(false);

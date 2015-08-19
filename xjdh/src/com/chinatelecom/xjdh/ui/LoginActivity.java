@@ -48,7 +48,6 @@ public class LoginActivity extends BaseActivity {
 	@AfterViews
 	void initData() {
 		mAccountEt.setText(PreferenceUtils.getPrefString(this, PreferenceConstants.ACCOUNT, ""));
-		mActionBar.hide();
 	}
 
 	@Click(R.id.btn_login)

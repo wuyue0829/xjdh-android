@@ -2,6 +2,7 @@ package com.chinatelecom.xjdh.app;
 
 import org.androidannotations.annotations.EActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,20 +11,17 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 
 import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.ui.BaseActivity;
 import com.chinatelecom.xjdh.ui.LoginActivity_;
 import com.chinatelecom.xjdh.ui.MainActivity_;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 
 @EActivity
-public class AppStart extends BaseActivity {
+public class AppStart extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mActionBar.hide();
-
 		final View view = View.inflate(this, R.layout.start, null);
 		setContentView(view);
 		// 渐变展示启动屏

@@ -3,6 +3,7 @@
 
 package com.chinatelecom.xjdh.bean;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class MessageItem {
 	@org.codehaus.jackson.annotate.JsonProperty("id")
 	private java.lang.Integer id;

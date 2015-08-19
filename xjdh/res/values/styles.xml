@@ -1,21 +1,13 @@
 <resources>
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
-        <item name="android:actionMenuTextColor">@color/white</item>
-        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
-        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
-    </style>
-
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-        <item name="homeAsUpIndicator">@drawable/icon_back</item>
-    </style>
+    <style name="AppTheme" parent="AppTheme.Base"></style>
 
-    <style name="Widget.Styled.ActionBar" parent="@android:style/Widget.ActionBar">
-        <item name="background">@drawable/actionbar_bg</item>
-        <item name="titleTextStyle">@style/AppTheme.ActionBar.TitleTextStyle</item>
-        <item name="android:titleTextStyle">@style/AppTheme.ActionBar.TitleTextStyle</item>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+        <item name="actionMenuTextColor">@color/white</item>
     </style>
 
     <style name="activityAnimation" parent="@android:style/Animation">

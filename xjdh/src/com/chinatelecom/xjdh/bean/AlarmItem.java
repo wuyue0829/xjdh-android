@@ -5,6 +5,7 @@ package com.chinatelecom.xjdh.bean;
 
 import java.io.Serializable;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class AlarmItem implements Serializable {
 
 	private static final long serialVersionUID = -987395170636781619L;
@@ -206,12 +207,34 @@ public class AlarmItem implements Serializable {
 		return county_code;
 	}
 
+	@org.codehaus.jackson.annotate.JsonProperty("signal_name")
+	private java.lang.String signalName;
+
+	@org.codehaus.jackson.annotate.JsonProperty("signal_id")
+	private java.lang.String signalId;
+
 	@Override
 	public boolean equals(Object o) {
 		if (!(o instanceof AlarmItem))
 			return false;
 		AlarmItem a = (AlarmItem) o;
 		return this.id == a.id;
+	}
+
+	public java.lang.String getSignalName() {
+		return signalName;
+	}
+
+	public void setSignalName(java.lang.String signalName) {
+		this.signalName = signalName;
+	}
+
+	public java.lang.String getSignalId() {
+		return signalId;
+	}
+
+	public void setSignalId(java.lang.String signalId) {
+		this.signalId = signalId;
 	}
 
 }

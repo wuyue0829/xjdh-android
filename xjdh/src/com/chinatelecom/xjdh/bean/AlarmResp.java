@@ -3,6 +3,7 @@
 
 package com.chinatelecom.xjdh.bean;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class AlarmResp {
 	@org.codehaus.jackson.annotate.JsonProperty("alarmList")
 	private AlarmItem[] alarmlist;

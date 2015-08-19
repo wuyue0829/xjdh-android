@@ -3,11 +3,12 @@
 
 package com.chinatelecom.xjdh.bean;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class DevModelItem {
 	@org.codehaus.jackson.annotate.JsonProperty("key")
 	private java.lang.String key;
 
- 	public void setKey(java.lang.String key) {
+	public void setKey(java.lang.String key) {
 		this.key = key;
 	}
 
@@ -18,7 +19,7 @@ public class DevModelItem {
 	@org.codehaus.jackson.annotate.JsonProperty("val")
 	private java.lang.String val;
 
- 	public void setVal(java.lang.String val) {
+	public void setVal(java.lang.String val) {
 		this.val = val;
 	}
 

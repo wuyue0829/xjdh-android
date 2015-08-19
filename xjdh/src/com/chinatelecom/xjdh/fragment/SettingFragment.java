@@ -37,7 +37,6 @@ public class SettingFragment extends PreferenceFragment {
 		mExitDialog.setIcon(R.drawable.index_btn_exit);
 		mExitDialog.setMessage("确定注销？");
 		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				mExitDialog.dismiss();

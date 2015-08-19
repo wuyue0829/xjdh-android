@@ -23,7 +23,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.baidu.mapapi.search.sug.a;
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.DevItem;

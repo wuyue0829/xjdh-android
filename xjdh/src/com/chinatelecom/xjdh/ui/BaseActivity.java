@@ -2,67 +2,46 @@ package com.chinatelecom.xjdh.ui;
 
 import java.util.ArrayList;
 
-import android.annotation.TargetApi;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Gravity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppManager;
+import com.chinatelecom.xjdh.utils.ToolBarHelper;
 
-public class BaseActivity extends ActionBarActivity {
-	public ActionBar mActionBar;
-	public boolean isInit = true;
+public abstract class BaseActivity extends AppCompatActivity {
+	private ToolBarHelper mToolBarHelper;
+	public Toolbar toolbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mActionBar = getSupportActionBar();
-		mActionBar.setDisplayShowCustomEnabled(true);
-		mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-		mActionBar.setCustomView(getLayoutInflater().inflate(R.layout.actionbar_title, null), new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT,
-				ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER));
-		if (!this.getClass().equals(MainActivity_.class)) {
-			mActionBar.setDisplayHomeAsUpEnabled(true);
-			mActionBar.setDisplayShowHomeEnabled(false);
-			mActionBar.setHomeButtonEnabled(true);
-		}
-		// if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-		// setTranslucentStatus(true);
-		// }
-		//
-		// // create our manager instance after the content view is set
-		// SystemBarTintManager tintManager = new SystemBarTintManager(this);
-		// // enable status bar tint
-		// tintManager.setStatusBarTintEnabled(true);
-		// // enable navigation bar tint
-		// tintManager.setNavigationBarTintEnabled(true);
-		//
 		AppManager.getAppManager().addActivity(this);
 	}
 
-	@TargetApi(19)
-	private void setTranslucentStatus(boolean on) {
-		Window win = getWindow();
-		WindowManager.LayoutParams winParams = win.getAttributes();
-		final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-		if (on) {
-			winParams.flags |= bits;
-		} else {
-			winParams.flags &= ~bits;
+	@Override
+	public void setContentView(int layoutResID) {
+		if (this.getClass().equals(LoginActivity_.class)) {
+			super.setContentView(layoutResID);
+			return;
 		}
-		win.setAttributes(winParams);
+		mToolBarHelper = new ToolBarHelper(this, layoutResID);
+		toolbar = mToolBarHelper.getToolBar();
+		super.setContentView(mToolBarHelper.getContentView());
+		setSupportActionBar(toolbar);
+		onCreateCustomToolBar(toolbar);
+		if (!this.getClass().equals(MainActivity_.class)) {
+			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+			getSupportActionBar().setDisplayShowHomeEnabled(false);
+			getSupportActionBar().setHomeButtonEnabled(true);
+			getSupportActionBar().setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+		}
 	}
 
-	void setTitle(String title) {
-		View abView = mActionBar.getCustomView();
-		((TextView) abView.findViewById(R.id.ab_title)).setText(title);
+	public void onCreateCustomToolBar(Toolbar toolbar) {
+		toolbar.setContentInsetsRelative(0, 0);
 	}
 
 	@Override
@@ -90,14 +69,6 @@ public class BaseActivity extends ActionBarActivity {
 			}
 	}
 
-	public static ArrayList<BackPressHandler> mListeners = new ArrayList<BackPressHandler>();
-
-	public static abstract interface BackPressHandler {
-		public abstract void activityOnResume();
-
-		public abstract void activityOnPause();
-	}
-
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -111,5 +82,13 @@ public class BaseActivity extends ActionBarActivity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	public static ArrayList<BackPressHandler> mListeners = new ArrayList<BackPressHandler>();
+
+	public static abstract interface BackPressHandler {
+		public abstract void activityOnResume();
+
+		public abstract void activityOnPause();
 	}
 }

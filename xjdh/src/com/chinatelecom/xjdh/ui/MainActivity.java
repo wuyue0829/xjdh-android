@@ -55,7 +55,6 @@ public class MainActivity extends BaseActivity implements EventHandler {
 			this.name = name;
 			this.activity = activity;
 		}
-
 	}
 
 	// main board
@@ -64,7 +63,6 @@ public class MainActivity extends BaseActivity implements EventHandler {
 	@Extra("isDoLogin")
 	boolean isDoLogin = false;
 	SimpleAdapter mMainGridAdapter;
-
 	private List<DashboardItem> dashboardList = new ArrayList<MainActivity.DashboardItem>() {
 		private static final long serialVersionUID = 6541190919019797339L;
 		{
@@ -74,7 +72,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 			// add(new DashboardItem(R.drawable.ic_dashboard, "油机管理", null));
 			add(new DashboardItem(R.drawable.ic_chart, "数据报表", ChartActivity_.class));
 			add(new DashboardItem(R.drawable.ic_message, "消息中心", MessageCenterActivity_.class));
-			add(new DashboardItem(R.drawable.ic_help, "帮组中心", null));
+			add(new DashboardItem(R.drawable.ic_help, "帮助中心", null));
 			add(new DashboardItem(R.drawable.ic_user, "用户中心", UserDetailActivity_.class));
 			add(new DashboardItem(R.drawable.ic_setting, "设置", SettingActivity_.class));
 		}
@@ -101,7 +99,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 		pDialog = new ProgressDialog(this);
 		pDialog.setCancelable(true);
 		pDialog.setMessage("正在验证登录，请稍后...");
-		if (isDoLogin) {
+		if (isDoLogin && !pDialog.isShowing()) {
 			pDialog.show();
 			doLogin();
 		}
@@ -110,7 +108,6 @@ public class MainActivity extends BaseActivity implements EventHandler {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 	}
 
 	@ItemClick(R.id.main_gridview)
@@ -204,6 +201,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 				mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, mOauthResp.getAccess_token());
 				if (!AppContext.isServiceRunning(this, ScheduleService_.class.getName()))
 					ScheduleService_.intent(this).start();
+
 				if (AppContext.getInstance().isNetworkConnected())
 					UpdateManager.getUpdateManager().checkAppUpdate(this, false);
 				getFilterData();

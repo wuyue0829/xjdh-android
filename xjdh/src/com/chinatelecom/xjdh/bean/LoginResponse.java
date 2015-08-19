@@ -3,6 +3,7 @@
 
 package com.chinatelecom.xjdh.bean;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginResponse {
 	public LoginResponse(Integer ret, String response, String error) {
 		super();

@@ -3,11 +3,12 @@
 
 package com.chinatelecom.xjdh.bean;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class OauthRespose {
 	@org.codehaus.jackson.annotate.JsonProperty("refresh_token")
 	private java.lang.String refresh_token;
 
- 	public void setRefresh_token(java.lang.String refresh_token) {
+	public void setRefresh_token(java.lang.String refresh_token) {
 		this.refresh_token = refresh_token;
 	}
 
@@ -18,7 +19,7 @@ public class OauthRespose {
 	@org.codehaus.jackson.annotate.JsonProperty("token_type")
 	private java.lang.String token_type;
 
- 	public void setToken_type(java.lang.String token_type) {
+	public void setToken_type(java.lang.String token_type) {
 		this.token_type = token_type;
 	}
 
@@ -29,7 +30,7 @@ public class OauthRespose {
 	@org.codehaus.jackson.annotate.JsonProperty("expires_in")
 	private java.lang.Integer expires_in;
 
- 	public void setExpires_in(java.lang.Integer expires_in) {
+	public void setExpires_in(java.lang.Integer expires_in) {
 		this.expires_in = expires_in;
 	}
 
@@ -40,7 +41,7 @@ public class OauthRespose {
 	@org.codehaus.jackson.annotate.JsonProperty("access_token")
 	private java.lang.String access_token;
 
- 	public void setAccess_token(java.lang.String access_token) {
+	public void setAccess_token(java.lang.String access_token) {
 		this.access_token = access_token;
 	}
 
@@ -51,7 +52,7 @@ public class OauthRespose {
 	@org.codehaus.jackson.annotate.JsonProperty("expires")
 	private java.lang.Integer expires;
 
- 	public void setExpires(java.lang.Integer expires) {
+	public void setExpires(java.lang.Integer expires) {
 		this.expires = expires;
 	}
 

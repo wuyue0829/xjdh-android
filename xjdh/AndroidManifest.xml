@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chinatelecom.xjdh"
-    android:versionCode="7"
-    android:versionName="1.1.0" >
+    android:versionCode="8"
+    android:versionName="2.0.0" >
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="22" />
+        android:targetSdkVersion="23" />
 
     <supports-screens
         android:anyDensity="true"
@@ -60,7 +60,8 @@
 
         <activity
             android:name=".app.AppStart_"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

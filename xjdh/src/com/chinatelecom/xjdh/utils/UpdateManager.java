@@ -159,7 +159,7 @@ public class UpdateManager {
 							apkUrl = mUpdate.getDownloadUrl();
 							updateMsg = "版本：" + mUpdate.getVersionName() + "\r\n";
 							updateMsg += "更新日志：\r\n" + mUpdate.getUpdateLog();
-							updateMsg += "\r\n更新时间：" + StringUtils.friendly_time(mUpdate.getUpdateDatetime());
+							updateMsg += "\r\n更新时间：" + mUpdate.getUpdateDatetime();
 							showNoticeDialog();
 						} else if (isShowMsg) {
 							showLatestOrFailDialog(DIALOG_TYPE_LATEST);

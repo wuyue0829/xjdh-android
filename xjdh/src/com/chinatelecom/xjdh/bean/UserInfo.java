@@ -5,6 +5,7 @@ package com.chinatelecom.xjdh.bean;
 
 import java.io.Serializable;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class UserInfo implements Serializable {
 
 	private static final long serialVersionUID = 7220925282557754987L;

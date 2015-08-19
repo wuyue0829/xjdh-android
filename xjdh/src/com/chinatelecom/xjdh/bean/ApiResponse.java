@@ -3,6 +3,7 @@
 
 package com.chinatelecom.xjdh.bean;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class ApiResponse {
 	@org.codehaus.jackson.annotate.JsonProperty("ret")
 	private java.lang.Integer ret;

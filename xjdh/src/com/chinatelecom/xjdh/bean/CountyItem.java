@@ -3,6 +3,7 @@
 
 package com.chinatelecom.xjdh.bean;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class CountyItem {
 	@org.codehaus.jackson.annotate.JsonProperty("name")
 	private java.lang.String name;

@@ -56,6 +56,11 @@ public class AlarmDetailActivity extends BaseActivity {
 	TextView tvAlarmDetailStatus;
 	@ViewById(R.id.tv_alarm_detail_substation)
 	TextView tvAlarmDetailSubstation;
+	@ViewById(R.id.tv_alarm_signal_name)
+	TextView tvAlarmDetailSignalName;
+	@ViewById(R.id.tv_alarm_signal_id)
+	TextView tvAlarmDetailSignalId;
+
 	@Extra("alarmItem")
 	AlarmItem alarmItem;
 	@RestService
@@ -79,6 +84,8 @@ public class AlarmDetailActivity extends BaseActivity {
 		tvAlarmDetailContent.setText(alarmItem.getSubject());
 		tvAlarmDetailCounty.setText(alarmItem.getCounty());
 		tvAlarmDetailDevName.setText(alarmItem.getDev_name());
+		tvAlarmDetailSignalName.setText(alarmItem.getSignalName());
+		tvAlarmDetailSignalId.setText(alarmItem.getSignalId());
 		String level = "一级";
 		switch (alarmItem.getLevel()) {
 		case 1:

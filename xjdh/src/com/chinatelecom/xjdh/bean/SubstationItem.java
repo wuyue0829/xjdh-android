@@ -8,6 +8,7 @@ import java.util.Arrays;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class SubstationItem implements Parcelable {
 	@org.codehaus.jackson.annotate.JsonProperty("roomList")
 	private RoomItem[] roomlist;

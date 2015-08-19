@@ -6,6 +6,7 @@ package com.chinatelecom.xjdh.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+@org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class DevItem implements Parcelable {
 
 	@org.codehaus.jackson.annotate.JsonProperty("model")
