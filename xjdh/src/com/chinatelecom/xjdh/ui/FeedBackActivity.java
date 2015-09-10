@@ -26,6 +26,10 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.StringUtils;
 import com.chinatelecom.xjdh.utils.T;
 
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.activity_feedback)
 public class FeedBackActivity extends BaseActivity {
 	@RestService

@@ -1,5 +1,8 @@
 package com.chinatelecom.xjdh.bean;
-
+/**
+ * @author peter
+ * 
+ */
 public class KeyValuePair {
 	public String key;
 	public String value;

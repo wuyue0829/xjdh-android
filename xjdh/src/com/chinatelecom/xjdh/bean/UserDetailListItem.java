@@ -1,5 +1,8 @@
 package com.chinatelecom.xjdh.bean;
-
+/**
+ * @author peter
+ * 
+ */
 public class UserDetailListItem {
 	private String columnText;
 	private String columnName;

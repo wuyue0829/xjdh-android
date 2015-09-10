@@ -16,6 +16,10 @@ import com.chinatelecom.xjdh.utils.URLs;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+/**
+ * @author peter
+ * 
+ */
 public class UserDetailListAdapter extends BaseAdapter {
 	private List<UserDetailListItem> listItems;
 	private Context context;// 运行上下文

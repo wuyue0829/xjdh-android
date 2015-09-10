@@ -1,5 +1,9 @@
 package com.chinatelecom.xjdh.bean;
 
+/**
+ * @author peter
+ * 
+ */
 public class WebviewItem {
 	public String title;
 	public String url;

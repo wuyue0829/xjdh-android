@@ -16,6 +16,10 @@ import com.chinatelecom.xjdh.ui.MainActivity_;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 
+/**
+ * @author peter
+ * 
+ */
 @EActivity
 public class AppStart extends Activity {
 

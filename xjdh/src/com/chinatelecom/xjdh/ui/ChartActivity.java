@@ -37,7 +37,10 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Highlight;
-
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.activity_barchart)
 public class ChartActivity extends BaseActivity {
 

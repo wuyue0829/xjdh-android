@@ -32,6 +32,10 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 import com.chinatelecom.xjdh.utils.URLs;
 
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.activity_alarm_detail)
 public class AlarmDetailActivity extends BaseActivity {
 	@ViewById(R.id.btn_monitor)

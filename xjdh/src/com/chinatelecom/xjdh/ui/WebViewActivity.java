@@ -25,6 +25,10 @@ import android.widget.TextView;
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppContext;
 
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.webview)
 public class WebViewActivity extends BaseActivity {
 	@ViewById(R.id.webview_main)

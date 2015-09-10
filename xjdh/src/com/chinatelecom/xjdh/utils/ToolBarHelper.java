@@ -7,10 +7,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.chinatelecom.xjdh.R;
 
+/**
+ * @author peter
+ * 
+ */
 public class ToolBarHelper {/* 上下文，创建view的时候需要用到 */
 	private Context mContext;
 

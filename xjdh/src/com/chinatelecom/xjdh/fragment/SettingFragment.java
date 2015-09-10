@@ -23,6 +23,10 @@ import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.UpdateManager;
 
+/**
+ * @author peter
+ * 
+ */
 @PreferenceScreen(R.xml.preferences)
 @EFragment
 public class SettingFragment extends PreferenceFragment {
@@ -76,5 +80,10 @@ public class SettingFragment extends PreferenceFragment {
 	@PreferenceClick(R.string.app_exit)
 	void onPreferenceExitClicked() {
 		DialogUtils.buildExitDialog(getActivity());
+	}
+
+	@PreferenceClick(R.string.app_about)
+	void onPreferenceAboutClicked() {
+
 	}
 }

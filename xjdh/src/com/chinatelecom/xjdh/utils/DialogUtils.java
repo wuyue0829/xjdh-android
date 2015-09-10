@@ -15,6 +15,10 @@ import android.widget.TextView;
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppManager;
 
+/**
+ * @author peter
+ * 
+ */
 public class DialogUtils {
 	public static int getScreenWidth(Activity context) {
 		DisplayMetrics dm = new DisplayMetrics();

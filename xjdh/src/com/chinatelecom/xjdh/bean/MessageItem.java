@@ -2,7 +2,10 @@
 /*http://javafromjson.dashingrocket.com*/
 
 package com.chinatelecom.xjdh.bean;
-
+/**
+ * @author peter
+ * 
+ */
 @org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class MessageItem {
 	@org.codehaus.jackson.annotate.JsonProperty("id")

@@ -27,7 +27,10 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-
+/**
+ * @author peter
+ * 
+ */
 @EApplication
 public class AppContext extends Application {
 	public static final int NUM_PAGE = 6;// 总共有多少页

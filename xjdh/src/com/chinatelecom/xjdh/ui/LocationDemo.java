@@ -23,6 +23,10 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.chinatelecom.xjdh.R;
 
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.activity_location)
 public class LocationDemo extends BaseActivity {
 

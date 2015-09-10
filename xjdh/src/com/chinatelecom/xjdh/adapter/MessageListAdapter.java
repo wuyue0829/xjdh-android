@@ -13,6 +13,10 @@ import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.MessageItem;
 import com.chinatelecom.xjdh.utils.StringUtils;
 
+/**
+ * @author peter
+ * 
+ */
 public class MessageListAdapter extends BaseAdapter {
 	private List<MessageItem> listItems;
 	private Context context;// 运行上下文

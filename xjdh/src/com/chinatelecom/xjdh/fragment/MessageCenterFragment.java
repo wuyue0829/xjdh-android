@@ -34,6 +34,10 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 import com.chinatelecom.xjdh.utils.URLs;
 
+/**
+ * @author peter
+ * 
+ */
 @EFragment(R.layout.normal_list_view)
 public class MessageCenterFragment extends Fragment {
 	@ViewById(R.id.lv_items)

@@ -27,6 +27,10 @@ import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.activity_login)
 public class LoginActivity extends BaseActivity {
 

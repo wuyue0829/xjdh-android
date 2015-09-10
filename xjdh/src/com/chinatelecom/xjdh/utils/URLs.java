@@ -1,5 +1,9 @@
 package com.chinatelecom.xjdh.utils;
 
+/**
+ * @author peter
+ * 
+ */
 public class URLs {
 	public final static String HOST = "xjdh.jimglobal.com";// "192.168.1.105";//
 	public final static String API_VERSION = "v1";

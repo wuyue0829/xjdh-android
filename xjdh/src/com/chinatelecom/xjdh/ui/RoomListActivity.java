@@ -25,7 +25,10 @@ import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
-
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.normal_list_view)
 public class RoomListActivity extends BaseActivity {
 

@@ -3,6 +3,10 @@
 
 package com.chinatelecom.xjdh.bean;
 
+/**
+ * @author peter
+ * 
+ */
 @org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class AlarmChartsResp {
 	@org.codehaus.jackson.annotate.JsonProperty("title")

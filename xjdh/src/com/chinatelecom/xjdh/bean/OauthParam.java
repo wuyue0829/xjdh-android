@@ -1,5 +1,8 @@
 package com.chinatelecom.xjdh.bean;
-
+/**
+ * @author peter
+ * 
+ */
 public class OauthParam {
 	private String client_id;
 	private String client_secret;

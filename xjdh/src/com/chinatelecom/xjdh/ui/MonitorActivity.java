@@ -33,7 +33,10 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
-
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.normal_list_view)
 public class MonitorActivity extends BaseActivity {
 	@ViewById(R.id.lv_items)

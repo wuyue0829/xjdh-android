@@ -14,6 +14,10 @@ import com.chinatelecom.xjdh.service.ScheduleService_;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 
+/**
+ * @author peter
+ * 
+ */
 @EReceiver
 public class AppBroadcastReceiver extends BroadcastReceiver {
 

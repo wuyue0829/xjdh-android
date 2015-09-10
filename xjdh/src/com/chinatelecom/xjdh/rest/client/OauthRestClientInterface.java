@@ -11,6 +11,10 @@ import com.chinatelecom.xjdh.bean.OauthParam;
 import com.chinatelecom.xjdh.rest.interceptor.HttpBasicAuthenticatorInterceptor;
 import com.chinatelecom.xjdh.utils.URLs;
 
+/**
+ * @author peter
+ * 
+ */
 @Rest(rootUrl = URLs.URL_API_HOST + "/oauth2", converters = { MappingJacksonHttpMessageConverter.class }, interceptors = { HttpBasicAuthenticatorInterceptor.class })
 public interface OauthRestClientInterface extends RestClientHeaders {
 	@Post("/authenticate")

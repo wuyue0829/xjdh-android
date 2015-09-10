@@ -7,7 +7,10 @@ import android.os.Bundle;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.fragment.SettingFragment_;
-
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.activity_setting)
 public class SettingActivity extends BaseActivity {
 	@Override

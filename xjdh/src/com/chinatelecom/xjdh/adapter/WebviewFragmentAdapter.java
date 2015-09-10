@@ -13,6 +13,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import com.chinatelecom.xjdh.bean.WebviewItem;
 import com.chinatelecom.xjdh.fragment.WebviewFragment_;
 
+/**
+ * @author peter
+ * 
+ */
 public class WebviewFragmentAdapter extends FragmentStatePagerAdapter {
 	List<WebviewItem> listItem = new ArrayList<WebviewItem>();
 	Context ctx;

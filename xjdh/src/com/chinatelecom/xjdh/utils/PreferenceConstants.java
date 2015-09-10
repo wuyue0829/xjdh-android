@@ -1,5 +1,9 @@
 package com.chinatelecom.xjdh.utils;
 
+/**
+ * @author peter
+ * 
+ */
 public class PreferenceConstants {
 
 	public final static String ISNEEDLOG = "isneedlog";

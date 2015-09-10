@@ -33,7 +33,10 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.URLs;
-
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.normal_list_view)
 public class RoomDevListActivity extends BaseActivity {
 
@@ -112,8 +115,6 @@ public class RoomDevListActivity extends BaseActivity {
 			dataId[i] = devItem.getData_id();
 		}
 		if (Arrays.asList(WEBVIEW_MODEL).contains(mDevTypeList.get(pos).getType())) {
-			// if (mDevTypeList.get(pos).getType().equalsIgnoreCase("ad") || mDevTypeList.get(pos).getType().equalsIgnoreCase("di")
-			// || mDevTypeList.get(pos).getType().equalsIgnoreCase("imem12"))
 			WebViewActivity_
 					.intent(this)
 					.originalUrl(

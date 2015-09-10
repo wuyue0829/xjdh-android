@@ -13,6 +13,10 @@ import com.chinatelecom.xjdh.adapter.MessageCenterPagerAdapter;
 import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.activity_message_center)
 public class MessageCenterActivity extends BaseActivity implements OnPageChangeListener {
 

@@ -66,6 +66,10 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.StringUtils;
 import com.chinatelecom.xjdh.utils.T;
 
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.activity_alarm)
 public class AlarmActivity extends BaseActivity {
 	@ViewById(R.id.tv_refresh)

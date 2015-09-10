@@ -33,7 +33,10 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.URLs;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
-
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.activity_realtime)
 public class RealtimeActivity extends BaseActivity {
 	@ViewById(R.id.webview_indicator)

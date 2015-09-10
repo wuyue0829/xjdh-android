@@ -3,6 +3,10 @@ package com.chinatelecom.xjdh.utils;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author peter
+ * 
+ */
 public class SharedConst {
 	public static String CLIENT_PASSWORD = "036D45B52D2FDDBC12A171015947CE71";
 	public static String PASSWORD_CRYPRO_SEED = "xjtele";

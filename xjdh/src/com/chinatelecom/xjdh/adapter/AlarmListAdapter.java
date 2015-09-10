@@ -15,6 +15,10 @@ import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.AlarmItem;
 import com.chinatelecom.xjdh.utils.StringUtils;
 
+/**
+ * @author peter
+ * 
+ */
 public class AlarmListAdapter extends BaseAdapter {
 	private List<AlarmItem> listItems;
 	private Context context;// 运行上下文

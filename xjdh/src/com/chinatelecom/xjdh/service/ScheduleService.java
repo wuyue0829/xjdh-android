@@ -35,6 +35,10 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 
+/**
+ * @author peter
+ * 
+ */
 @EService
 public class ScheduleService extends Service implements EventHandler {
 
@@ -187,7 +191,7 @@ public class ScheduleService extends Service implements EventHandler {
 		}
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, mNotificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		mNotificationBuilder.setContentIntent(pendingIntent);
-		mNotificationBuilder.setOngoing(true);
+		// mNotificationBuilder.setOngoing(true);
 		mNotificationBuilder.setOnlyAlertOnce(true);
 		mNotificationManager.notify(1, mNotificationBuilder.build());
 	}

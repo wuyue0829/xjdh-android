@@ -12,6 +12,10 @@ import android.widget.TextView;
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.SubstationItem;
 
+/**
+ * @author peter
+ * 
+ */
 public class SubstationListAdapter extends BaseAdapter {
 	private List<SubstationItem> listItems;
 	private Context context;// 运行上下文

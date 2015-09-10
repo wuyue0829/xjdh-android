@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import com.chinatelecom.xjdh.fragment.MessageCenterFragment_;
 import com.chinatelecom.xjdh.utils.SharedConst;
 
+/**
+ * @author peter
+ * 
+ */
 public class MessageCenterPagerAdapter extends FragmentPagerAdapter {
 	private List<Fragment> mFragmentList = new ArrayList<Fragment>();
 	FragmentManager fm;

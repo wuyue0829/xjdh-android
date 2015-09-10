@@ -3,7 +3,10 @@ package com.chinatelecom.xjdh.bean;
 import java.text.DecimalFormat;
 
 import com.github.mikephil.charting.utils.ValueFormatter;
-
+/**
+ * @author peter
+ * 
+ */
 public class IntValueFormatter implements ValueFormatter {
 	private DecimalFormat mFormat;
 

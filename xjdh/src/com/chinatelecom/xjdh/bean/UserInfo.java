@@ -4,7 +4,10 @@
 package com.chinatelecom.xjdh.bean;
 
 import java.io.Serializable;
-
+/**
+ * @author peter
+ * 
+ */
 @org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class UserInfo implements Serializable {
 

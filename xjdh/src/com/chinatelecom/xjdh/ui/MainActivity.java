@@ -42,6 +42,10 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 import com.chinatelecom.xjdh.utils.UpdateManager;
 
+/**
+ * @author peter
+ * 
+ */
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity implements EventHandler {
 	class DashboardItem {

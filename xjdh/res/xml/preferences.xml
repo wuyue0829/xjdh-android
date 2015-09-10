@@ -31,6 +31,10 @@
             android:title="检查更新" >
         </Preference>
         <Preference
+            android:key="@string/app_about"
+            android:title="关于" >
+        </Preference>
+        <Preference
             android:key="@string/logout"
             android:title="注销账户" >
         </Preference>
