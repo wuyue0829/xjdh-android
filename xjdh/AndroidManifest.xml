@@ -14,7 +14,11 @@
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true" />
+    <uses-permission android:name="android.permission.NFC" />
 
+    <uses-feature
+        android:name="android.hardware.nfc"
+        android:required="true" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -67,7 +71,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>  
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />  
+                </intent-filter>
         </activity>
+        <activity 
+            android:name=".ui.ReadNfcNumber_"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LoginActivity_"
             android:screenOrientation="portrait"
