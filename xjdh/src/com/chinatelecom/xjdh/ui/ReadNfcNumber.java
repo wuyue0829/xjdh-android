@@ -86,20 +86,24 @@ public class ReadNfcNumber extends BaseActivity {
 
 		Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+		if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action) 
+				|| NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
+				|| NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
 			byte[] idArr = tag.getId();
 			if(idArr.length == 8)
 			{
-				int number = idArr[5] * 16 * 16 + idArr[6] * 16 + idArr[7];
+				long number = (idArr[5] & 0xFF) << 16;
+				number += (idArr[6] & 0xff) << 8;
+				number += idArr[7]&0xFF;
 				ShowNumber(number);
 			}
 		}
 	}
 
 	@UiThread
-	public void ShowNumber(int number)
+	public void ShowNumber(long number)
 	{
-		tvNumber.setText(Integer.valueOf(number).toString());
+		tvNumber.setText(Long.valueOf(number).toString());
 	}
 	/**
 	 * @param activity
