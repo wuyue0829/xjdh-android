@@ -1,5 +1,7 @@
 package com.chinatelecom.xjdh.utils;
 
+import com.chinatelecom.xjdh.R;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v7.widget.Toolbar;
@@ -8,10 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.chinatelecom.xjdh.R;
 
 /**
- * @author peter
+ * @author Scott Zhang
  * 
  */
 public class ToolBarHelper {/* 上下文，创建view的时候需要用到 */

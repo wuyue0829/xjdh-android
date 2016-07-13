@@ -2179,6 +2179,7 @@ containing a value of this type.
         public static int Base_TextAppearance_AppCompat_Headline=0x7f0b00cd;
         /**  Deprecated text styles 
  Deprecated text styles 
+ Now deprecated styles 
          */
         public static int Base_TextAppearance_AppCompat_Inverse=0x7f0b00d7;
         public static int Base_TextAppearance_AppCompat_Large=0x7f0b00d8;
@@ -2190,6 +2191,8 @@ containing a value of this type.
         public static int Base_TextAppearance_AppCompat_Menu=0x7f0b00d5;
         public static int Base_TextAppearance_AppCompat_SearchResult=0x7f0b00a1;
         public static int Base_TextAppearance_AppCompat_SearchResult_Subtitle=0x7f0b00a3;
+        /**  Search View result styles 
+         */
         public static int Base_TextAppearance_AppCompat_SearchResult_Title=0x7f0b00a2;
         public static int Base_TextAppearance_AppCompat_Small=0x7f0b00dc;
         public static int Base_TextAppearance_AppCompat_Small_Inverse=0x7f0b00dd;
@@ -2241,6 +2244,10 @@ containing a value of this type.
         public static int Base_V11_Theme_AppCompat_Light_Dialog=0x7f0b011d;
         public static int Base_V12_Widget_AppCompat_AutoCompleteTextView=0x7f0b00c7;
         public static int Base_V12_Widget_AppCompat_EditText=0x7f0b00c6;
+        public static int Base_V21_Theme_AppCompat=0x7f0b0120;
+        public static int Base_V21_Theme_AppCompat_Dialog=0x7f0b0122;
+        public static int Base_V21_Theme_AppCompat_Light=0x7f0b0121;
+        public static int Base_V21_Theme_AppCompat_Light_Dialog=0x7f0b0123;
         /**  Base platform-dependent theme providing an action bar in a dark-themed activity. 
          */
         public static int Base_V7_Theme_AppCompat=0x7f0b0101;
@@ -2256,6 +2263,8 @@ containing a value of this type.
         public static int Base_Widget_AppCompat_ActionBar_TabBar=0x7f0b007e;
         public static int Base_Widget_AppCompat_ActionBar_TabText=0x7f0b0082;
         public static int Base_Widget_AppCompat_ActionBar_TabView=0x7f0b0080;
+        /**  Action Button Styles 
+         */
         public static int Base_Widget_AppCompat_ActionButton=0x7f0b007b;
         public static int Base_Widget_AppCompat_ActionButton_CloseMode=0x7f0b007c;
         public static int Base_Widget_AppCompat_ActionButton_Overflow=0x7f0b007d;
@@ -2296,8 +2305,12 @@ containing a value of this type.
         public static int Base_Widget_AppCompat_Light_ActionBar_TabView=0x7f0b0081;
         public static int Base_Widget_AppCompat_Light_PopupMenu=0x7f0b009c;
         public static int Base_Widget_AppCompat_Light_PopupMenu_Overflow=0x7f0b009a;
+        /**  Popup Menu 
+         */
         public static int Base_Widget_AppCompat_ListPopupWindow=0x7f0b0098;
         public static int Base_Widget_AppCompat_ListView=0x7f0b0093;
+        /**  Spinner Widgets 
+         */
         public static int Base_Widget_AppCompat_ListView_DropDown=0x7f0b0094;
         public static int Base_Widget_AppCompat_ListView_Menu=0x7f0b0097;
         public static int Base_Widget_AppCompat_PopupMenu=0x7f0b009b;
@@ -2305,6 +2318,7 @@ containing a value of this type.
         public static int Base_Widget_AppCompat_PopupWindow=0x7f0b00a7;
         public static int Base_Widget_AppCompat_ProgressBar=0x7f0b008e;
         /**  Progress Bar 
+ Progress Bar 
          */
         public static int Base_Widget_AppCompat_ProgressBar_Horizontal=0x7f0b008d;
         public static int Base_Widget_AppCompat_RatingBar=0x7f0b00b6;
@@ -2317,6 +2331,12 @@ containing a value of this type.
         public static int Base_Widget_AppCompat_Spinner_Underlined=0x7f0b0090;
         public static int Base_Widget_AppCompat_TextView_SpinnerItem=0x7f0b00bc;
         public static int Base_Widget_AppCompat_Toolbar=0x7f0b00a8;
+        /** 
+        Widget.AppCompat.Toolbar style is purposely ommitted. This is because the support
+        Toolbar implementation is used on ALL platforms and relies on the unbundled attrs.
+        The supporting Toolbar styles below only use basic attrs so work fine.
+    
+         */
         public static int Base_Widget_AppCompat_Toolbar_Button_Navigation=0x7f0b00a9;
         public static int Platform_AppCompat=0x7f0b00ff;
         public static int Platform_AppCompat_Light=0x7f0b0100;

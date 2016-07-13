@@ -16,6 +16,10 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 
 import com.chinatelecom.xjdh.bean.ApiResponse;
+import com.chinatelecom.xjdh.bean.ApiResponseImage;
+import com.chinatelecom.xjdh.bean.ApiResponseStationList;
+import com.chinatelecom.xjdh.bean.ApiResponseUpLoad;
+import com.chinatelecom.xjdh.bean.JsonResponse;
 import com.chinatelecom.xjdh.rest.interceptor.HttpBasicAuthenticatorInterceptor;
 import com.chinatelecom.xjdh.utils.URLs;
 import com.chinatelecom.xjdh.utils.Update;
@@ -24,19 +28,27 @@ import com.chinatelecom.xjdh.utils.Update;
  * @author peter
  * 
  */
-@Rest(rootUrl = URLs.URL_API_HOST + "/api/" + URLs.API_VERSION, converters = { MappingJacksonHttpMessageConverter.class, StringHttpMessageConverter.class,
-		FormHttpMessageConverter.class, ResourceHttpMessageConverter.class, ByteArrayHttpMessageConverter.class }, interceptors = { HttpBasicAuthenticatorInterceptor.class })
+@Rest(rootUrl = URLs.URL_API_HOST + "/api/" + URLs.API_VERSION, converters = { MappingJacksonHttpMessageConverter.class,
+		StringHttpMessageConverter.class, MyFormHttpMessageConverter.class, MyStringHttpMessageConverter.class,
+		ResourceHttpMessageConverter.class, FormHttpMessageConverter.class,
+		ByteArrayHttpMessageConverter.class }, interceptors = { HttpBasicAuthenticatorInterceptor.class })
 @RequiresHeader("Authorization")
 public interface ApiRestClientInterface extends RestClientHeaders {
 	@Get("/getuserinfo")
 	ApiResponse getUserInfo() throws RestClientException;
 
 	@Get("/getAlarmList?citycode={citycode}&countycode={countycode}&substationId={substationId}&roomId={roomId}&level={level}&model={model}&startdatetime={startdatetime}&enddatetime={enddatetime}&offset={offset}&count={count}&lastId={lastId}")
-	ApiResponse getAlarmList(String citycode, String countycode, String substationId, String roomId, String level, String model, String startdatetime,
-			String enddatetime, String offset, String count, String lastId) throws RestClientException;
+	ApiResponse getAlarmList(String citycode, String countycode, String substationId, String roomId, String level,
+			String model, String startdatetime, String enddatetime, String offset, String count, String lastId)
+					throws RestClientException;
 
-	@Get("/getAreaData")
-	ApiResponse getAreaData() throws RestClientException;
+	@Get("/getPreAlarmList?citycode={citycode}&countycode={countycode}&substationId={substationId}&roomId={roomId}&level={level}&model={model}&startdatetime={startdatetime}&enddatetime={enddatetime}&offset={offset}&count={count}&lastId={lastId}")
+	ApiResponse getPreAlarmList(String citycode, String countycode, String substationId, String roomId, String level,
+			String model, String startdatetime, String enddatetime, String offset, String count, String lastId)
+					throws RestClientException;
+
+	@Get("/getAreaData?cityName={cityName}&stationName={stationName}&stationNames={stationNames}")
+	ApiResponse getAreaData(String cityName, String stationName,String stationNames) throws RestClientException;
 
 	@Get("/getDevModelData")
 	ApiResponse getDevModelData() throws RestClientException;
@@ -66,4 +78,36 @@ public interface ApiRestClientInterface extends RestClientHeaders {
 
 	@Get("/getmessage?msgtype={msgType}")
 	ApiResponse getMessage(String msgType) throws RestClientException;
+
+	// 预告警处理
+	@Post("/postPreAlarmList")
+	ApiResponse postPreAlarmList(LinkedHashMap<String, String> lastd) throws RestClientException;
+
+	// 上传图片
+	@Post("/StationImage")
+	@RequiresHeader({ "Authorization", "Content-Type" })
+	ApiResponseUpLoad StationImage(MultiValueMap<String, Object> multiValueMap);
+
+	// 局站列表
+	@Get("/stationList?stationName={stationName}")
+	ApiResponse stationList(String stationName) throws RestClientException;
+
+	// 局站列表
+	@Get("/stationList")
+	ApiResponseImage stationListImage() throws RestClientException;
+
+	@Post("/creationUser")
+	ApiResponse creationUser(LinkedHashMap<String, String> items) throws RestClientException;
+
+	@Get("/newGrouping?GroupingName={GroupingName}&substation_id={substation_id}")
+	ApiResponse newGrouping(String GroupingName, String substation_id);
+
+	// 分组
+	@Get("/Group?substation_id={substation_id}")
+	ApiResponse Group(String substation_id);
+
+	// 删除数据
+	@Get("/deleteStation?station_id={station_id}")
+	ApiResponse deleteStation(String station_id);
+
 }

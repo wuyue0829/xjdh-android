@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.ApiResponse;
@@ -33,6 +34,7 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.URLs;
+
 /**
  * @author peter
  * 
@@ -68,7 +70,8 @@ public class RoomDevListActivity extends BaseActivity {
 	@AfterViews
 	void bindData() {
 		setTitle(mRoomName + "-设备类型列表");
-		mDevTypeAdapter = new SimpleAdapter(this, listItem, R.layout.area_list_item, new String[] { "num", "name" }, new int[] { R.id.tv_num, R.id.tv_info });
+		mDevTypeAdapter = new SimpleAdapter(this, listItem, R.layout.area_list_item, new String[] { "num", "name" },
+				new int[] { R.id.tv_num, R.id.tv_info });
 		mLvDevType.setAdapter(mDevTypeAdapter);
 		pDialog.show();
 		getRoomDeviceList();
@@ -78,9 +81,11 @@ public class RoomDevListActivity extends BaseActivity {
 	void getRoomDeviceList() {
 		try {
 			ApiResponse apiResp = mApiClient.getRoomDeviceList(mRoomCode, "");
+			L.e("12121212121213434535465768" + apiResp.getData());
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
 				List<DevTypeItem> l = mapper.readValue(apiResp.getData(), new TypeReference<List<DevTypeItem>>() {
+					
 				});
 				mDevTypeList.clear();
 				mDevTypeList.addAll(l);
@@ -115,14 +120,14 @@ public class RoomDevListActivity extends BaseActivity {
 			dataId[i] = devItem.getData_id();
 		}
 		if (Arrays.asList(WEBVIEW_MODEL).contains(mDevTypeList.get(pos).getType())) {
-			WebViewActivity_
-					.intent(this)
-					.originalUrl(
-							URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + mRoomCode + "&model=" + mDevTypeList.get(pos).getType() + "&access_token="
-									+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION)).title(mDevTypeList.get(pos).getName()).start();
+			WebViewActivity_.intent(this)
+					.originalUrl(URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + mRoomCode + "&model="
+							+ mDevTypeList.get(pos).getType() + "&access_token="
+							+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION))
+					.title(mDevTypeList.get(pos).getName()).start();
 		} else {
 			RealtimeActivity_.intent(this).devTypeItem(mDevTypeList.get(pos)).start();
 		}
-
+//		Toast.makeText(this, "------------"+mDevTypeList.get(pos).getType(), 0).show();
 	}
 }

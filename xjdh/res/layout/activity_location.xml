@@ -15,8 +15,6 @@
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="@dimen/space_30"
-        android:layout_marginLeft="@dimen/space_10"
         android:background="@color/white"
         android:src="@drawable/main_icon_location" />
 

@@ -42,6 +42,7 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.adapter.AlarmListAdapter;
@@ -132,6 +133,7 @@ public class AlarmActivity extends BaseActivity {
 		mAlarmListAdapter = new AlarmListAdapter(this, alarmList);
 		footerView = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.listview_footer, null);
 		footerMsg = (TextView) footerView.findViewById(R.id.footer_msg);
+		//点击加载更多
 		footerMsg.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -156,6 +158,9 @@ public class AlarmActivity extends BaseActivity {
 			else {
 				mSvAlarmFilter.setVisibility(View.VISIBLE);
 				ObjectMapper mapper = new ObjectMapper();
+				/**
+				 * cityList全部数据
+				 */
 				if (cityList.size() == 0) {
 					String cityData = new String(FileUtils.getFileData(this, SharedConst.FILE_AREA_JSON));
 					try {
@@ -202,7 +207,8 @@ public class AlarmActivity extends BaseActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, MENU_FILTER_ID, 0, "筛选").setIcon(R.drawable.icon_filter).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		menu.add(0, MENU_FILTER_ID, 0, "筛选").setIcon(R.drawable.icon_filter)
+				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -215,7 +221,8 @@ public class AlarmActivity extends BaseActivity {
 				long latest = Long.parseLong(latestId);
 				long currentMax = alarmList.size() > 0 ? Long.parseLong(alarmList.get(0).getId()) : 0;
 				updateTvRefreshVisibility(latest > currentMax);
-				// L.i("Refreshing alarm latestId:" + latestId + " currentMax:" + currentMax);
+				// L.i("Refreshing alarm latestId:" + latestId + " currentMax:"
+				// + currentMax);
 			}
 		});
 		mLvAlarm.addFooterView(footerView);
@@ -229,8 +236,10 @@ public class AlarmActivity extends BaseActivity {
 			}
 		});
 		Calendar c = Calendar.getInstance();
-		mEtStartDatetime.setText(c.get(Calendar.YEAR) + "-" + c.get(Calendar.MONTH) + "-" + c.get(Calendar.DAY_OF_MONTH));
-		mEtEndDatetime.setText(c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH));
+		mEtStartDatetime
+				.setText(c.get(Calendar.YEAR) + "-" + c.get(Calendar.MONTH) + "-" + c.get(Calendar.DAY_OF_MONTH));
+		mEtEndDatetime
+				.setText(c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-" + c.get(Calendar.DAY_OF_MONTH));
 
 		alarmLevelList.put("0", "所有级别");
 		alarmLevelList.put("1", "一级");
@@ -238,7 +247,8 @@ public class AlarmActivity extends BaseActivity {
 		alarmLevelList.put("3", "三级");
 		alarmLevelList.put("4", "四级");
 
-		ArrayAdapter<String> levelAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<String>(alarmLevelList.values()));
+		ArrayAdapter<String> levelAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,
+				new ArrayList<String>(alarmLevelList.values()));
 		levelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mSpLevel.setAdapter(levelAdapter);
 		mSpLevel.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -291,7 +301,8 @@ public class AlarmActivity extends BaseActivity {
 						substations.add(e.getName());
 					}
 				}
-				mSubstationtyAdapter = new ArrayAdapter<>(AlarmActivity.this, android.R.layout.simple_spinner_item, substations);
+				mSubstationtyAdapter = new ArrayAdapter<>(AlarmActivity.this, android.R.layout.simple_spinner_item,
+						substations);
 				mSubstationtyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				mSpSubstation.setAdapter(mSubstationtyAdapter);
 				selSubstation = 0;
@@ -310,7 +321,8 @@ public class AlarmActivity extends BaseActivity {
 				List<String> rooms = new ArrayList<>();
 				rooms.add("所有机房");
 				if (position > 0) {
-					SubstationItem substationObj = cityList.get(selCity - 1).getCountylist()[selCounty - 1].getSubstationlist()[selSubstation - 1];
+					SubstationItem substationObj = cityList.get(selCity - 1).getCountylist()[selCounty - 1]
+							.getSubstationlist()[selSubstation - 1];
 					for (RoomItem e : substationObj.getRoomlist()) {
 						rooms.add(e.getName());
 					}
@@ -355,6 +367,9 @@ public class AlarmActivity extends BaseActivity {
 			mDpDlg = new DatePickerDialog(this, mDateSetListener, 2015, 1, 1);
 			mDpDlg.setCanceledOnTouchOutside(true);
 		}
+		/**
+		 * 第一次刷新数据
+		 */
 		if (alarmList.size() == 0) {
 			L.d("bindData pdialog show");
 			pDialog.show();
@@ -434,10 +449,11 @@ public class AlarmActivity extends BaseActivity {
 				if (selCounty > 0) {
 					countycode = cityList.get(selCity - 1).getCountylist()[selCounty - 1].getCode();
 					if (selSubstation > 0) {
-						substationId = cityList.get(selCity - 1).getCountylist()[selCounty - 1].getSubstationlist()[selSubstation - 1].getCode();
+						substationId = cityList.get(selCity - 1).getCountylist()[selCounty - 1]
+								.getSubstationlist()[selSubstation - 1].getCode();
 						if (selRoom > 0) {
-							roomId = cityList.get(selCity - 1).getCountylist()[selCounty - 1].getSubstationlist()[selSubstation - 1].getRoomlist()[selRoom - 1]
-									.getId();
+							roomId = cityList.get(selCity - 1).getCountylist()[selCounty - 1]
+									.getSubstationlist()[selSubstation - 1].getRoomlist()[selRoom - 1].getId();
 						}
 					}
 				}
@@ -447,10 +463,12 @@ public class AlarmActivity extends BaseActivity {
 			String startdatetime = mEtStartDatetime.getText().toString();
 			String enddatetime = mEtEndDatetime.getText().toString();
 			String lastId = (!isRefreshing && alarmList.size() > 0) ? alarmList.get(0).getId() : "-1";
-			ScheduleService.SetRequestParams(citycode, countycode, substationId, roomId, level, model, startdatetime, enddatetime,
-					String.valueOf(isRefreshing ? 0 : alarmList.size()), String.valueOf(SharedConst.DEFAULT_PAGE_SIZE), lastId);
-			ApiResponse apiResp = mApiClient.getAlarmList(citycode, countycode, substationId, roomId, level, model, startdatetime, enddatetime,
-					String.valueOf(isRefreshing ? 0 : alarmList.size()), String.valueOf(SharedConst.DEFAULT_PAGE_SIZE), lastId);
+//			ScheduleService.SetRequestParams(citycode, countycode, substationId, roomId, level, model, startdatetime,
+//					enddatetime, String.valueOf(isRefreshing ? 0 : alarmList.size()),
+//					String.valueOf(SharedConst.DEFAULT_PAGE_SIZE), lastId);
+			ApiResponse apiResp = mApiClient.getAlarmList(citycode, countycode, substationId, roomId, level, model,startdatetime, enddatetime, String.valueOf(isRefreshing ? 0 : alarmList.size()),String.valueOf(SharedConst.DEFAULT_PAGE_SIZE), lastId);
+			L.e("ggggggggggg"+apiResp.getData()+""+apiResp.getRet());
+			// 请求加载数据
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
 				AlarmResp alarmResp = mapper.readValue(apiResp.getData(), AlarmResp.class);

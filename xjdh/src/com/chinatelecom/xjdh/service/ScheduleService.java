@@ -19,7 +19,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.IBinder;
+import android.widget.Toast;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppManager;
@@ -95,10 +97,10 @@ public class ScheduleService extends Service implements EventHandler {
 		intentFilter.addAction(ALARM_ACTIVITY_RECEIVER_ACTION);
 		registerReceiver(alarmActivityReceiver, intentFilter);
 		AppBroadcastReceiver.mListeners.add(this);
-		// 开启定时器，每隔20秒刷新一次
+		// 开启定时器，每隔60秒刷新一次
 		if (timer == null) {
 			timer = new Timer();
-			timer.scheduleAtFixedRate(new RefreshTask(), 0, 20000);
+			timer.scheduleAtFixedRate(new RefreshTask(), 0, 60000);
 		}
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -142,6 +144,7 @@ public class ScheduleService extends Service implements EventHandler {
 			}
 			if (newAlarmListener != null)
 				newAlarmListener.onHasNewAlarm(latestId);
+
 		}
 	}
 
@@ -156,8 +159,12 @@ public class ScheduleService extends Service implements EventHandler {
 		ScheduleService.startdatetime = startdatetime;
 		ScheduleService.enddatetime = enddatetime;
 	}
-
+/**
+ * 
+ * @param alarmItem
+ */
 	private void sendAlarmNotification(AlarmItem alarmItem) {
+		L.v("通知。。。。。。。。。。。。");
 		Notification.Builder mNotificationBuilder = new Notification.Builder(this).setSmallIcon(R.drawable.logo)
 				.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo)).setPriority(Notification.PRIORITY_MAX).setAutoCancel(true);
 		int totalCount = 0;
@@ -174,11 +181,15 @@ public class ScheduleService extends Service implements EventHandler {
 			boolean isVibrate = PreferenceUtils.getPrefBoolean(this, getString(R.string.new_message_vibrate), true);
 			boolean isSound = PreferenceUtils.getPrefBoolean(this, getString(R.string.new_message_sound), true);
 			if (isVibrate && isSound) {
+				L.v("DEFAULT_VIBRATE DEFAULT_SOUND ");
 				mNotificationBuilder.setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND);
 			} else if (isVibrate) {
+				L.v("DEFAULT_VIBRATE   111111");
 				mNotificationBuilder.setDefaults(Notification.DEFAULT_VIBRATE);
 			} else if (isSound) {
-				mNotificationBuilder.setDefaults(Notification.DEFAULT_SOUND);
+				L.v("isSound22222");
+				mNotificationBuilder.setDefaults(Notification.DEFAULT_SOUND);//加声音
+				mNotificationBuilder.setSound(Uri.parse("android.resource://"+"com.chinatelecom.xjdh.service"+"/"+R.raw.sound_3));
 			}
 			mNotificationBuilder.setContentTitle("收到新的告警");
 			mNotificationBuilder.setTicker(alarmItem.getSubject());

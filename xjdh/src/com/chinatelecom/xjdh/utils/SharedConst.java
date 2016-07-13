@@ -16,6 +16,7 @@ public class SharedConst {
 	public static String FILE_AREA_JSON = "area.json";
 	public static String FILE_MODEL_JSON = "model.json";
 	public static String USER_IMAGE = "user_image";
+	public static String UPLOAD_IMG = "uploadImg";// 向服务器上传的参数
 	public static int DEFAULT_PAGE_SIZE = 10;
 	public static Map<String, String> DEV_MODEL_MAP = new HashMap<String, String>() {
 		private static final long serialVersionUID = -1098171620713871607L;
@@ -44,6 +45,7 @@ public class SharedConst {
 	public static int MESG_TYPE_SYSTEM = 2;
 	public static final Map<Integer, String> CONTENT_MAP = new HashMap<Integer, String>() {
 		private static final long serialVersionUID = 3188956071119862143L;
+
 		{
 			put(MESG_TYPE_PERSONAL, "个人消息");
 			put(MESG_TYPE_SYSTEM, "系统消息");

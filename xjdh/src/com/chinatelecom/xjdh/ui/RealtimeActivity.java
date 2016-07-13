@@ -21,6 +21,7 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -33,6 +34,7 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.URLs;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
+
 /**
  * @author peter
  * 
@@ -62,8 +64,9 @@ public class RealtimeActivity extends BaseActivity {
 		setTitle(devTypeItem.getName());
 		myAdapter = new WebPagerAdapter();
 		for (DevItem e : devTypeItem.getDevlist()) {
-			addView(mListViews, URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + e.getData_id() + "&model=" + devTypeItem.getType() + "&access_token="
-					+ PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, ""));
+			addView(mListViews,
+					URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + e.getData_id() + "&model=" + devTypeItem.getType()
+							+ "&access_token="+ PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, ""));
 		}
 		mWebviewPager.setAdapter(myAdapter);
 		mWebviewIndicator.setViewPager(mWebviewPager);
@@ -75,7 +78,7 @@ public class RealtimeActivity extends BaseActivity {
 
 	@SuppressLint("SetJavaScriptEnabled")
 	private void addView(List<WebView> viewList, String url) {
-		WebView webView = new WebView(this);
+		final WebView webView = new WebView(this);
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.getSettings().setUseWideViewPort(true);
 		webView.setWebViewClient(new WebViewClient() {
@@ -83,12 +86,12 @@ public class RealtimeActivity extends BaseActivity {
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				pDialog.dismiss();
+				super.onPageFinished(view, url);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
 					if (0 != (getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE)) {
 						WebView.setWebContentsDebuggingEnabled(true);
 					}
 				}
-				super.onPageFinished(view, url);
 			}
 
 			@Override

@@ -54,12 +54,19 @@ public class AppContext extends Application {
 		mApplication = this;
 		mTelephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		L.isDebug = PreferenceUtils.getPrefBoolean(this, PreferenceConstants.ISNEEDLOG, true);
-		if (Config.DEVELOPER_MODE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
+				if (Config.DEVELOPER_MODE && Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
 			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyDialog().build());
 			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyDeath().build());
 		}
 		initImageLoader(getApplicationContext());
 		SDKInitializer.initialize(this);
+		//创建默认的ImageLoader配置参数
+		ImageLoaderConfiguration configuration = ImageLoaderConfiguration
+				.createDefault(this);
+		
+		//Initialize ImageLoader with configuration.
+		ImageLoader.getInstance().init(configuration);
+
 	}
 
 	public static void initImageLoader(Context context) {

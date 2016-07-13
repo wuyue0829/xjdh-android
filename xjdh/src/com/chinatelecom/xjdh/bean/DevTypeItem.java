@@ -9,7 +9,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 /**
  * @author peter
- * 
+ * @JsonIgnoreProperties(ignoreUnknown=true)     忽略掉Pojo中没有配置的属性
  */
 @org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class DevTypeItem implements Parcelable {

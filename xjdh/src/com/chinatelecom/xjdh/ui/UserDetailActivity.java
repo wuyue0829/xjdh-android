@@ -375,21 +375,24 @@ public class UserDetailActivity extends BaseActivity {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
+	ApiResponse mApiResp;
 	@Background
 	void modifyUserImage(MultiValueMap<String, Object> multiValueMap) {
 		mApiClient.setHeader("Content-Type", MediaType.MULTIPART_FORM_DATA);
 		try {
-			ApiResponse mApiResp = mApiClient.modifyuserimage(multiValueMap);
+			 mApiResp = mApiClient.modifyuserimage(multiValueMap);
 			if (mApiResp.getRet() == 0) {
 				userDetailListItem.setColumnVal(mApiResp.getData());
 				onUserInfoChanged(true);
 				return;
 			}
+			
+//			L.e("头像"+mApiResp.getRet()+"------------------"+multiValueMap.get(SharedConst.USER_IMAGE));
 		} catch (Exception e) {
 			L.e(e.toString());
 		}
 		onUserInfoChanged(false);
+		L.e("头像catch"+mApiResp.getRet());
 	}
 
 	/**

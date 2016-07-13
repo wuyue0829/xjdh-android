@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+<!-- 新疆动环监控 -->
     <string name="app_name">新疆动环监控</string>
     <string name="action_settings">设置</string>
     <string name="login_prompt">登录中</string>
@@ -9,5 +9,12 @@
     <string name="network_down">网络连接已断开</string>
     <string name="network_up">网络连接已恢复</string>
     <string name="progress_loading_msg">加载数据中...</string>
+    <string name="starting_point">起点：</string>
+    <string name="my_location">我的位置</string>
+    <string name="drive_search">驾车搜索</string>
+    <string name="bus_search">公交搜索</string>
+    <string name="walk_search">步行搜索</string>
+    <string name="destination">终点:</string>
+    <string name="route_info">路线详情</string>
 
 </resources>

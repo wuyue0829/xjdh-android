@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -45,9 +46,11 @@ public class WebViewActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTitle(title);
-
+	
 		pDialog = new ProgressDialog(this);
 		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
 
 	@SuppressLint("SetJavaScriptEnabled")
@@ -55,6 +58,8 @@ public class WebViewActivity extends BaseActivity {
 	void bindData() {
 		webview.getSettings().setJavaScriptEnabled(true);
 		webview.getSettings().setUseWideViewPort(true);
+		webview.getSettings().setBuiltInZoomControls(true);
+		webview.getSettings().setAllowFileAccess(true); 
 		webview.setWebViewClient(new WebViewClient() {
 			@SuppressLint("NewApi")
 			@Override

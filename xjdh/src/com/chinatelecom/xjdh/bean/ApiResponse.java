@@ -2,6 +2,7 @@
 /*http://javafromjson.dashingrocket.com*/
 
 package com.chinatelecom.xjdh.bean;
+
 /**
  * @author peter
  * 
@@ -28,6 +29,39 @@ public class ApiResponse {
 
 	public java.lang.String getData() {
 		return data;
+	}
+
+	@org.codehaus.jackson.annotate.JsonProperty("stationimg")
+	private java.lang.String stationimg;
+
+	public java.lang.String getStationimg() {
+		return stationimg;
+	}
+
+	public void setStationimg(java.lang.String stationimg) {
+		this.stationimg = stationimg;
+	}
+
+	@org.codehaus.jackson.annotate.JsonProperty("response")
+	private java.lang.String response;
+
+	public java.lang.String getResponse() {
+		return response;
+	}
+
+	public void setResponse(java.lang.String response) {
+		this.response = response;
+	}
+
+	@org.codehaus.jackson.annotate.JsonProperty("mobile")
+	private java.lang.String mobile;
+
+	public java.lang.String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(java.lang.String mobile) {
+		this.mobile = mobile;
 	}
 
 }

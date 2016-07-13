@@ -68,6 +68,7 @@ public class RoomListActivity extends BaseActivity {
 
 	@ItemClick(R.id.lv_items)
 	void onRoomItemClicked(int pos) {
-		RoomDevListActivity_.intent(this).mRoomCode(mRoomList.get(pos).getCode()).mRoomName(mRoomList.get(pos).getName()).start();
+//		RoomDevListActivity_.intent(this).mRoomCode(mRoomList.get(pos).getCode()).mRoomName(mRoomList.get(pos).getName()).start();
+		RoomDevListActivity_.intent(this).mRoomCode(mRoomList.get(pos).getId()).mRoomName(mRoomList.get(pos).getName()).start();
 	}
 }

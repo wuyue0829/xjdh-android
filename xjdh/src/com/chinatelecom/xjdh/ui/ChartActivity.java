@@ -68,13 +68,14 @@ public class ChartActivity extends BaseActivity {
 		mBarChart.setPinchZoom(false);
 		mBarChart.setDrawBarShadow(false);
 		mBarChart.setDrawValueAboveBar(false);
+//		设置字体(在assets目录下新建fonts目录，把TTF字体文件放到这里,//根据路径得到Typeface)
 		mTf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
 		XAxis xLabels = mBarChart.getXAxis();
 		xLabels.setPosition(XAxisPosition.BOTTOM);
 		xLabels.setDrawGridLines(false);
 		xLabels.setTypeface(mTf);
 		YAxis leftAxis = mBarChart.getAxisLeft();
-		leftAxis.setTypeface(mTf);
+		leftAxis.setTypeface(mTf);//设置字体
 		leftAxis.setValueFormatter(new IntValueFormatter());
 		leftAxis.setDrawGridLines(false);
 		leftAxis.setSpaceTop(30f);

@@ -90,11 +90,11 @@ public class ReadNfcNumber extends BaseActivity {
 				|| NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
 				|| NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)) {
 			byte[] idArr = tag.getId();
-			if(idArr.length == 8)
+			if(idArr.length >= 4)
 			{
-				long number = (idArr[5] & 0xFF) << 16;
-				number += (idArr[6] & 0xff) << 8;
-				number += idArr[7]&0xFF;
+				long number = (idArr[idArr.length-3] & 0xFF) << 16;
+				number += (idArr[idArr.length-2] & 0xff) << 8;
+				number += idArr[idArr.length-1]&0xFF;
 				ShowNumber(number);
 			}
 		}

@@ -57,7 +57,7 @@
             android:layout_marginLeft="@dimen/space_5"
             android:layout_marginRight="@dimen/space_5"
             android:background="@color/blue"
-            android:text="已处理"
+            android:text="未处理"
             android:textColor="@color/white" />
 
         <TextView

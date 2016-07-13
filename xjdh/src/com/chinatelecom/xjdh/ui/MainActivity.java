@@ -16,13 +16,20 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppContext;
+import com.chinatelecom.xjdh.app.AppContext_;
 import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.LoginResponse;
@@ -40,6 +47,7 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
+import com.chinatelecom.xjdh.utils.Update;
 import com.chinatelecom.xjdh.utils.UpdateManager;
 
 /**
@@ -69,6 +77,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 	SimpleAdapter mMainGridAdapter;
 	private List<DashboardItem> dashboardList = new ArrayList<MainActivity.DashboardItem>() {
 		private static final long serialVersionUID = 6541190919019797339L;
+
 		{
 			add(new DashboardItem(R.drawable.ic_compass, "地图", LocationDemo_.class));
 			add(new DashboardItem(R.drawable.ic_monitor, "实时监控", MonitorActivity_.class));
@@ -80,13 +89,16 @@ public class MainActivity extends BaseActivity implements EventHandler {
 			add(new DashboardItem(R.drawable.ic_user, "用户中心", UserDetailActivity_.class));
 			add(new DashboardItem(R.drawable.ic_setting, "设置", SettingActivity_.class));
 			add(new DashboardItem(R.drawable.ic_bell, "预告警处理", PreAlarmActivity_.class));
-			add(new DashboardItem(R.drawable.collect, "局站采集", StationCollectActivity_.class));
-			add(new DashboardItem(R.drawable.list, "局站列表", StationListActivity_.class));
-			add(new DashboardItem(R.drawable.ic_user, "读取卡号", ReadNfcNumber_.class));
+			add(new DashboardItem(R.drawable.station_collect, "局站采集", StationCollectActivity_.class));
+			add(new DashboardItem(R.drawable.list, "局站列表", StationListGroupingActivity_.class));
+			add(new DashboardItem(R.drawable.nfc,"读取卡号", ReadNfcNumber_.class));
 		}
 	};
 	@RestService
 	ApiRestClientInterface mApiClient;
+	private int curVersionCode;
+	private Update mUpdate;
+	private String curVersionName = "";
 
 	@AfterViews
 	void initData() {
@@ -97,8 +109,8 @@ public class MainActivity extends BaseActivity implements EventHandler {
 			map.put("itemText", item.name);
 			menuData.add(map);
 		}
-		mMainGridAdapter = new SimpleAdapter(this, menuData, R.layout.main_grid_item, new String[] { "itemImage", "itemText" }, new int[] {
-				R.id.menuitem_image, R.id.menuitem_text });
+		mMainGridAdapter = new SimpleAdapter(this, menuData, R.layout.main_grid_item,
+				new String[] { "itemImage", "itemText" }, new int[] { R.id.menuitem_image, R.id.menuitem_text });
 		mMainGrid.setAdapter(mMainGridAdapter);
 		setTitle("首页");
 		if (!AppContext.getInstance().isNetworkConnected()) {
@@ -111,11 +123,23 @@ public class MainActivity extends BaseActivity implements EventHandler {
 			pDialog.show();
 			doLogin();
 		}
+
+	}
+
+	/**
+	 * 重启Activity检测APP版本
+	 */
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+		super.onRestart();
+		updateApp();
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		updateApp();
 	}
 
 	@ItemClick(R.id.main_gridview)
@@ -139,18 +163,22 @@ public class MainActivity extends BaseActivity implements EventHandler {
 
 	@Override
 	protected void onDestroy() {
-		if (AppContext.isServiceRunning(this, ScheduleService_.class.getName())
-				&& !PreferenceUtils.getPrefBoolean(this, getResources().getString(R.string.new_message_background), false))
+		if (AppContext.isServiceRunning(this, ScheduleService_.class.getName()) && !PreferenceUtils.getPrefBoolean(this,
+				getResources().getString(R.string.new_message_background), false))
 			ScheduleService_.intent(this).stop();
 		super.onDestroy();
 	}
+
+	private String city = "all";
+	private String station = "all";
+	private String stationNames = "all";
 
 	@Background
 	void getFilterData() {
 		int retryTimes = 0;
 		while (retryTimes++ < 5) {
 			try {
-				ApiResponse apiResp = mApiClient.getAreaData();
+				ApiResponse apiResp = mApiClient.getAreaData(city, station, stationNames);
 				if (apiResp.getRet() == 0) {
 					FileUtils.setToData(this, SharedConst.FILE_AREA_JSON, apiResp.getData().getBytes());
 					break;
@@ -184,7 +212,8 @@ public class MainActivity extends BaseActivity implements EventHandler {
 		String account = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCOUNT, "");
 		try {
 			String pwdStr = CryptoUtils.decrypt(SharedConst.PASSWORD_CRYPRO_SEED, SharedConst.CLIENT_PASSWORD);
-			OauthParam param = new OauthParam(SharedConst.CLIENT_ID, pwdStr, SharedConst.CLIENT_REDIRECT_URL, account, password);
+			OauthParam param = new OauthParam(SharedConst.CLIENT_ID, pwdStr, SharedConst.CLIENT_REDIRECT_URL, account,
+					password);
 			LoginResponse resp = mOauthClient.login(param);
 			onLoginResult(resp);
 			return;
@@ -249,6 +278,71 @@ public class MainActivity extends BaseActivity implements EventHandler {
 				doLogin();
 		} else {
 			T.showLong(this, getResources().getString(R.string.network_down));
+		}
+	}
+
+	private long exitTime = 0;
+
+	/**
+	 * 监听手机物理键（返回）
+	 */
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) { //
+			if ((System.currentTimeMillis() - exitTime) > 2000) {
+				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+				exitTime = System.currentTimeMillis();
+			} else {
+				// System.exit(0);
+				Intent intent = new Intent(Intent.ACTION_MAIN);// 跳到手机（home）主界面
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//
+				intent.addCategory(Intent.CATEGORY_HOME);
+				this.startActivity(intent);
+			}
+			return true;
+		} else if (keyCode == KeyEvent.KEYCODE_MENU) {
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	/**
+	 * 检测更新App
+	 */
+	public void updateApp() {
+		getCurrentVersion();
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				Update u = AppContext_.getInstance().getUpdateInfo();
+				Message msg = new Message();
+				if (u != null) {
+					msg.what = 1;
+					msg.obj = u;
+				} else {
+					msg.what = 0;
+				}
+				handler.sendMessage(msg);
+			}
+		}).start();
+	}
+
+	final Handler handler=new Handler(){public void handleMessage(Message msg){
+	// 显示检测结果
+	if(msg.what==1){mUpdate=(Update)msg.obj;if(mUpdate!=null){if(curVersionCode<mUpdate.getVersionCode()){UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this,true);// 检测更新APP版本
+	}}}}};
+
+	/**
+	 * 获取当前客户端版本信息
+	 */
+	private void getCurrentVersion() {
+		try {
+			PackageInfo info = this.getPackageManager().getPackageInfo(this.getPackageName(), 0);
+			curVersionName = info.versionName;
+			curVersionCode = info.versionCode;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace(System.err);
 		}
 	}
 }

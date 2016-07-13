@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chinatelecom.xjdh"
-    android:versionCode="8"
-    android:versionName="2.0.0" >
+    android:installLocation="auto"
+    android:versionCode="12"
+    android:versionName="2.2.2" >
 
     <uses-sdk
         android:minSdkVersion="16"
-        android:targetSdkVersion="23" />
+        android:targetSdkVersion="19" />
 
     <supports-screens
         android:anyDensity="true"
@@ -14,11 +15,21 @@
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true" />
+
     <uses-permission android:name="android.permission.NFC" />
 
     <uses-feature
         android:name="android.hardware.nfc"
         android:required="true" />
+    <!-- SD卡 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -60,30 +71,31 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="U5afBEIhMl34SWFtSHM9xt2X" />
+            android:value="QXVB1tt57cLKEK3YLYkcYQ07NCqmNKjb" />
 
         <activity
             android:name=".app.AppStart_"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
             <intent-filter>
+                <action android:name="com.ultrapower.android.me.APP" />
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>  
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />  
-                </intent-filter>
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+            </intent-filter>
         </activity>
-        <activity 
-            android:name=".ui.ReadNfcNumber_"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.LoginActivity_"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
+        </activity>
         <activity
             android:name=".ui.MainActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.AlarmActivity_"
@@ -91,7 +103,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MonitorActivity_"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.RoomListActivity_"
             android:screenOrientation="portrait" />
@@ -126,6 +139,69 @@
             android:name=".ui.MessageCenterActivity_"
             android:screenOrientation="portrait" >
         </activity>
+        <!-- 预告警 -->
+        <activity
+            android:name="com.chinatelecom.xjdh.ui.PreAlarmActivity_"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 预告警详细信息 -->
+        <activity
+            android:name="com.chinatelecom.xjdh.ui.PreAlarmDetailActivity_"
+            android:screenOrientation="portrait" >
+        </activity>
+        <!-- 局站采集 -->
+        <activity android:name="com.chinatelecom.xjdh.ui.StationCollectActivity_" >
+        </activity>
+        <!-- 添加局站 -->
+        <activity android:name="com.chinatelecom.xjdh.ui.AppendStationActivity_" >
+        </activity>
+        <!-- 采集 -->
+        <activity
+            android:name="com.chinatelecom.xjdh.ui.CollectActivity_"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTask" >
+        </activity>
+        <!-- 局站列表 -->
+        <activity android:name="com.chinatelecom.xjdh.ui.StationListActivity_" 
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <!-- 路线规划 -->
+        <activity
+            android:name="com.chinatelecom.xjdh.location.RoutePlanDemo_"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity android:name="com.chinatelecom.xjdh.ui.ViewPhotosActivity_" >
+        </activity>
+        <!-- 新建分组 -->
+        <activity android:name="com.chinatelecom.xjdh.ui.NewGroupingActivity_" >
+        </activity>
+        <!-- 分组名称 -->
+        <activity android:name="com.chinatelecom.xjdh.ui.GroupingNameActivity_" >
+        </activity>
+        <!-- 局站名称与分组Activity -->
+        <activity android:name="com.chinatelecom.xjdh.ui.StationListGroupingActivity_" >
+        </activity>
+        <!-- 局站分组 -->
+        <activity android:name="com.chinatelecom.xjdh.ui.StationGroupingActivity_" >
+        </activity>
+        <!-- 读取NFC -->
+        <activity
+            android:name="com.chinatelecom.xjdh.ui.ReadNfcNumber_"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.ultrapower.auth.AuthWbLoginActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" >
+
+            <!-- 配置统一认证平台的服务地址和端口serverAddress 必需 -->
+            <meta-data
+                android:name="serverAddress"
+                android:value="oauth.ctinm.com:55001" />
+
+            <!-- 配置第三方应用的clientId 必需 -->
+            <meta-data
+                android:name="clientId"
+                android:value="650228RING" />
+        </activity>
 
         <service android:name=".service.ScheduleService_" />
         <service
@@ -142,5 +218,12 @@
             </intent-filter>
         </receiver>
     </application>
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="false"
+        android:resizeable="true"
+        android:smallScreens="true" />
 
 </manifest>

@@ -1,11 +1,17 @@
 package com.chinatelecom.xjdh.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.baidu.location.BDLocation;
@@ -29,7 +35,7 @@ import com.chinatelecom.xjdh.R;
  */
 @EActivity(R.layout.activity_location)
 public class LocationDemo extends BaseActivity {
-
+	private List<BDLocation> list = new ArrayList<BDLocation>();
 	// 定位相关
 	LocationClient mLocClient;
 	public MyLocationListenner myListener = new MyLocationListenner();
@@ -57,13 +63,15 @@ public class LocationDemo extends BaseActivity {
 				case NORMAL:
 					requestLocButton.setImageResource(R.drawable.main_icon_follow);
 					mCurrentMode = LocationMode.FOLLOWING;
-					mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker));
+					mBaiduMap.setMyLocationConfigeration(
+							new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker));
 					break;
 				case COMPASS:
 					requestLocButton.setImageResource(R.drawable.main_icon_location);
 					mCurrentMode = LocationMode.NORMAL;
 					isFirstLoc = true;
-					mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker));
+					mBaiduMap.setMyLocationConfigeration(
+							new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker));
 					MapStatus.Builder mapStatusBuilder = new MapStatus.Builder();
 					mapStatusBuilder.overlook(0);
 					mapStatusBuilder.rotate(0);
@@ -72,7 +80,8 @@ public class LocationDemo extends BaseActivity {
 				case FOLLOWING:
 					requestLocButton.setImageResource(R.drawable.main_icon_compass);
 					mCurrentMode = LocationMode.COMPASS;
-					mBaiduMap.setMyLocationConfigeration(new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker));
+					mBaiduMap.setMyLocationConfigeration(
+							new MyLocationConfiguration(mCurrentMode, true, mCurrentMarker));
 					break;
 				}
 			}
@@ -107,9 +116,10 @@ public class LocationDemo extends BaseActivity {
 				return;
 
 			MyLocationData locData = new MyLocationData.Builder().accuracy(location.getRadius())
-			// 此处设置开发者获取到的方向信息，顺时针0-360
+					// 此处设置开发者获取到的方向信息，顺时针0-360
 					.direction(100).latitude(location.getLatitude()).longitude(location.getLongitude()).build();
 			mBaiduMap.setMyLocationData(locData);
+
 			if (isFirstLoc) {
 				isFirstLoc = false;
 				MapStatus.Builder mapStatusBuilder = new MapStatus.Builder();
@@ -118,7 +128,9 @@ public class LocationDemo extends BaseActivity {
 				mapStatusBuilder.target(ll);
 				mapStatusBuilder.overlook(0);
 				mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(mapStatusBuilder.build()));
+				list.add(location);
 			}
+
 		}
 
 		public void onReceivePoi(BDLocation poiLocation) {
@@ -146,6 +158,13 @@ public class LocationDemo extends BaseActivity {
 		mMapView.onDestroy();
 		mMapView = null;
 		super.onDestroy();
+	}
+
+	@Override
+	public void startActivityForResult(Intent intent, int requestCode) {
+		// TODO Auto-generated method stub
+		super.startActivityForResult(intent, requestCode);
+		// inte
 	}
 
 }

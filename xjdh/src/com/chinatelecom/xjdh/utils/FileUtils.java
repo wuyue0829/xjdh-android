@@ -7,12 +7,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
+import android.text.format.DateFormat;
 
 /**
  * 文件处理工具包
@@ -22,6 +24,9 @@ import android.os.Environment;
  * @created 2015-07-08
  */
 public class FileUtils {
+	// 创建文件夹myImage
+	public static String SDPATH = Environment.getExternalStorageDirectory() + "/myImage/";
+
 	public static String getFromAssets(Context ctx, String fileName) {
 		String Result = "";
 		try {
@@ -65,7 +70,7 @@ public class FileUtils {
 	}
 
 	public static Uri getTakePhotoUri() {
-		SimpleDateFormat imageDateFormat = new SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.getDefault());
+		SimpleDateFormat imageDateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault());
 		StringBuilder pathBuilder = new StringBuilder();
 		pathBuilder.append(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM));
 		pathBuilder.append('/');
@@ -76,5 +81,31 @@ public class FileUtils {
 		File file = new File(uri.toString());
 		file.getParentFile().mkdirs();
 		return uri;
+	}
+
+	public static String getImagePath(String picName) {
+		File dir = new File(SDPATH);
+		if (! dir.isDirectory()) {
+			dir.mkdir();
+		}
+		return SDPATH + picName + ".png";
+	}
+	public static String PHOTOPATH = Environment.getExternalStorageDirectory() + File.separator ;
+	public static String getImagePath_(String picName) {
+		// /sdcard/myImage/
+		File file = new File("/sdcard/myImage/");
+		if (!file.exists()) {
+			file.mkdirs();// 创建文件夹
+		}
+		return file + picName + ".JPEG";
+	}
+
+	public static String imageURI() {
+		String name = new DateFormat().format("yyyyMMdd_hhmmss", Calendar.getInstance(Locale.CHINA)) + ".jpg";
+		File file = new File("IMAGE_PATH");
+		file.mkdirs();// 创建文件夹
+		String fileName = file + name;
+		return fileName;
+
 	}
 }

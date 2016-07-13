@@ -151,6 +151,7 @@ public class AlarmDetailActivity extends BaseActivity {
 					.originalUrl(
 							URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + alarmItem.getRoom_code() + "&model=" + type + "&access_token="
 									+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION)).title(typeName).start();
+			L.v("状态："+alarmItem.getRoom_code());
 		} else {
 			pDialog.show();
 			getData();
