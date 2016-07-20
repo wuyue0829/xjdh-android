@@ -1,5 +1,7 @@
 package com.chinatelecom.xjdh.zoom;
 
+import java.lang.ref.WeakReference;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Matrix;
@@ -16,7 +18,6 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import java.lang.ref.WeakReference;
 
 public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 		VersionedGestureDetector.OnGestureListener,

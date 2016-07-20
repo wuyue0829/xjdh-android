@@ -19,6 +19,21 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.adapter.UserDetailListAdapter;
+import com.chinatelecom.xjdh.bean.ApiResponse;
+import com.chinatelecom.xjdh.bean.UserDetailListItem;
+import com.chinatelecom.xjdh.bean.UserInfo;
+import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
+import com.chinatelecom.xjdh.utils.CryptoUtils;
+import com.chinatelecom.xjdh.utils.FileUtils;
+import com.chinatelecom.xjdh.utils.L;
+import com.chinatelecom.xjdh.utils.PreferenceConstants;
+import com.chinatelecom.xjdh.utils.PreferenceUtils;
+import com.chinatelecom.xjdh.utils.SharedConst;
+import com.chinatelecom.xjdh.utils.StringUtils;
+import com.chinatelecom.xjdh.utils.T;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -41,21 +56,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.adapter.UserDetailListAdapter;
-import com.chinatelecom.xjdh.bean.ApiResponse;
-import com.chinatelecom.xjdh.bean.UserDetailListItem;
-import com.chinatelecom.xjdh.bean.UserInfo;
-import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinatelecom.xjdh.utils.CryptoUtils;
-import com.chinatelecom.xjdh.utils.FileUtils;
-import com.chinatelecom.xjdh.utils.L;
-import com.chinatelecom.xjdh.utils.PreferenceConstants;
-import com.chinatelecom.xjdh.utils.PreferenceUtils;
-import com.chinatelecom.xjdh.utils.SharedConst;
-import com.chinatelecom.xjdh.utils.StringUtils;
-import com.chinatelecom.xjdh.utils.T;
 
 /**
  * @author peter

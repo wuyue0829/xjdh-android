@@ -2,6 +2,12 @@ package com.chinatelecom.xjdh.app;
 
 import org.androidannotations.annotations.EActivity;
 
+import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.ui.LoginActivity_;
+import com.chinatelecom.xjdh.ui.MainActivity_;
+import com.chinatelecom.xjdh.utils.PreferenceConstants;
+import com.chinatelecom.xjdh.utils.PreferenceUtils;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,12 +15,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-
-import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.ui.LoginActivity_;
-import com.chinatelecom.xjdh.ui.MainActivity_;
-import com.chinatelecom.xjdh.utils.PreferenceConstants;
-import com.chinatelecom.xjdh.utils.PreferenceUtils;
 
 /**
  * @author peter

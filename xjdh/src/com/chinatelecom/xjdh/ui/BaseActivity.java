@@ -2,14 +2,14 @@ package com.chinatelecom.xjdh.ui;
 
 import java.util.ArrayList;
 
+import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppManager;
+import com.chinatelecom.xjdh.utils.ToolBarHelper;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-
-import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.app.AppManager;
-import com.chinatelecom.xjdh.utils.ToolBarHelper;
 
 public abstract class BaseActivity extends AppCompatActivity {
 	private ToolBarHelper mToolBarHelper;

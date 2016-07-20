@@ -14,6 +14,7 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
+
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.ApiResponseStationList;
@@ -49,7 +50,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * 

@@ -5,13 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.chinatelecom.xjdh.bean.WebviewItem;
+import com.chinatelecom.xjdh.fragment.WebviewFragment_;
+
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-
-import com.chinatelecom.xjdh.bean.WebviewItem;
-import com.chinatelecom.xjdh.fragment.WebviewFragment_;
 
 /**
  * @author peter

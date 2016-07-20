@@ -17,9 +17,8 @@ import org.springframework.web.client.RestClientException;
 
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.ApiResponseImage;
-import com.chinatelecom.xjdh.bean.ApiResponseStationList;
 import com.chinatelecom.xjdh.bean.ApiResponseUpLoad;
-import com.chinatelecom.xjdh.bean.JsonResponse;
+import com.chinatelecom.xjdh.bean.SPDevResponse;
 import com.chinatelecom.xjdh.rest.interceptor.HttpBasicAuthenticatorInterceptor;
 import com.chinatelecom.xjdh.utils.URLs;
 import com.chinatelecom.xjdh.utils.Update;
@@ -109,5 +108,8 @@ public interface ApiRestClientInterface extends RestClientHeaders {
 	// 删除数据
 	@Get("/deleteStation?station_id={station_id}")
 	ApiResponse deleteStation(String station_id);
+	
+	@Get("/get_spdev_list")
+	SPDevResponse get_spdev_list();
 
 }

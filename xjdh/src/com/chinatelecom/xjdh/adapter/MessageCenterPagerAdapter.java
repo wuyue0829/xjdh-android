@@ -3,13 +3,13 @@ package com.chinatelecom.xjdh.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.chinatelecom.xjdh.fragment.MessageCenterFragment_;
+import com.chinatelecom.xjdh.utils.SharedConst;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
-
-import com.chinatelecom.xjdh.fragment.MessageCenterFragment_;
-import com.chinatelecom.xjdh.utils.SharedConst;
 
 /**
  * @author peter

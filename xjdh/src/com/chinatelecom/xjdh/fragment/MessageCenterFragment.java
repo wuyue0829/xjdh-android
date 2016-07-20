@@ -13,14 +13,6 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.adapter.MessageListAdapter;
 import com.chinatelecom.xjdh.bean.ApiResponse;
@@ -33,6 +25,14 @@ import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 import com.chinatelecom.xjdh.utils.URLs;
+
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
 
 /**
  * @author peter

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chinatelecom.xjdh"
     android:installLocation="auto"
-    android:versionCode="12"
-    android:versionName="2.2.2" >
+    android:versionCode="14"
+    android:versionName="2.2.3" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -16,6 +16,9 @@
         android:resizeable="true"
         android:smallScreens="true" />
 
+     <!-- 蓝牙 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.NFC" />
 
     <uses-feature
@@ -93,6 +96,35 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
         </activity>
+         <activity
+            android:name=".ui.BoardSettingActivity_"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
+        </activity>
+        <activity
+            android:name=".ui.SPDevTestActivity_"
+           android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
+        </activity>
+        <activity
+            android:name=".ui.NetworkTestActivity_"
+           android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
+        </activity>
+        
+        <activity
+            android:name=".ui.SMDDeviceMonitor_"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
+        </activity>
+        <activity
+            android:name=".ui.TestEquipmentActivity_"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity
+            android:name=".ui.DevMonitorListActivity_" 
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <activity
             android:name=".ui.MainActivity_"
             android:configChanges="orientation|keyboardHidden|screenSize"

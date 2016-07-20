@@ -1,7 +1,6 @@
 package com.chinatelecom.xjdh.ui;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -13,7 +12,6 @@ import org.androidannotations.annotations.ViewById;
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.db.DatabaseHelper;
 import com.chinatelecom.xjdh.model.GroupingName;
-import com.chinatelecom.xjdh.utils.L;
 import com.j256.ormlite.dao.Dao;
 
 import android.app.Activity;

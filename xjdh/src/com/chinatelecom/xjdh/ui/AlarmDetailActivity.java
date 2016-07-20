@@ -12,14 +12,6 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.UiThread;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.AlarmItem;
 import com.chinatelecom.xjdh.bean.ApiResponse;
@@ -31,6 +23,14 @@ import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 import com.chinatelecom.xjdh.utils.URLs;
+
+import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.UiThread;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * @author peter

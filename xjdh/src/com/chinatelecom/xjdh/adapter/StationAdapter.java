@@ -2,6 +2,11 @@ package com.chinatelecom.xjdh.adapter;
 
 import java.util.List;
 
+import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.model.StationTable;
+import com.chinatelecom.xjdh.ui.CollectActivity_;
+import com.chinatelecom.xjdh.ui.UpLoadActivity_;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +15,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-
-import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.model.StationTable;
-import com.chinatelecom.xjdh.ui.CollectActivity_;
-import com.chinatelecom.xjdh.ui.UpLoadActivity_;
-import com.chinatelecom.xjdh.utils.L;
 
 /**
  * @author peter

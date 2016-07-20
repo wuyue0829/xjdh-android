@@ -8,6 +8,9 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
+import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppContext;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,9 +26,6 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-
-import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.app.AppContext;
 
 /**
  * @author peter

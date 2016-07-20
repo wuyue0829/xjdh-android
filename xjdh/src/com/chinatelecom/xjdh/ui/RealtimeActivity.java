@@ -10,6 +10,15 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
+import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.adapter.WebviewFragmentAdapter;
+import com.chinatelecom.xjdh.bean.DevItem;
+import com.chinatelecom.xjdh.bean.DevTypeItem;
+import com.chinatelecom.xjdh.utils.PreferenceConstants;
+import com.chinatelecom.xjdh.utils.PreferenceUtils;
+import com.chinatelecom.xjdh.utils.URLs;
+import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,19 +30,9 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.WindowManager;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.adapter.WebviewFragmentAdapter;
-import com.chinatelecom.xjdh.bean.DevItem;
-import com.chinatelecom.xjdh.bean.DevTypeItem;
-import com.chinatelecom.xjdh.utils.PreferenceConstants;
-import com.chinatelecom.xjdh.utils.PreferenceUtils;
-import com.chinatelecom.xjdh.utils.URLs;
-import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 
 /**
  * @author peter

@@ -10,19 +10,6 @@ import org.androidannotations.annotations.SystemService;
 import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.IBinder;
-import android.widget.Toast;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.AlarmItem;
@@ -36,6 +23,18 @@ import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.IBinder;
 
 /**
  * @author peter

@@ -5,10 +5,8 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.util.StringUtils;
 
 
 public class MyStringHttpMessageConverter extends StringHttpMessageConverter {

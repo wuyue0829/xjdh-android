@@ -14,19 +14,6 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.preference.PreferenceManager;
-import android.view.KeyEvent;
-import android.widget.GridView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppContext;
 import com.chinatelecom.xjdh.app.AppContext_;
@@ -49,6 +36,19 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 import com.chinatelecom.xjdh.utils.Update;
 import com.chinatelecom.xjdh.utils.UpdateManager;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.preference.PreferenceManager;
+import android.view.KeyEvent;
+import android.widget.GridView;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 /**
  * @author peter
@@ -92,6 +92,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 			add(new DashboardItem(R.drawable.station_collect, "局站采集", StationCollectActivity_.class));
 			add(new DashboardItem(R.drawable.list, "局站列表", StationListGroupingActivity_.class));
 			add(new DashboardItem(R.drawable.nfc,"读取卡号", ReadNfcNumber_.class));
+			add(new DashboardItem(R.drawable.ic_device,"现场测试", TestEquipmentActivity_.class));
 		}
 	};
 	@RestService

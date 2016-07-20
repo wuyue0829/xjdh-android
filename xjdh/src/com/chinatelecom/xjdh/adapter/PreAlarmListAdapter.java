@@ -3,7 +3,6 @@ package com.chinatelecom.xjdh.adapter;
 import java.util.List;
 
 import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.R.layout;
 import com.chinatelecom.xjdh.adapter.AlarmListAdapter.ListItemView;
 import com.chinatelecom.xjdh.bean.AlarmItem;
 import com.chinatelecom.xjdh.utils.StringUtils;

@@ -5,12 +5,6 @@ import org.androidannotations.annotations.PreferenceByKey;
 import org.androidannotations.annotations.PreferenceClick;
 import org.androidannotations.annotations.PreferenceScreen;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.preference.SwitchPreference;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.ui.FeedBackActivity_;
@@ -22,6 +16,12 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.UpdateManager;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 
 /**
  * @author peter

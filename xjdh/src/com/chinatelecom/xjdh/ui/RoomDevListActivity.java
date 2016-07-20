@@ -17,13 +17,6 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.DevItem;
@@ -34,6 +27,12 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.URLs;
+
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 /**
  * @author peter

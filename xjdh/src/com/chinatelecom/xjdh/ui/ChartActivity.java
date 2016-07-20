@@ -10,10 +10,6 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import android.app.ProgressDialog;
-import android.graphics.Typeface;
-import android.widget.TextView;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.AlarmChartsItem;
 import com.chinatelecom.xjdh.bean.AlarmChartsResp;
@@ -37,6 +33,10 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Highlight;
+
+import android.app.ProgressDialog;
+import android.graphics.Typeface;
+import android.widget.TextView;
 /**
  * @author peter
  * 

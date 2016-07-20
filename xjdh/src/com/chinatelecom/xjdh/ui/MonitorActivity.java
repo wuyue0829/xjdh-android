@@ -14,6 +14,20 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
+import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.adapter.SubstationListAdapter;
+import com.chinatelecom.xjdh.bean.ApiResponse;
+import com.chinatelecom.xjdh.bean.CityItem;
+import com.chinatelecom.xjdh.bean.CountyItem;
+import com.chinatelecom.xjdh.bean.SubstationItem;
+import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
+import com.chinatelecom.xjdh.utils.FileUtils;
+import com.chinatelecom.xjdh.utils.L;
+import com.chinatelecom.xjdh.utils.PreferenceConstants;
+import com.chinatelecom.xjdh.utils.PreferenceUtils;
+import com.chinatelecom.xjdh.utils.SharedConst;
+import com.chinatelecom.xjdh.utils.T;
+
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -29,19 +43,6 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.adapter.SubstationListAdapter;
-import com.chinatelecom.xjdh.bean.ApiResponse;
-import com.chinatelecom.xjdh.bean.CityItem;
-import com.chinatelecom.xjdh.bean.CountyItem;
-import com.chinatelecom.xjdh.bean.SubstationItem;
-import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinatelecom.xjdh.utils.FileUtils;
-import com.chinatelecom.xjdh.utils.L;
-import com.chinatelecom.xjdh.utils.PreferenceConstants;
-import com.chinatelecom.xjdh.utils.PreferenceUtils;
-import com.chinatelecom.xjdh.utils.SharedConst;
-import com.chinatelecom.xjdh.utils.T;
 
 /**
  * @author peter

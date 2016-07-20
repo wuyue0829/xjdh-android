@@ -1,5 +1,8 @@
 package com.chinatelecom.xjdh.utils;
 
+import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppManager;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,9 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.app.AppManager;
 
 /**
  * @author peter

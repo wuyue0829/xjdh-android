@@ -3,10 +3,10 @@ package com.chinatelecom.xjdh.ui;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 
-import android.os.Bundle;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.fragment.SettingFragment_;
+
+import android.os.Bundle;
 /**
  * @author peter
  * 

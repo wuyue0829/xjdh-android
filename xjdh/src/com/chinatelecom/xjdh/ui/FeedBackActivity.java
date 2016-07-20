@@ -10,11 +10,6 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
-import android.app.ProgressDialog;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppContext;
 import com.chinatelecom.xjdh.bean.ApiResponse;
@@ -25,6 +20,11 @@ import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.StringUtils;
 import com.chinatelecom.xjdh.utils.T;
+
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * @author peter

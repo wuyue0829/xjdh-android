@@ -9,6 +9,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 
+import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppContext_;
+
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -30,9 +33,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.app.AppContext_;
 
 /**
  * 应用程序更新工具包

@@ -2,16 +2,16 @@ package com.chinatelecom.xjdh.db;
 
 import java.sql.SQLException;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 import com.chinatelecom.xjdh.model.FileNameGPSTable;
 import com.chinatelecom.xjdh.model.GroupingName;
 import com.chinatelecom.xjdh.model.StationTable;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 /**
  * Database helper class used to manage the creation and upgrading of your

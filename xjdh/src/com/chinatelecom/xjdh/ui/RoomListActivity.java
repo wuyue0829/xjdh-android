@@ -13,11 +13,6 @@ import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 
-import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.RoomItem;
 import com.chinatelecom.xjdh.bean.SubstationItem;
@@ -25,6 +20,11 @@ import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
+
+import android.os.Bundle;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 /**
  * @author peter
  * 

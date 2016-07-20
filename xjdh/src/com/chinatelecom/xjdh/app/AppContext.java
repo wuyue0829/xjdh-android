@@ -5,6 +5,17 @@ import java.util.List;
 import org.androidannotations.annotations.EApplication;
 import org.androidannotations.annotations.rest.RestService;
 
+import com.baidu.mapapi.SDKInitializer;
+import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
+import com.chinatelecom.xjdh.utils.L;
+import com.chinatelecom.xjdh.utils.PreferenceConstants;
+import com.chinatelecom.xjdh.utils.PreferenceUtils;
+import com.chinatelecom.xjdh.utils.Update;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
@@ -16,17 +27,6 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.StrictMode;
 import android.telephony.TelephonyManager;
-
-import com.baidu.mapapi.SDKInitializer;
-import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinatelecom.xjdh.utils.L;
-import com.chinatelecom.xjdh.utils.PreferenceConstants;
-import com.chinatelecom.xjdh.utils.PreferenceUtils;
-import com.chinatelecom.xjdh.utils.Update;
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 /**
  * @author peter
  * 

@@ -1,6 +1,7 @@
 package com.chinatelecom.xjdh.ui;
 
 import java.util.LinkedHashMap;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
@@ -8,12 +9,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
-import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.AlarmItem;
@@ -22,6 +17,13 @@ import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
+
+import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author peter

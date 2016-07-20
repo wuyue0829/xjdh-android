@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import org.androidannotations.annotations.EReceiver;
 import org.androidannotations.annotations.ReceiverAction;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.service.ScheduleService_;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 
 /**
  * @author peter
