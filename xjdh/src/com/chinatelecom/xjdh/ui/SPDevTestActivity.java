@@ -2,6 +2,7 @@ package com.chinatelecom.xjdh.ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.androidannotations.annotations.AfterViews;
@@ -11,6 +12,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ItemSelect;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.StringArrayRes;
 import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
@@ -54,7 +56,8 @@ public class SPDevTestActivity extends BaseActivity {
 	@ViewById
 	TextView tvBanner,tvSendData,tvRecvData,tvResult;
 	
-	
+	@StringArrayRes(R.array.spdev_rate_array)
+	String[] baud_rate;
 	@RestService
 	ApiRestClientInterface apiRestClient;
 	
@@ -77,6 +80,8 @@ public class SPDevTestActivity extends BaseActivity {
 					if(position < res.getSpdevList().size())
 					{
 						SPDev sp = res.getSpdevList().get(position);
+						int rateIndex = Arrays.asList(baud_rate).indexOf(Integer.toString(sp.getBaud_rate()));
+						spRate.setSelection(rateIndex);
 						tvSendData.setText(sp.getCmd());
 						tvRecvData.setText(sp.getReply());
 						tvResult.setText("");

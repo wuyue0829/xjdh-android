@@ -6,7 +6,7 @@ package com.chinatelecom.xjdh.utils;
  * 
  */
 public class URLs {
-	public final static String HOST = "xjdh.jimglobal.com";//
+	public final static String HOST = "xt.jimglobal.com";//
 	//public final static String HOST = "xt.jimglobal.com";//
 //	 public final static String HOST = "192.168.1.100";//
 //	 public final static String HOST = "192.168.1.112";//

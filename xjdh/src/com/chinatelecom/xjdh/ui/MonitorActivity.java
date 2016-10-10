@@ -65,14 +65,15 @@ public class MonitorActivity extends BaseActivity {
 	@ViewById(R.id.county_spinner) // 局站名称下拉列表
 	Spinner county_spinner;
 	private List<CityItem> cityList = new ArrayList<CityItem>(0);
-//	private List<SubstationItem> substationItems = new ArrayList<SubstationItem>(0);
+	// private List<SubstationItem> substationItems = new
+	// ArrayList<SubstationItem>(0);
 	private List<SubstationItem> mSubstationList = new ArrayList<SubstationItem>();
 	private SubstationListAdapter mSubstationAdapter;
 	private static final int MENU_FILTER_ID = Menu.FIRST;
 	private ArrayAdapter<String> mCityAdapter;
 	private ArrayAdapter<String> mCountyAdapter;
-	private String cityName="all";// 选择的所属公司
-	private String sbarea = "all" ;// 所属分区
+	private String cityName = "all";// 选择的所属公司
+	private String sbarea = "all";// 所属分区
 	private int selCity = 0;
 	@RestService
 	ApiRestClientInterface mApiClient;
@@ -126,7 +127,8 @@ public class MonitorActivity extends BaseActivity {
 						public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 							// TODO Auto-generated method stub
 							cityName = city_spinner.getSelectedItem().toString();// 得到city的内容
-//							Toast.makeText(MonitorActivity.this, "你选择了" + cityName, 0).show();
+							// Toast.makeText(MonitorActivity.this, "你选择了" +
+							// cityName, 0).show();
 							selCity = position;
 							List<String> counties = new ArrayList<>();
 							counties.add("all");
@@ -187,7 +189,8 @@ public class MonitorActivity extends BaseActivity {
 						@Override
 						public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long arg3) {
 							sbarea = county_spinner.getSelectedItem().toString();
-//							Toast.makeText(MonitorActivity.this, "你选择了" + stationName, 0).show();
+							// Toast.makeText(MonitorActivity.this, "你选择了" +
+							// stationName, 0).show();
 						}
 
 						@Override
@@ -218,7 +221,7 @@ public class MonitorActivity extends BaseActivity {
 		mTvRefresh.setText("加载失败，下拉刷新");
 		if (mSubstationList.size() == 0) {
 			pDialog.show();
-			getData(sbarea,cityName);
+			getData(sbarea, cityName);
 		}
 		/**
 		 * 下拉刷新
@@ -229,7 +232,7 @@ public class MonitorActivity extends BaseActivity {
 			public void onRefresh() {
 				mSrlAlarm.setRefreshing(false);
 				pDialog.show();
-				getData(sbarea,cityName);
+				getData(sbarea, cityName);
 			}
 		});
 		mSubstationAdapter = new SubstationListAdapter(this, mSubstationList);
@@ -237,12 +240,12 @@ public class MonitorActivity extends BaseActivity {
 	}
 
 	@Background
-	void getData(String station,String city) {
+	void getData(String station, String city) {
 		int tryCount = 0;
 		do {
 			try {
 
-				ApiResponse apiResp = mApiClient.getAreaData(city, station,sbarea);
+				ApiResponse apiResp = mApiClient.getAreaData(city, station, sbarea);
 				if (apiResp.getRet() == 0) {
 					FileUtils.setToData(this, SharedConst.FILE_AREA_JSON, apiResp.getData().getBytes());
 					ObjectMapper mapper = new ObjectMapper();
@@ -281,7 +284,7 @@ public class MonitorActivity extends BaseActivity {
 	@Click(R.id.tv_new_message)
 	void onTvRefreshClicked() {
 		pDialog.show();
-		getData(sbarea,cityName);
+		getData(sbarea, cityName);
 	}
 
 	@ItemClick(R.id.lv_items)
@@ -301,22 +304,23 @@ public class MonitorActivity extends BaseActivity {
 		int tryCount = 0;
 		station = "all";
 		station = et_station_name.getText().toString();
-		
-			searchData(tryCount,station,sbarea,cityName);
-	
+
+		searchData(tryCount, station, sbarea, cityName);
+
 	}
 
 	/**
 	 * 搜索
+	 * 
 	 * @param tryCount
 	 */
 	@Background
-	public void searchData(int tryCount,String station,String sbarea,String city) {
+	public void searchData(int tryCount, String station, String sbarea, String city) {
 		do {
 			try {
 
-				ApiResponse apiResp = mApiClient.getAreaData(city, sbarea,station);
-				L.e(" data------------------- :"+apiResp.getData()+"  ret :"+apiResp.getRet());
+				ApiResponse apiResp = mApiClient.getAreaData(city, sbarea, station);
+				L.e(" data------------------- :" + apiResp.getData() + "  ret :" + apiResp.getRet());
 				if (apiResp.getRet() == 0) {
 					ObjectMapper mapper = new ObjectMapper();
 					// 复杂泛型和首字母大写的json转换
@@ -347,10 +351,11 @@ public class MonitorActivity extends BaseActivity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		super.onBackPressed();
 		if (mSvAlarmFilter.getVisibility() == View.VISIBLE) {
 			mSvAlarmFilter.setVisibility(View.GONE);
 			return;
+		}else{
+			super.onBackPressed();
 		}
 	}
 }

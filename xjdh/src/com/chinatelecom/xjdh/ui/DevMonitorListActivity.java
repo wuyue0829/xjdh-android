@@ -29,7 +29,7 @@ public class DevMonitorListActivity extends BaseActivity {
 	@ViewById(R.id.tvModel)
 	TextView tvModel;
 	
-	String[] devModeArray = new String[]{"查看实时数据","智能设备测试","网络测试","系统设置","重启程序","重启板子","退出设置"};
+	String[] devModeArray = new String[]{"DI/AI数据","智能设备测试","网络测试","系统设置","重启程序","重启板子","退出设置"};
 	ArrayAdapter<String> mAdapter;
 
 

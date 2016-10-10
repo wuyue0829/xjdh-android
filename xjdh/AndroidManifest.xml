@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chinatelecom.xjdh"
     android:installLocation="auto"
-    android:versionCode="14"
-    android:versionName="2.2.3" >
+    android:versionCode="16"
+    android:versionName="2.3.3" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -96,6 +96,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
         </activity>
+        <activity
+            android:name=".ui.DoorActivity_"
+            screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
+            </activity>	
          <activity
             android:name=".ui.BoardSettingActivity_"
             android:screenOrientation="portrait"

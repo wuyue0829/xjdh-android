@@ -18,6 +18,7 @@ import org.springframework.web.client.RestClientException;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.ApiResponseImage;
 import com.chinatelecom.xjdh.bean.ApiResponseUpLoad;
+import com.chinatelecom.xjdh.bean.DoorOperation;
 import com.chinatelecom.xjdh.bean.SPDevResponse;
 import com.chinatelecom.xjdh.rest.interceptor.HttpBasicAuthenticatorInterceptor;
 import com.chinatelecom.xjdh.utils.URLs;
@@ -111,5 +112,12 @@ public interface ApiRestClientInterface extends RestClientHeaders {
 	
 	@Get("/get_spdev_list")
 	SPDevResponse get_spdev_list();
+	
+	@Get("/get_door_status?data_id={data_id}")
+	ApiResponse GetDoorStatus(String data_id);
+	
+	@Post("/open_door")
+	ApiResponse OpenDoor(DoorOperation op);
+	
 
 }

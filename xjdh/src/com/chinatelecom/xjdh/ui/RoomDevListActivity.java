@@ -22,6 +22,7 @@ import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.DevItem;
 import com.chinatelecom.xjdh.bean.DevTypeItem;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
+import com.chinatelecom.xjdh.rest.client.ApiRestClientInterfaceV1;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
@@ -47,6 +48,10 @@ public class RoomDevListActivity extends BaseActivity {
 	TextView mTvRefresh;
 	@RestService
 	ApiRestClientInterface mApiClient;
+	
+	@RestService
+	ApiRestClientInterfaceV1 mApiClientV1;
+	
 	@Extra("roomcode")
 	String mRoomCode;
 	@Extra("roomname")
@@ -79,7 +84,7 @@ public class RoomDevListActivity extends BaseActivity {
 	@Background
 	void getRoomDeviceList() {
 		try {
-			ApiResponse apiResp = mApiClient.getRoomDeviceList(mRoomCode, "");
+			ApiResponse apiResp = mApiClientV1.get_room_dev_list(mRoomCode, "");
 			L.e("12121212121213434535465768" + apiResp.getData());
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
@@ -118,7 +123,10 @@ public class RoomDevListActivity extends BaseActivity {
 			DevItem devItem = devList.get(i);
 			dataId[i] = devItem.getData_id();
 		}
-		if (Arrays.asList(WEBVIEW_MODEL).contains(mDevTypeList.get(pos).getType())) {
+		if (mDevTypeList.get(pos).getType().equals("door"))
+		{
+			DoorActivity_.intent(this).Name(mDevTypeList.get(pos).getDevlist()[0].getName()).DataId(mDevTypeList.get(pos).getDevlist()[0].getData_id()).CanOpen(mDevTypeList.get(pos).getDevlist()[0].getCan_open()).start();
+		}else if (Arrays.asList(WEBVIEW_MODEL).contains(mDevTypeList.get(pos).getType())) {
 			WebViewActivity_.intent(this)
 					.originalUrl(URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + mRoomCode + "&model="
 							+ mDevTypeList.get(pos).getType() + "&access_token="

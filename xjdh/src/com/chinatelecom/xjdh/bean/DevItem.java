@@ -5,6 +5,7 @@ package com.chinatelecom.xjdh.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 /**
  * @author peter
  * 
@@ -45,6 +46,18 @@ public class DevItem implements Parcelable {
 		return data_id;
 	}
 
+	@org.codehaus.jackson.annotate.JsonProperty("can_open")
+	@org.codehaus.jackson.annotate.JsonIgnore
+	private int can_open;
+
+	public void setCan_open(int can_open) {
+		this.can_open = can_open;
+	}
+
+	public int getCan_open() {
+		return can_open;
+	}
+
 	@Override
 	public int describeContents() {
 		return 0;
@@ -55,6 +68,7 @@ public class DevItem implements Parcelable {
 		out.writeString(model);
 		out.writeString(name);
 		out.writeString(data_id);
+		out.writeInt(can_open);
 	}
 
 	public static final Parcelable.Creator<DevItem> CREATOR = new Creator<DevItem>() {
@@ -77,5 +91,6 @@ public class DevItem implements Parcelable {
 		model = in.readString();
 		name = in.readString();
 		data_id = in.readString();
+		can_open = in.readInt();
 	}
 }
