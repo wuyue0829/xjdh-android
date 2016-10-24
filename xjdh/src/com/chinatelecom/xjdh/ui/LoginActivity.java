@@ -141,6 +141,7 @@ public class LoginActivity extends BaseActivity {
 		if (resp.getRet() == 0) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
+				L.d("WWWWWWWWWWWWWWWWWWWWWWWWWw", mapper.writeValueAsString(resp.getResponse().toString()));
 				OauthRespose mOauthResp = mapper.readValue(resp.getResponse(), OauthRespose.class);
 				PreferenceUtils.setPrefString(this, PreferenceConstants.ACCESSTOKEN, mOauthResp.getAccess_token());
 				PreferenceUtils.setPrefInt(this, PreferenceConstants.EXPIRES, mOauthResp.getExpires());

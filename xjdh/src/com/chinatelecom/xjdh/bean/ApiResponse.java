@@ -64,4 +64,10 @@ public class ApiResponse {
 		this.mobile = mobile;
 	}
 
+	@Override
+	public String toString() {
+		return "ApiResponse [ret=" + ret + ", data=" + data + ", stationimg=" + stationimg + ", response=" + response
+				+ ", mobile=" + mobile + "]";
+	}
+
 }

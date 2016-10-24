@@ -58,11 +58,11 @@ public class MonitorActivity extends BaseActivity {
 	SwipeRefreshLayout mSrlAlarm;
 	@ViewById(R.id.sv_alarm_filter)
 	ScrollView mSvAlarmFilter;
-	@ViewById(R.id.city_spinner) // 所属分公司
+	@ViewById(R.id.city_spinners) // 所属分公司
 	Spinner city_spinner;
-	@ViewById(R.id.et_station_name) // 局站名称
+	@ViewById(R.id.et_station_names) // 局站名称
 	EditText et_station_name;
-	@ViewById(R.id.county_spinner) // 局站名称下拉列表
+	@ViewById(R.id.county_spinners) // 局站名称下拉列表
 	Spinner county_spinner;
 	private List<CityItem> cityList = new ArrayList<CityItem>(0);
 	// private List<SubstationItem> substationItems = new
@@ -104,6 +104,8 @@ public class MonitorActivity extends BaseActivity {
 				 */
 				if (true) {
 					String cityData = new String(FileUtils.getFileData(this, SharedConst.FILE_AREA_JSON));
+					L.d("@@@@@@@@@@@@@@@@@@@@22", cityData.toString());
+
 					try {
 						List<CityItem> l = mapper.readValue(cityData, new TypeReference<List<CityItem>>() {
 						});
@@ -238,14 +240,14 @@ public class MonitorActivity extends BaseActivity {
 		mSubstationAdapter = new SubstationListAdapter(this, mSubstationList);
 		mLvSubstation.setAdapter(mSubstationAdapter);
 	}
-
+	ApiResponse apiResp;
 	@Background
 	void getData(String station, String city) {
 		int tryCount = 0;
 		do {
 			try {
 
-				ApiResponse apiResp = mApiClient.getAreaData(city, station, sbarea);
+				apiResp = mApiClient.getAreaData(city, station, sbarea);
 				if (apiResp.getRet() == 0) {
 					FileUtils.setToData(this, SharedConst.FILE_AREA_JSON, apiResp.getData().getBytes());
 					ObjectMapper mapper = new ObjectMapper();
@@ -295,7 +297,7 @@ public class MonitorActivity extends BaseActivity {
 	/**
 	 * 确认
 	 */
-	@Click(R.id.btn_confirm)
+	@Click(R.id.btn_confirms)
 	void confirmClicked() {
 		pDialog.show();
 		mSvAlarmFilter.setVisibility(View.GONE);
@@ -303,10 +305,9 @@ public class MonitorActivity extends BaseActivity {
 		mSubstationAdapter.notifyDataSetChanged();
 		int tryCount = 0;
 		station = "all";
-		station = et_station_name.getText().toString();
+//		station = et_station_name.getText().toString();
 
 		searchData(tryCount, station, sbarea, cityName);
-
 	}
 
 	/**
@@ -319,7 +320,7 @@ public class MonitorActivity extends BaseActivity {
 		do {
 			try {
 
-				ApiResponse apiResp = mApiClient.getAreaData(city, sbarea, station);
+//				ApiResponse apiResp = mApiClient.getAreaData(city, sbarea, station);
 				L.e(" data------------------- :" + apiResp.getData() + "  ret :" + apiResp.getRet());
 				if (apiResp.getRet() == 0) {
 					ObjectMapper mapper = new ObjectMapper();
@@ -332,9 +333,11 @@ public class MonitorActivity extends BaseActivity {
 					for (CityItem cityItem : l) {
 						for (CountyItem countyitem : cityItem.getCountylist()) {
 							for (SubstationItem substationItem : countyitem.getSubstationlist()) {
-								substationItem.setName(cityItem.getName() + "->" + countyitem.getName() + "->"
-										+ substationItem.getName());
-								mSubstationList.add(substationItem);
+								if (city.equals(cityItem.getName()) && sbarea.equals(countyitem.getName())) {
+									substationItem.setName(cityItem.getName() + "->" + countyitem.getName() + "->"
+											+ substationItem.getName());
+									mSubstationList.add(substationItem);
+								}
 							}
 						}
 					}
@@ -344,7 +347,7 @@ public class MonitorActivity extends BaseActivity {
 				L.e(e.toString());
 			}
 		} while (tryCount++ < 1);
-		et_station_name.setText("");
+//		et_station_name.setText("");
 		updateSubstationListview(tryCount < 1);
 	}
 
@@ -354,7 +357,7 @@ public class MonitorActivity extends BaseActivity {
 		if (mSvAlarmFilter.getVisibility() == View.VISIBLE) {
 			mSvAlarmFilter.setVisibility(View.GONE);
 			return;
-		}else{
+		} else {
 			super.onBackPressed();
 		}
 	}

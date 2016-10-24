@@ -51,7 +51,7 @@
                 android:textSize="@dimen/text_size_20" />
 
             <Spinner
-                android:id="@+id/city_spinner"
+                android:id="@+id/city_spinners"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
@@ -65,7 +65,7 @@
                 android:textSize="@dimen/text_size_20" />
 
             <Spinner
-                android:id="@+id/county_spinner"
+                android:id="@+id/county_spinners"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
@@ -79,14 +79,14 @@
                 android:textSize="@dimen/text_size_20" />
 
             <EditText
-                android:id="@+id/et_station_name"
+                android:id="@+id/et_station_names"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="请输入局站名称">
                 <requestFocus />
             </EditText>
             <Button
-                android:id="@+id/btn_confirm"
+                android:id="@+id/btn_confirms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/space_20"

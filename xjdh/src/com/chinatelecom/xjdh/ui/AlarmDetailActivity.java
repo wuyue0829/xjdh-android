@@ -179,6 +179,7 @@ public class AlarmDetailActivity extends BaseActivity {
 
 	@UiThread
 	void onResult(boolean isSuccess, DevTypeItem devTypeItem) {
+		L.d("============================", devTypeItem.toString());
 		pDialog.dismiss();
 		if (isSuccess) {
 			RealtimeActivity_.intent(this).devTypeItem(devTypeItem).start();

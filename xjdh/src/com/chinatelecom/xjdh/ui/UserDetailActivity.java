@@ -95,14 +95,15 @@ public class UserDetailActivity extends BaseActivity {
 		pDialog.show();
 		getUserInfo();
 	}
-
+	ApiResponse mApiResps;
 	@Background
 	void getUserInfo() {
 		try {
-			ApiResponse mApiResp = mApiClient.getUserInfo();
-			if (mApiResp.getRet() == 0) {
+			mApiResps = mApiClient.getUserInfo();
+			if (mApiResps.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
-				mUserInfo = mapper.readValue(mApiResp.getData(), UserInfo.class);
+				L.d("&&&&&&&&&&&&&&&&&&&&&&&&&&", mapper.writeValueAsString(mApiClient.getUserInfo().toString()));
+				mUserInfo = mapper.readValue(mApiResps.getData(), UserInfo.class);
 				updateView(true);
 				return;
 			}
@@ -186,6 +187,7 @@ public class UserDetailActivity extends BaseActivity {
 			builder.setTitle("请选择性别");
 			final String[] sex = { "男", "女" };
 			// 设置一个单项选择下拉框
+			L.d("OOOOOOOOOOOOOOOOOOOOOOO", mUserInfo.getGender().toString());
 			builder.setSingleChoiceItems(sex, mUserInfo.getGender().equalsIgnoreCase("male") ? 0 : 1, new DialogInterface.OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -289,7 +291,7 @@ public class UserDetailActivity extends BaseActivity {
 		boolean isSuccess = false;
 		try {
 			ApiResponse resp = mApiClient.modifyUserInfo(items);
-			if (resp.getRet() == 0) {
+			if (mApiResps.getRet() == 0) {
 				isSuccess = true;
 			} else {
 				isSuccess = false;
