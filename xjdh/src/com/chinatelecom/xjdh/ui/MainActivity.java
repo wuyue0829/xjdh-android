@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 
 		{
 			add(new DashboardItem(R.drawable.ic_compass, "地图", LocationDemo_.class));
-			add(new DashboardItem(R.drawable.ic_monitor, "实时监控", MonitorActivity_.class));
+			add(new DashboardItem(R.drawable.ic_monitor, "实时监控", MonSeachActivity_.class));
 			add(new DashboardItem(R.drawable.ic_bell, "告警处理", AlarmActivity_.class));
 			// add(new DashboardItem(R.drawable.ic_dashboard, "油机管理", null));
 			add(new DashboardItem(R.drawable.ic_chart, "数据报表", ChartActivity_.class));

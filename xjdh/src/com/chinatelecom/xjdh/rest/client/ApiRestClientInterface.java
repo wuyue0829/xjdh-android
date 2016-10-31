@@ -41,7 +41,9 @@ public interface ApiRestClientInterface extends RestClientHeaders {
 	ApiResponse getAlarmList(String citycode, String countycode, String substationId, String roomId, String level,
 			String model, String startdatetime, String enddatetime, String offset, String count, String lastId)
 					throws RestClientException;
-
+	@Get("/getSubstationList?name={name}&offset={offset}")
+	ApiResponse getSubstationList(CharSequence name,int offset) throws RestClientException;
+	
 	@Get("/getPreAlarmList?citycode={citycode}&countycode={countycode}&substationId={substationId}&roomId={roomId}&level={level}&model={model}&startdatetime={startdatetime}&enddatetime={enddatetime}&offset={offset}&count={count}&lastId={lastId}")
 	ApiResponse getPreAlarmList(String citycode, String countycode, String substationId, String roomId, String level,
 			String model, String startdatetime, String enddatetime, String offset, String count, String lastId)

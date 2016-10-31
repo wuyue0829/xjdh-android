@@ -142,6 +142,10 @@
             android:name=".ui.MonitorActivity_"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
+            <activity
+            android:name=".ui.MonSeachActivity_"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.RoomListActivity_"
             android:screenOrientation="portrait" />
