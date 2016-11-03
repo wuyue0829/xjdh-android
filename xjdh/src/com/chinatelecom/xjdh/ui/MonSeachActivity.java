@@ -32,6 +32,8 @@ import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,15 +42,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 @EActivity(R.layout.normal_seach_view)
-public class MonSeachActivity extends BaseActivity{
+public class MonSeachActivity extends BaseActivity {
 	@ViewById(R.id.lv_items)
 	ListView mLvSubstation;
-	@ViewById(R.id.tv_new_message)
-	TextView mTvRefresh;
 	@ViewById(R.id.et_search)
 	EditText et_search;
 	@ViewById(R.id.srl_alarm)
-
 	SwipeRefreshLayout mSrlAlarm;
 
 	@ViewById(R.id.btn_seach)
@@ -67,55 +66,60 @@ public class MonSeachActivity extends BaseActivity{
 	ApiResponse apiResp;
 
 	private CharSequence station;
-	private String sbarea = "";// 所属分区
+	private String sbarea = "";
+	int offsets = 0;
+	private int offset;
+	private int count;
+	private int totalItemCount;
+	private int lastViewItem;
 
-	private int offset = 10;
-	private int count = 10;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTitle("实时监控");
 		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
-		// pDialog = new ProgressDialog(this);
-		// pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 		mSubstationAdapter = new SubstationListAdapter(this);
-		footerView = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.listview_footer, null);
-		footerMsg = (TextView) footerView.findViewById(R.id.footer_msg);
-		// 点击加载更多
-		footerMsg.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (seachApi) {
-					count+=10;
-					searchData(station, count);
-				} else {
-					offset+=10;
-					getData(false, offset);
-				}
-				pDialog.show();
-				footerMsg.setText("加载中....");
-			}
-		});
-		if (pDialog == null) {
-			pDialog = new ProgressDialog(this);
-			pDialog.setMessage("加载数据中...");
-			pDialog.setCancelable(true);
-		}
 	}
 
 	@AfterViews
 	void bindData() {
 
-		mLvSubstation.addFooterView(footerView);
 		mLvSubstation.setAdapter(mSubstationAdapter);
 
-		mTvRefresh.setText("加载失败，下拉刷新");
-		
-			if (mSubstationList.size() == 0) {
-				pDialog.show();
-				getData(true, offset);
+		mLvSubstation.setOnScrollListener(new OnScrollListener() {
+
+			private int totalItemCount;
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+				if (totalItemCount == lastViewItem && scrollState == SCROLL_STATE_IDLE) {
+					if (seachApi&& station!="") {
+						
+						searchData(station, offsets+=10);
+					}else {
+					offset+=10;
+					getData(true, offset);
+					}
+				}
 			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				// TODO Auto-generated method stub
+				lastViewItem = firstVisibleItem + visibleItemCount;
+				this.totalItemCount = totalItemCount;
+			}
+		});
+
+		if (mSubstationList.size() == 0) {
+		
+				offset = 0;
+				getData(true, offset+=10);
+			
+			
+		}
 
 		/**
 		 * 下拉刷新
@@ -125,27 +129,25 @@ public class MonSeachActivity extends BaseActivity{
 			@Override
 			public void onRefresh() {
 				station = et_search.getText().toString();
-				if(station.equals(""))
+				if (station.equals(""))
 					seachApi = false;
 				else
 					seachApi = true;
 				if (seachApi) {
-					count = 10;
+					count = 0;
 					mSrlAlarm.setRefreshing(false);
-					pDialog.show();
 					mSubstationListSeach.clear();
 					searchData(station, count);
 				} else {
-					offset = 10;
+					offset = 0;
 					mSrlAlarm.setRefreshing(false);
-					pDialog.show();
 					mSubstationList.clear();
-					getData(true, offset);
+					getData(true, offset += 10);
 				}
 
 			}
 		});
-		
+
 	}
 
 	@Background
@@ -162,22 +164,17 @@ public class MonSeachActivity extends BaseActivity{
 				mSubstationList.clear();
 				mSubstationList.addAll(item);
 				notifld();
-				updateAlarmListView(isRefreshing, item.size() > 0, item.size()%10 !=0);
 			}
-//			else {
-//				updateAlarmListView(isRefreshing, true, true);
-//			}
 		} catch (Exception e) {
 			L.e(e.toString());
 		}
-//		updateAlarmListView(isRefreshing, false, false);
 
 	}
 
 	@Background
-	public void searchData(CharSequence station, int count) {
+	public void searchData(CharSequence station, int counts) {
 		try {
-			apiResp = mApiClient.getSubstationList(station, count);
+			apiResp = mApiClient.getSubstationList(station, counts);
 
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
@@ -189,72 +186,34 @@ public class MonSeachActivity extends BaseActivity{
 				mSubstationListSeach.clear();
 				mSubstationListSeach.addAll(item);
 				notifldSeach();
-				updateAlarmListView(isRefreshing, item.size() > 0, item.size()%10  != 0);
-			} 
-//			else {
-//				updateAlarmListView(isRefreshing, true, true);
-//			}
+			}
 		} catch (Exception e) {
 			L.e(e.toString());
 		}
-//		updateAlarmListView(isRefreshing, false, false);
 	}
-
+	private int num=0;
 	@Click(R.id.btn_seach)
 	void getSeachData() {
-		seachApi=true;
-		pDialog.show();
+		seachApi = true;
+		// pDialog.show();
 		mSubstationListSeach.clear();
 		station = et_search.getText().toString();
-		if (station.equals("")) {
-			offset = 10;
-			getData(false, offset);
-		} else {
-			searchData(station, count);
+		if (station=="") {
+			getData(true, num+=10);
+		} else if(station!=""){
+			count = 0;
+			searchData(station, count+=10);
 		}
 	}
 
 	@UiThread
-	void notifld(){
+	void notifld() {
 		mSubstationAdapter.updateListView(mSubstationList);
 	}
+
 	@UiThread
-	void notifldSeach(){
+	void notifldSeach() {
 		mSubstationAdapter.updateListView(mSubstationListSeach);
-	}
-	
-	@UiThread
-	void updateAlarmListView(boolean isRefreshing, boolean isSuccess, boolean isLoadAll) {
-		mSrlAlarm.setRefreshing(false);
-		if (pDialog.isShowing() && pDialog.isShowing()) {
-			L.d("updateAlarmListView pdialog dismiss");
-			pDialog.dismiss();
-		}
-
-		if (isRefreshing) {
-			if (isSuccess)
-				mTvRefresh.setVisibility(View.GONE);
-			else
-				mTvRefresh.setText("加载失败，点击重试");
-		}
-
-		if (!isLoadAll) {
-			footerMsg.setText("点击加载更多");
-			footerMsg.setClickable(true);
-		} else {
-			T.showLong(this, "已经加载全部");
-			footerMsg.setText("已经加载全部");
-			footerMsg.setClickable(false);
-		}
-		if (isSuccess) {
-			mSubstationAdapter.notifyDataSetChanged();
-		}
-	}
-
-	@Click(R.id.tv_new_message)
-	void onTvRefreshClicked() {
-		pDialog.show();
-		getData(true, 10);
 	}
 
 	@ItemClick(R.id.lv_items)
