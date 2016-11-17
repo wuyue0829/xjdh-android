@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chinatelecom.xjdh"
     android:installLocation="auto"
-    android:versionCode="16"
-    android:versionName="2.3.3" >
+    android:versionCode="17"
+    android:versionName="2.4" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -91,6 +91,11 @@
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
             </intent-filter>
         </activity>
+        <activity 
+            android:name=".ui.DoorListActivity_"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
+            ></activity>
         <activity
             android:name=".ui.LoginActivity_"
             android:screenOrientation="portrait"

@@ -79,7 +79,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 		private static final long serialVersionUID = 6541190919019797339L;
 
 		{
-			add(new DashboardItem(R.drawable.ic_compass, "地图", LocationDemo_.class));
+			//add(new DashboardItem(R.drawable.ic_compass, "地图", LocationDemo_.class));
 			add(new DashboardItem(R.drawable.ic_monitor, "实时监控", MonSeachActivity_.class));
 			add(new DashboardItem(R.drawable.ic_bell, "告警处理", AlarmActivity_.class));
 			// add(new DashboardItem(R.drawable.ic_dashboard, "油机管理", null));

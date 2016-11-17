@@ -125,7 +125,8 @@ public class RoomDevListActivity extends BaseActivity {
 		}
 		if (mDevTypeList.get(pos).getType().equals("door"))
 		{
-			DoorActivity_.intent(this).Name(mDevTypeList.get(pos).getDevlist()[0].getName()).DataId(mDevTypeList.get(pos).getDevlist()[0].getData_id()).CanOpen(mDevTypeList.get(pos).getDevlist()[0].getCan_open()).start();
+			DoorListActivity_.intent(this).devTypeItem(mDevTypeList.get(pos)).start();
+			//DoorActivity_.intent(this).Name(mDevTypeList.get(pos).getDevlist()[0].getName()).DataId(mDevTypeList.get(pos).getDevlist()[0].getData_id()).CanOpen(mDevTypeList.get(pos).getDevlist()[0].getCan_open()).start();
 		}else if (Arrays.asList(WEBVIEW_MODEL).contains(mDevTypeList.get(pos).getType())) {
 			WebViewActivity_.intent(this)
 					.originalUrl(URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + mRoomCode + "&model="

@@ -66,7 +66,7 @@ public class MonSeachActivity extends BaseActivity{
 
 	ApiResponse apiResp;
 
-	private CharSequence station;
+	private String station;
 	private String sbarea = "";// 所属分区
 
 	private int offset = 10;
@@ -175,7 +175,7 @@ public class MonSeachActivity extends BaseActivity{
 	}
 
 	@Background
-	public void searchData(CharSequence station, int count) {
+	public void searchData(String station, int count) {
 		try {
 			apiResp = mApiClient.getSubstationList(station, count);
 
@@ -207,9 +207,10 @@ public class MonSeachActivity extends BaseActivity{
 		mSubstationListSeach.clear();
 		station = et_search.getText().toString();
 		if (station.equals("")) {
-			offset = 10;
+			offset = 0;
 			getData(false, offset);
 		} else {
+			count = 0;
 			searchData(station, count);
 		}
 	}

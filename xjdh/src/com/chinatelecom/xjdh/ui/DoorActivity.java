@@ -1,31 +1,38 @@
 package com.chinatelecom.xjdh.ui;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.rest.RestService;
 
 import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.bean.ApiResponse;
-import com.chinatelecom.xjdh.bean.DoorOperation;
-import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
-import com.chinatelecom.xjdh.utils.T;
+import com.chinatelecom.xjdh.adapter.WebviewFragmentAdapter;
+import com.chinatelecom.xjdh.bean.DevItem;
+import com.chinatelecom.xjdh.bean.DevTypeItem;
+import com.chinatelecom.xjdh.utils.PreferenceConstants;
+import com.chinatelecom.xjdh.utils.PreferenceUtils;
+import com.chinatelecom.xjdh.utils.URLs;
+import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 
-import android.app.AlertDialog;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.text.InputType;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 /**
  * @author peter
@@ -33,157 +40,143 @@ import android.widget.TextView;
  */
 @EActivity(R.layout.activity_door)
 public class DoorActivity extends BaseActivity {
-
-	@Extra
-	public String Name;
-
-	@Extra
-	public String DataId;
-
-	@Extra
-	public int CanOpen;
-
-	@ViewById
-	TextView tvName,tvStatus;
-	
-	@ViewById(R.id.btnRemoteOpen)
-	Button btnRemoteOpen;
-	@ViewById(R.id.btnForceOpen)
-	Button btnForceOpen;
-
-	@RestService
-	ApiRestClientInterface mApiClient;
-	private Timer timer;
-	
+	@ViewById(R.id.webview_indicator)
+	com.viewpagerindicator.TitlePageIndicator mWebviewIndicator;
+	@ViewById(R.id.webview_pager)
+	ViewPager mWebviewPager;
+	@Extra("model")
+	String model;
+	@Extra("devTypeItem")
+	DevTypeItem devTypeItem;
+	WebviewFragmentAdapter mPagerAdapter;
 	ProgressDialog pDialog;
-	@AfterViews
-	void Show() {
-		tvName.setText(Name);
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		pDialog = new ProgressDialog(this);
 		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
-		//pDialog.show();
-		
-		if (CanOpen == 0) {
-			btnRemoteOpen.setVisibility(View.GONE);
-			btnForceOpen.setVisibility(View.GONE);
+	}
+
+	@AfterViews
+	void bindData() {
+		setTitle(devTypeItem.getName());
+		myAdapter = new WebPagerAdapter();
+		for (DevItem e : devTypeItem.getDevlist()) {
+			addView(mListViews,
+					URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + e.getData_id() + "&model=" + devTypeItem.getType()
+							+ "&access_token="+ PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, ""));
 		}
-		// Start Timer to refresh status
-		if (timer == null) {
-			timer = new Timer();
-			timer.scheduleAtFixedRate(new RefreshTask(), 0, 10000);
-		}
+		mWebviewPager.setAdapter(myAdapter);
+		mWebviewIndicator.setViewPager(mWebviewPager);
+		mWebviewIndicator.setFooterIndicatorStyle(IndicatorStyle.Triangle);
+	}
+
+	private List<WebView> mListViews = new ArrayList<WebView>();
+	private WebPagerAdapter myAdapter;
+
+	@SuppressLint("SetJavaScriptEnabled")
+	private void addView(List<WebView> viewList, String url) {
+		final WebView webView = new WebView(this);
+		webView.getSettings().setJavaScriptEnabled(true);
+		webView.getSettings().setUseWideViewPort(true);
+		webView.setWebViewClient(new WebViewClient() {
+			@SuppressLint("NewApi")
+			@Override
+			public void onPageFinished(WebView view, String url) {
+				pDialog.dismiss();
+				super.onPageFinished(view, url);
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+					if (0 != (getApplicationInfo().flags &= ApplicationInfo.FLAG_DEBUGGABLE)) {
+						WebView.setWebContentsDebuggingEnabled(true);
+					}
+				}
+			}
+
+			@Override
+			public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+				WebResourceResponse response = null;
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+					if (url.contains("bootstrap.css")) {
+						return getWebResourceResponseFromAsset("text/css", "css/bootstrap.css");
+					} else if (url.contains("bootstrap-responsive.css")) {
+						return getWebResourceResponseFromAsset("text/css", "css/bootstrap-responsive.css");
+					} else if (url.contains("jquery.js")) {
+						return getWebResourceResponseFromAsset("application/x-javascript", "js/jquery.js");
+					} else {
+						return super.shouldInterceptRequest(view, url);
+					}
+
+				}
+				return response;
+			}
+
+			private WebResourceResponse getWebResourceResponseFromAsset(String mimeType, String fileName) {
+				try {
+					return getUtf8EncodedWebResourceResponse(mimeType, getAssets().open(fileName));
+				} catch (IOException e) {
+					return null;
+				}
+			}
+
+			private WebResourceResponse getUtf8EncodedWebResourceResponse(String mimeType, InputStream data) {
+				return new WebResourceResponse(mimeType, "UTF-8", data);
+			}
+
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				pDialog.show();
+				super.onPageStarted(view, url, favicon);
+			}
+
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				if (Uri.parse(url).getHost().equals(Uri.parse(url).getHost())) {
+					return false;
+				}
+				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+				startActivity(intent);
+				return true;
+			}
+		});
+		webView.loadUrl(url);
+		viewList.add(webView);
 	}
 
 	@Override
-	public void onDestroy() {
-		timer.cancel();
-		timer = null;
+	protected void onDestroy() {
+		for (WebView webView : mListViews) {
+			webView.destroy();
+		}
 		super.onDestroy();
 	}
-	
-	class RefreshTask extends TimerTask {
+
+	private class WebPagerAdapter extends PagerAdapter {
 
 		@Override
-		public void run() {
-			try
-			{
-				ApiResponse ret = mApiClient.GetDoorStatus(DataId);
-				if(ret.getData().equals("1"))
-				{
-					ShowStatus("打开");
-				}else{
-					ShowStatus("关闭");
-				}
-			}catch(Exception e)
-			{
-				
-			}
+		public void destroyItem(View arg0, int arg1, Object arg2) {
+			((ViewPager) arg0).removeView(mListViews.get(arg1));
 		}
-	}
-	
-	@UiThread
-	void ShowStatus(String status)
-	{
-		tvStatus.setText(status);
-	}
-	@Click(R.id.btnRemoteOpen)
-	public void OnRemoteOpen() {
-		final EditText inputServer = new EditText(this);
-		inputServer.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-        inputServer.setPadding(20, 5, 5, 20);
-		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("请输入情况说明").setIcon(android.R.drawable.ic_dialog_info).setView(inputServer)
-                        .setNegativeButton("取消", null);
-        builder.setPositiveButton("提交", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                        String reason = inputServer.getText().toString();
-                        reason = reason.trim();
-                        if (reason.length() == 0) {
-                                T.showLong(DoorActivity.this, "请输入情况说明");
-                                return;
-                        }
-                        pDialog.setMessage("发送命令中...");
-                		pDialog.show();
-                        doOpenDoor("远程开门", reason);
-                }
-        });
-        builder.show();
-	}
-	
-	@Background
-	void doOpenDoor(String action, String message)
-	{
-		try
-		{
-			DoorOperation op = new DoorOperation();
-			op.setData_id(DataId);
-			op.setAction(action);
-			op.setMessage(message);
-			ApiResponse ret = mApiClient.OpenDoor(op);
-			if(ret.getRet() == 0)
-			{
-				ShowResult(0);
-				return;
-			}			
-		}catch(Exception e)
-		{
-			
-		}
-		ShowResult(1);
-	}
 
-	@UiThread
-	void ShowResult(int ret)
-	{
-		pDialog.dismiss();
-		if(ret == 0)
-		{
-			T.showLong(this, "开门成功");
-		}else{
-			T.showLong(this, "开门失败");
+		@Override
+		public int getCount() {
+			return mListViews.size();
 		}
-	}
-	@Click(R.id.btnForceOpen)
-	public void OnForceOpen() {
-		final EditText inputServer = new EditText(this);
-        inputServer.setPadding(20, 5, 5, 20);
-		final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("请输入情况说明").setIcon(android.R.drawable.ic_dialog_info).setView(inputServer)
-                        .setNegativeButton("取消", null);
-        builder.setPositiveButton("提交", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                        String reason = inputServer.getText().toString();
-                        reason = reason.trim();
-                        if (reason.length() == 0) {
-                                T.showLong(DoorActivity.this, "请输入情况说明");
-                                builder.show();
-                                return;
-                        }
-                        pDialog.setMessage("发送命令中...");
-                		pDialog.show();
-                        doOpenDoor("强制开门", reason);
-                }
-        });
-        builder.show();
+
+		@Override
+		public CharSequence getPageTitle(int position) {
+			return devTypeItem.getDevlist()[position].getName();
+		}
+
+		@Override
+		public Object instantiateItem(View arg0, int arg1) {
+			((ViewPager) arg0).addView(mListViews.get(arg1), 0);
+			return mListViews.get(arg1);
+		}
+
+		@Override
+		public boolean isViewFromObject(View arg0, Object arg1) {
+			return arg0 == (arg1);
+		}
 	}
 }
