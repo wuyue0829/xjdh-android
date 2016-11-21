@@ -27,6 +27,7 @@ import com.chinatelecom.xjdh.utils.URLs;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.annotation.UiThread;
 import android.view.View;
 import android.widget.Button;
@@ -83,6 +84,7 @@ public class AlarmDetailActivity extends BaseActivity {
 	@AfterViews
 	void bindData() {
 		setTitle("告警详情");
+		L.d("@@@@@@@@@@@@@@@@@", alarmItem.toString());
 		tvAlarmDetailAddDatetime.setText(alarmItem.getAdded_datetime());
 		tvAlarmDetailCity.setText(alarmItem.getCity());
 		tvAlarmDetailContent.setText(alarmItem.getSubject());
@@ -146,11 +148,9 @@ public class AlarmDetailActivity extends BaseActivity {
 			typeName = "智能电表";
 		}
 		if (type.equalsIgnoreCase("ad") || type.equalsIgnoreCase("di") || type.equalsIgnoreCase("imem12")) {
-			WebViewActivity_
-					.intent(this)
-					.originalUrl(
-							URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + alarmItem.getRoom_code() + "&model=" + type + "&access_token="
-									+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION)).title(typeName).start();
+			String originalUrl=URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + alarmItem.getRoom_code() + "&model=" + type + "&access_token="
+					+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION);
+			WebViewActivity_.intent(this).originalUrl(originalUrl).title(typeName).start();
 			L.v("状态："+alarmItem.getRoom_code());
 		} else {
 			pDialog.show();
@@ -168,6 +168,7 @@ public class AlarmDetailActivity extends BaseActivity {
 				});
 				if (l.size() > 0) {
 					onResult(true, l.get(0));
+					Looper.loop();
 					return;
 				}
 			}
@@ -175,16 +176,15 @@ public class AlarmDetailActivity extends BaseActivity {
 			L.e(e.toString());
 		}
 		onResult(false, null);
+		Looper.loop();
 	}
 
 	@UiThread
 	void onResult(boolean isSuccess, DevTypeItem devTypeItem) {
-		L.d("============================", devTypeItem.toString());
-		pDialog.dismiss();
 		if (isSuccess) {
 			RealtimeActivity_.intent(this).devTypeItem(devTypeItem).start();
 		} else {
-			T.showLong(this, "加载数据失败");
+			T.showShort(this, "加载数据失败");
 		}
 	}
 }

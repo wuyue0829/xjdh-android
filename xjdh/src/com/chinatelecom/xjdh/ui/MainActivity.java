@@ -81,18 +81,18 @@ public class MainActivity extends BaseActivity implements EventHandler {
 		{
 			//add(new DashboardItem(R.drawable.ic_compass, "地图", LocationDemo_.class));
 			add(new DashboardItem(R.drawable.ic_monitor, "实时监控", MonSeachActivity_.class));
+			add(new DashboardItem(R.drawable.ic_chart, "数据报表", ChartActivity_.class));
 			add(new DashboardItem(R.drawable.ic_bell, "告警处理", AlarmActivity_.class));
 			// add(new DashboardItem(R.drawable.ic_dashboard, "油机管理", null));
-			add(new DashboardItem(R.drawable.ic_chart, "数据报表", ChartActivity_.class));
-			add(new DashboardItem(R.drawable.ic_message, "消息中心", MessageCenterActivity_.class));
-			add(new DashboardItem(R.drawable.ic_help, "帮助中心", null));
-			add(new DashboardItem(R.drawable.ic_user, "用户中心", UserDetailActivity_.class));
-			add(new DashboardItem(R.drawable.ic_setting, "设置", SettingActivity_.class));
 			add(new DashboardItem(R.drawable.ic_bell, "预告警处理", PreAlarmActivity_.class));
 			add(new DashboardItem(R.drawable.station_collect, "局站采集", StationCollectActivity_.class));
 			add(new DashboardItem(R.drawable.list, "局站列表", StationListGroupingActivity_.class));
 			add(new DashboardItem(R.drawable.nfc,"读取卡号", ReadNfcNumber_.class));
 			add(new DashboardItem(R.drawable.ic_device,"现场测试", TestEquipmentActivity_.class));
+			add(new DashboardItem(R.drawable.ic_message, "消息中心", MessageCenterActivity_.class));
+			add(new DashboardItem(R.drawable.ic_help, "帮助中心", null));
+			add(new DashboardItem(R.drawable.ic_user, "用户中心", UserDetailActivity_.class));
+			add(new DashboardItem(R.drawable.ic_setting, "设置", SettingActivity_.class));
 		}
 	};
 	@RestService

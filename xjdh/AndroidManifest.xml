@@ -15,6 +15,15 @@
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true" />
+    
+    
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
      <!-- 蓝牙 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -96,6 +105,17 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             ></activity>
+         <activity
+            android:name=".scan.CaptureActivity_"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
+        </activity>
+        <activity
+            android:name=".ui.CodeActivity_"
+           android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
+        </activity>
+        
         <activity
             android:name=".ui.LoginActivity_"
             android:screenOrientation="portrait"
@@ -103,7 +123,7 @@
         </activity>
         <activity
             android:name=".ui.DoorActivity_"
-            screenOrientation="portrait"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" >
             </activity>	
          <activity

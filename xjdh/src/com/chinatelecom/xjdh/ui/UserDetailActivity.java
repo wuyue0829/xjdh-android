@@ -10,6 +10,7 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ItemClick;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
@@ -25,6 +26,8 @@ import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.UserDetailListItem;
 import com.chinatelecom.xjdh.bean.UserInfo;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
+import com.chinatelecom.xjdh.scan.CaptureActivity_;
+import com.chinatelecom.xjdh.scan.CodeUtils;
 import com.chinatelecom.xjdh.utils.CryptoUtils;
 import com.chinatelecom.xjdh.utils.FileUtils;
 import com.chinatelecom.xjdh.utils.L;
@@ -56,6 +59,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * @author peter
@@ -66,6 +70,7 @@ public class UserDetailActivity extends BaseActivity {
 	@ViewById(R.id.lv_user_detail)
 	ListView mLvUser;
 	Dialog mImgChangeDialog;
+	public static final int TICKET_DETAIL = 4;
 	@RestService
 	ApiRestClientInterface mApiClient;
 	Uri pendingImageUri;
@@ -128,6 +133,8 @@ public class UserDetailActivity extends BaseActivity {
 			listItems.add(new UserDetailListItem(5, 1, "邮箱", "email", mUserInfo.getEmail()));
 			listItems.add(new UserDetailListItem(6, 1, "其他信息", "info", mUserInfo.getInfo()));
 			listItems.add(new UserDetailListItem(7, 1, "修改密码", "password", ""));
+			listItems.add(new UserDetailListItem(8, 1, "二维码", "code", ""));
+			listItems.add(new UserDetailListItem(9, 1, "扫一扫", "scan", ""));
 			mUserDetailAdapter.notifyDataSetChanged();
 		} else {
 			findViewById(R.id.btn_reload).setVisibility(View.VISIBLE);
@@ -209,7 +216,13 @@ public class UserDetailActivity extends BaseActivity {
 			});
 			builder.show();
 		}
+		else if(userDetailListItem.getId() == 8){
+			CodeActivity_.intent(this).start();
+		}
 		// other
+		else if(userDetailListItem.getId() == 9){
+			CaptureActivity_.intent(this).startForResult(TICKET_DETAIL);
+		}
 		else {
 			showModifyDialog();
 		}
@@ -281,6 +294,28 @@ public class UserDetailActivity extends BaseActivity {
 		});
 	}
 
+	@OnActivityResult(TICKET_DETAIL)
+	void onResult(int resultCode, Intent data) {
+	            //处理扫描结果（在界面上显示）
+	            if (null != data) {
+	                Bundle bundle = data.getExtras();
+	                if (bundle == null) {
+	                    return;
+	                }
+	                if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+	                    String result = bundle.getString(CodeUtils.RESULT_STRING);
+	                    //用默认浏览器打开扫描得到的地址
+	                    Intent intent = new Intent();
+	                    intent.setAction("android.intent.action.VIEW");
+	                    Uri content_url = Uri.parse(result.toString());
+	                    intent.setData(content_url);
+	                    startActivity(intent);
+	                } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+	                    Toast.makeText(this, "解析二维码失败", Toast.LENGTH_LONG).show();
+	                }
+	            }
+	}
+	
 	@Background
 	void uploadData() {
 		LinkedHashMap<String, String> items = new LinkedHashMap<String, String>(0);
@@ -347,6 +382,7 @@ public class UserDetailActivity extends BaseActivity {
 				startPhotoZoom(data.getData(), RESULT_PICTURE);
 			}
 			break;
+		
 		case RESULT_PICTURE:
 			if (data != null) {
 				Bundle extras = data.getExtras();
@@ -418,4 +454,5 @@ public class UserDetailActivity extends BaseActivity {
 		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 		startActivityForResult(intent, requestCode);
 	}
+	
 }

@@ -241,4 +241,17 @@ public class AlarmItem implements Serializable {
 		this.signalId = signalId;
 	}
 
+	@Override
+	public String toString() {
+		return "AlarmItem [id=" + id + ", substation_name=" + substation_name + ", room_location=" + room_location
+				+ ", status=" + status + ", dev_model=" + dev_model + ", room_name=" + room_name + ", data_id="
+				+ data_id + ", city_code=" + city_code + ", room_code=" + room_code + ", county=" + county
+				+ ", confirm_datetime=" + confirm_datetime + ", added_datetime=" + added_datetime
+				+ ", restore_datetime=" + restore_datetime + ", dev_name=" + dev_name + ", subject=" + subject
+				+ ", level=" + level + ", city=" + city + ", county_code=" + county_code + ", signalName=" + signalName
+				+ ", signalId=" + signalId + "]";
+	}
+	
+	
+
 }
