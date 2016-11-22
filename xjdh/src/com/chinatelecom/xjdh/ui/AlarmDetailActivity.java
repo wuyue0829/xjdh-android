@@ -77,14 +77,16 @@ public class AlarmDetailActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
-		pDialog = new ProgressDialog(this);
-		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
+		if (pDialog == null) {
+			pDialog = new ProgressDialog(this);
+			pDialog.setMessage("加载数据中...");
+			pDialog.setCancelable(true);
+		}
 	}
 
 	@AfterViews
 	void bindData() {
 		setTitle("告警详情");
-		L.d("@@@@@@@@@@@@@@@@@", alarmItem.toString());
 		tvAlarmDetailAddDatetime.setText(alarmItem.getAdded_datetime());
 		tvAlarmDetailCity.setText(alarmItem.getCity());
 		tvAlarmDetailContent.setText(alarmItem.getSubject());
@@ -161,6 +163,9 @@ public class AlarmDetailActivity extends BaseActivity {
 	@Background
 	void getData() {
 		try {
+			Looper.prepare();
+			L.d("@@@@@@@@@@@@", alarmItem.getRoom_code());
+			L.d("##########", alarmItem.getDev_model());
 			ApiResponse apiResp = mApiClient.getRoomDeviceList(alarmItem.getRoom_code(), alarmItem.getDev_model());
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
@@ -181,6 +186,9 @@ public class AlarmDetailActivity extends BaseActivity {
 
 	@UiThread
 	void onResult(boolean isSuccess, DevTypeItem devTypeItem) {
+		if (pDialog.isShowing()) {
+			pDialog.dismiss();
+		}
 		if (isSuccess) {
 			RealtimeActivity_.intent(this).devTypeItem(devTypeItem).start();
 		} else {

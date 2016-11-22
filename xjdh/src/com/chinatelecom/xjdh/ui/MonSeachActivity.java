@@ -29,14 +29,11 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.text.TextUtils;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -54,9 +51,8 @@ public class MonSeachActivity extends BaseActivity {
 	Button btn_seach;
 	private List<SubstationItem> mSubstationListSeach = new ArrayList<SubstationItem>(0);
 	private List<SubstationItem> mSubstationList = new ArrayList<SubstationItem>(0);
+	private List<SubstationItem> loadList = new ArrayList<SubstationItem>(0);
 	private SubstationListAdapter mSubstationAdapter;
-	private boolean isRefreshing = false;
-	private boolean seachApi = false;
 	@RestService
 	ApiRestClientInterface mApiClient;
 	ProgressDialog pDialog;
@@ -67,11 +63,11 @@ public class MonSeachActivity extends BaseActivity {
 
 	private String station;
 	private String sbarea = "";// 所属分区
-	int offsets = 0;
-	private int offset;
-	private int count;
+	private int offset = 0;
 	private int totalItemCount;
 	private int lastViewItem;
+	private int num;
+	private int count;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -80,6 +76,11 @@ public class MonSeachActivity extends BaseActivity {
 		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
 		mSubstationAdapter = new SubstationListAdapter(this);
+		if (pDialog == null) {
+			pDialog = new ProgressDialog(this);
+			pDialog.setMessage("加载数据中...");
+			pDialog.setCancelable(true);
+		}
 	}
 
 	@AfterViews
@@ -95,14 +96,9 @@ public class MonSeachActivity extends BaseActivity {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				// TODO Auto-generated method stub
 				if (totalItemCount == lastViewItem && scrollState == SCROLL_STATE_IDLE) {
-					if (seachApi&& station!="") {
-						
-						searchData(station, offsets+=10);
-					}else {
-					offset+=10;
-					getData(true, offset);
+						pDialog.show();
+						getUpData();
 					}
-				}
 			}
 
 			@Override
@@ -114,11 +110,8 @@ public class MonSeachActivity extends BaseActivity {
 		});
 
 		if (mSubstationList.size() == 0) {
-		
-				offset = 0;
-				getData(true, offset+=10);
-			
-			
+			pDialog.show();
+			getData(true, offset);
 		}
 
 		/**
@@ -128,27 +121,44 @@ public class MonSeachActivity extends BaseActivity {
 
 			@Override
 			public void onRefresh() {
-				station = et_search.getText().toString();
-				if (station.equals(""))
-					seachApi = false;
-				else
-					seachApi = true;
-				if (seachApi) {
-					count = 0;
-					mSrlAlarm.setRefreshing(false);
-					mSubstationListSeach.clear();
-					searchData(station, count);
-				} else {
-					offset = 0;
+					pDialog.show();
 					mSrlAlarm.setRefreshing(false);
 					mSubstationList.clear();
-					getData(true, offset += 10);
+					loadList.clear();
+					getData(true, offset);
+				}
+
+		});
+		mSubstationAdapter.notifyDataSetChanged();
+	}
+
+	@UiThread(delay = 500)
+	void getUpData() {
+
+		if (pDialog.isShowing()) {
+			pDialog.dismiss();
+		}
+		num++;
+		int a = mSubstationList.size() / 10;
+
+		if (mSubstationList.size() > 10 * (num - 1)) {
+			for (int i = 10 * (num - 1); i < 10 * num; i++) {
+				if (num <= a)
+					loadList.add(mSubstationList.get(i));
+				else {
+					if (i < mSubstationList.size())
+						loadList.add(mSubstationList.get(i));
 				}
 
 			}
-		});
+
+			mSubstationAdapter.notifyDataSetChanged();
+		} else {
+			T.showLong(this, "已经加载全部");
+		}
 
 	}
+
 
 	@Background
 	void getData(boolean isRefreshing, int offset) {
@@ -161,8 +171,20 @@ public class MonSeachActivity extends BaseActivity {
 				List<SubstationItem> item = mapper.readValue(apiResp.getData(),
 						new TypeReference<List<SubstationItem>>() {
 						});
-				mSubstationList.clear();
 				mSubstationList.addAll(item);
+
+				if (mSubstationList.size() > 0 && mSubstationList.size() < 10) {
+					for (int i = 0; i < 10; i++) {
+						if (i < mSubstationList.size()) {
+							loadList.add(mSubstationList.get(i));
+						}
+					}
+				} else {
+					for (int i = 0; i < 10; i++) {
+						loadList.add(mSubstationList.get(i));
+					}
+					num = 1;
+				}
 				notifld();
 			}
 		} catch (Exception e) {
@@ -178,11 +200,9 @@ public class MonSeachActivity extends BaseActivity {
 
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
-				L.d("@@@@@@@@@@@@@@@@@@@@22", mapper.writeValueAsString(apiResp.getData().toString()));
 				List<SubstationItem> item = mapper.readValue(apiResp.getData(),
 						new TypeReference<List<SubstationItem>>() {
 						});
-
 				mSubstationListSeach.clear();
 				mSubstationListSeach.addAll(item);
 				notifldSeach();
@@ -191,29 +211,33 @@ public class MonSeachActivity extends BaseActivity {
 			L.e(e.toString());
 		}
 	}
-	private int num=0;
+
 	@Click(R.id.btn_seach)
 	void getSeachData() {
-		seachApi = true;
-		// pDialog.show();
 		mSubstationListSeach.clear();
 		station = et_search.getText().toString();
-		if (station.equals("")) {
-			offset = 0;
-			getData(false, offset);
-		} else {
-			count = 0;
-			searchData(station, count);
-		}
+		if (TextUtils.isEmpty(station)) {
+				T.showShort(getApplicationContext(), "请输入查询内容...");
+				return;
+			}
+		pDialog.show();
+		searchData(station, offset);
+		et_search.setText("");
 	}
 
 	@UiThread
 	void notifld() {
-		mSubstationAdapter.updateListView(mSubstationList);
+		if (pDialog.isShowing()) {
+			pDialog.dismiss();
+		}
+		mSubstationAdapter.updateListView(loadList);
 	}
 
 	@UiThread
 	void notifldSeach() {
+		if (pDialog.isShowing()) {
+			pDialog.dismiss();
+		}
 		mSubstationAdapter.updateListView(mSubstationListSeach);
 	}
 

@@ -55,6 +55,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -130,17 +132,17 @@ public class AlarmActivity extends BaseActivity {
 		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
 		mAlarmListAdapter = new AlarmListAdapter(this, alarmList);
-		footerView = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.listview_footer, null);
-		footerMsg = (TextView) footerView.findViewById(R.id.footer_msg);
-		//点击加载更多
-		footerMsg.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				footerMsg.setText("加载中....");
-				pDialog.show();
-				getData(false);
-			}
-		});
+//		footerView = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.listview_footer, null);
+//		footerMsg = (TextView) footerView.findViewById(R.id.footer_msg);
+//		//点击加载更多
+//		footerMsg.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				footerMsg.setText("加载中....");
+//				pDialog.show();
+//				getData(false);
+//			}
+//		});
 		if (pDialog == null) {
 			pDialog = new ProgressDialog(this);
 			pDialog.setMessage("加载数据中...");
@@ -210,7 +212,8 @@ public class AlarmActivity extends BaseActivity {
 				.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
 	}
-
+	private int totalItemCount;
+	private int lastViewItem;
 	@AfterViews
 	void bindData() {
 		ScheduleService.setOnNewAlarmServiceListener(new onNewAlarmServiceListener() {
@@ -224,16 +227,34 @@ public class AlarmActivity extends BaseActivity {
 				// + currentMax);
 			}
 		});
-		mLvAlarm.addFooterView(footerView);
+//		mLvAlarm.addFooterView(footerView);
 		mLvAlarm.setAdapter(mAlarmListAdapter);
-		mSrlAlarm.setOnRefreshListener(new OnRefreshListener() {
+		mLvAlarm.setOnScrollListener(new OnScrollListener() {
+			private int totalItemCount;
 			@Override
-			public void onRefresh() {
-				mSrlAlarm.setRefreshing(false);
-				pDialog.show();
-				getData(true);
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+				if (totalItemCount == lastViewItem && scrollState == SCROLL_STATE_IDLE) {
+					pDialog.show();
+					getData(false);
+				}
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				// TODO Auto-generated method stub
+				lastViewItem = firstVisibleItem + visibleItemCount;
+				this.totalItemCount = totalItemCount;
 			}
 		});
+//		mSrlAlarm.setOnRefreshListener(new OnRefreshListener() {
+//			@Override
+//			public void onRefresh() {
+//				mSrlAlarm.setRefreshing(false);
+//				pDialog.show();
+//				getData(true);
+//			}
+//		});
 		Calendar c = Calendar.getInstance();
 		mEtStartDatetime
 				.setText(c.get(Calendar.YEAR) + "-" + c.get(Calendar.MONTH) + "-" + c.get(Calendar.DAY_OF_MONTH));
@@ -374,6 +395,15 @@ public class AlarmActivity extends BaseActivity {
 			pDialog.show();
 			getData(true);
 		}
+		
+		mSrlAlarm.setOnRefreshListener(new OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				pDialog.show();
+				getData(true);
+			}
+		});
 	}
 
 	@Touch(R.id.et_start_datetime)
@@ -502,15 +532,16 @@ public class AlarmActivity extends BaseActivity {
 			else
 				tvRefresh.setText("加载失败，点击重试");
 		}
+		
 
-		if (!isLoadAll) {
-			footerMsg.setText("点击加载更多");
-			footerMsg.setClickable(true);
-		} else {
-			T.showLong(this, "已经加载全部");
-			footerMsg.setText("已经加载全部");
-			footerMsg.setClickable(false);
-		}
+//		if (!isLoadAll) {
+//			footerMsg.setText("点击加载更多");
+//			footerMsg.setClickable(true);
+//		} else {
+//			T.showLong(this, "已经加载全部");
+//			footerMsg.setText("已经加载全部");
+//			footerMsg.setClickable(false);
+//		}
 		if (isSuccess) {
 			mAlarmListAdapter.notifyDataSetChanged();
 		}
