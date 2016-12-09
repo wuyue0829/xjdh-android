@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.AlarmItem;
+import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.StringUtils;
 
 import android.content.Context;
@@ -72,18 +73,19 @@ public class AlarmListAdapter extends BaseAdapter {
 			listItemView = (ListItemView) convertView.getTag();
 		}
 		AlarmItem alarmItem = listItems.get(position);
+		L.d("!!!!!!!!!!!", alarmItem.toString());
 		listItemView.date.setText(StringUtils.friendly_time(alarmItem.getAdded_datetime()));
 		listItemView.content.setText(StringUtils.cutArticle(alarmItem.getSubject(), 40));
 		listItemView.area.setText(alarmItem.getCity() + "-" + alarmItem.getCounty() + "-" + alarmItem.getSubstation_name());
-		if (alarmItem.getStatus().equalsIgnoreCase("unsloved")) {
-			listItemView.status.setText("未处理");
+		if (alarmItem.getStatus().equalsIgnoreCase("unresolved")) {
+			listItemView.status.setText("正在告警");
 			listItemView.status.setBackgroundColor(Color.RED);
-		} else if (alarmItem.getStatus().equalsIgnoreCase("sloving")) {
-			listItemView.status.setText("处理中");
+		} else if (alarmItem.getStatus().equalsIgnoreCase("solving")) {
+			listItemView.status.setText("告警结束未确认恢复");
 			listItemView.status.setBackgroundColor(Color.YELLOW);
-		} else if (alarmItem.getStatus().equalsIgnoreCase("sloved")) {
-			listItemView.status.setText("处理完成");
-			listItemView.status.setBackgroundColor(Color.GREEN);
+		} else if (alarmItem.getStatus().equalsIgnoreCase("solved")) {
+			listItemView.status.setText("已确认恢复");
+			listItemView.status.setBackgroundColor(Color.BLUE);
 		}
 		Drawable drawableLevel = null;
 		switch (alarmItem.getLevel()) {

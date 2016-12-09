@@ -129,6 +129,7 @@ public class AppContext extends Application {
 		Update u = null;// = new ApiRestClientInterface_(this);
 		try {
 			u = mApiClient.getUpdateInfo();
+			L.d("-------------", u.getDownloadUrl());
 		} catch (Exception e) {
 			L.e("get update info", e.toString());
 		}

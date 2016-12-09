@@ -12,11 +12,13 @@ import org.androidannotations.annotations.ViewById;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.adapter.WebviewFragmentAdapter;
+import com.chinatelecom.xjdh.bean.AlarmItem;
 import com.chinatelecom.xjdh.bean.DevItem;
 import com.chinatelecom.xjdh.bean.DevTypeItem;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.URLs;
+import com.nostra13.universalimageloader.utils.L;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 
 import android.annotation.SuppressLint;
@@ -63,10 +65,12 @@ public class RealtimeActivity extends BaseActivity {
 		setTitle(devTypeItem.getName());
 		myAdapter = new WebPagerAdapter();
 		for (DevItem e : devTypeItem.getDevlist()) {
-			addView(mListViews,
-					URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + e.getData_id() + "&model=" + devTypeItem.getType()
-							+ "&access_token="+ PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, ""));
+			String url = URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + e.getData_id() + "&model=" +devTypeItem.getName()
+			+ "&access_token="+ PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
+			L.d("---------------", url);
+			addView(mListViews,url);
 		}
+		
 		mWebviewPager.setAdapter(myAdapter);
 		mWebviewIndicator.setViewPager(mWebviewPager);
 		mWebviewIndicator.setFooterIndicatorStyle(IndicatorStyle.Triangle);

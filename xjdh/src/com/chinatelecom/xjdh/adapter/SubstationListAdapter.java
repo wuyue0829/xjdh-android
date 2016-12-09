@@ -22,16 +22,13 @@ import android.widget.TextView;
 public class SubstationListAdapter extends BaseAdapter {
 	private List<SubstationItem> listItems = new ArrayList<>();
 	private Context context;// 运行上下文
-	private LayoutInflater listContainer;// 视图容器
-	static class ListItemView { // 自定义控件集合
-		public TextView num;
-		public TextView roomName;
-	}
+	private LayoutInflater inflater;// 视图容器
+	
 
 	public SubstationListAdapter(Context context) {
 		super();
 		this.context = context;
-		this.listContainer = LayoutInflater.from(context);
+		inflater = LayoutInflater.from(context);
 	}
 
 	
@@ -60,7 +57,7 @@ public class SubstationListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ListItemView listItemView = null;
 		if (convertView == null) {
-			convertView = listContainer.inflate(R.layout.area_list_item, null);
+			convertView = inflater.inflate(R.layout.area_list_item, null);
 			listItemView = new ListItemView();
 			listItemView.num = (TextView) convertView.findViewById(R.id.tv_num);
 			listItemView.roomName = (TextView) convertView.findViewById(R.id.tv_info);
@@ -80,6 +77,10 @@ public class SubstationListAdapter extends BaseAdapter {
 	public void addLists(List<SubstationItem> items) {
 		listItems.addAll(items); 
 	    }
-
+	
+	
+	class ListItemView { // 自定义控件集合
+		 TextView num,roomName;
+	}
 	
 }

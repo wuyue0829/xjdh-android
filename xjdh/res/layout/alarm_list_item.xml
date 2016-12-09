@@ -56,8 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/space_5"
             android:layout_marginRight="@dimen/space_5"
-            android:background="@color/blue"
-            android:text="未处理"
+            android:text=""
             android:textColor="@color/white" />
 
         <TextView

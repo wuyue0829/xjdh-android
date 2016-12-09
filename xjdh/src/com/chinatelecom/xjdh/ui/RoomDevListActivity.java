@@ -84,6 +84,7 @@ public class RoomDevListActivity extends BaseActivity {
 	@Background
 	void getRoomDeviceList() {
 		try {
+			L.d("111111111111", mRoomCode);
 			ApiResponse apiResp = mApiClientV1.get_room_dev_list(mRoomCode, "");
 			L.e("12121212121213434535465768" + apiResp.getData());
 			if (apiResp.getRet() == 0) {
@@ -128,10 +129,12 @@ public class RoomDevListActivity extends BaseActivity {
 			DoorListActivity_.intent(this).devTypeItem(mDevTypeList.get(pos)).start();
 			//DoorActivity_.intent(this).Name(mDevTypeList.get(pos).getDevlist()[0].getName()).DataId(mDevTypeList.get(pos).getDevlist()[0].getData_id()).CanOpen(mDevTypeList.get(pos).getDevlist()[0].getCan_open()).start();
 		}else if (Arrays.asList(WEBVIEW_MODEL).contains(mDevTypeList.get(pos).getType())) {
+			String loadUrl = URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + mRoomCode + "&model="
+					+ mDevTypeList.get(pos).getType() + "&access_token="
+					+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION);
+			L.d("=================", loadUrl);
 			WebViewActivity_.intent(this)
-					.originalUrl(URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + mRoomCode + "&model="
-							+ mDevTypeList.get(pos).getType() + "&access_token="
-							+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION))
+					.originalUrl(loadUrl)
 					.title(mDevTypeList.get(pos).getName()).start();
 		} else {
 			RealtimeActivity_.intent(this).devTypeItem(mDevTypeList.get(pos)).start();

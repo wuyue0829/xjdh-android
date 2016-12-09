@@ -19,12 +19,15 @@ public final class R {
         public static final int abc_slide_in_top=0x7f040007;
         public static final int abc_slide_out_bottom=0x7f040008;
         public static final int abc_slide_out_top=0x7f040009;
-        public static final int dialog_enter=0x7f04000a;
-        public static final int dialog_exit=0x7f04000b;
-        public static final int slide_left_in=0x7f04000c;
-        public static final int slide_left_out=0x7f04000d;
-        public static final int slide_right_in=0x7f04000e;
-        public static final int slide_right_out=0x7f04000f;
+        public static final int base_slide_remain=0x7f04000a;
+        public static final int base_slide_right_in=0x7f04000b;
+        public static final int base_slide_right_out=0x7f04000c;
+        public static final int dialog_enter=0x7f04000d;
+        public static final int dialog_exit=0x7f04000e;
+        public static final int slide_left_in=0x7f04000f;
+        public static final int slide_left_out=0x7f040010;
+        public static final int slide_right_in=0x7f040011;
+        public static final int slide_right_out=0x7f040012;
     }
     public static final class array {
         public static final int spdev_array=0x7f0e0000;

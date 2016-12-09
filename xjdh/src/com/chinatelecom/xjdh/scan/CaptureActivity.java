@@ -4,7 +4,6 @@ import org.androidannotations.annotations.EActivity;
 
 import com.chinatelecom.xjdh.R;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;

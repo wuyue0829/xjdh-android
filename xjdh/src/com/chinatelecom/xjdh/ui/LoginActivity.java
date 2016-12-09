@@ -143,6 +143,7 @@ public class LoginActivity extends BaseActivity {
 			try {
 				L.d("WWWWWWWWWWWWWWWWWWWWWWWWWw", mapper.writeValueAsString(resp.getResponse().toString()));
 				OauthRespose mOauthResp = mapper.readValue(resp.getResponse(), OauthRespose.class);
+				PreferenceUtils.setPrefString(this, PreferenceConstants.USER_INFO, mapper.writeValueAsString(resp));
 				PreferenceUtils.setPrefString(this, PreferenceConstants.ACCESSTOKEN, mOauthResp.getAccess_token());
 				PreferenceUtils.setPrefInt(this, PreferenceConstants.EXPIRES, mOauthResp.getExpires());
 				PreferenceUtils.setPrefInt(this, PreferenceConstants.EXPIRE_IN, mOauthResp.getExpires_in());

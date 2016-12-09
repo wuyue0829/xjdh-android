@@ -160,6 +160,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 	@Override
 	public void onBackPressed() {
 		moveTaskToBack(true);
+		
 	}
 
 	@Override
@@ -346,4 +347,6 @@ public class MainActivity extends BaseActivity implements EventHandler {
 			e.printStackTrace(System.err);
 		}
 	}
+	
+	
 }

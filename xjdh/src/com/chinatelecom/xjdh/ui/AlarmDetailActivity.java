@@ -1,5 +1,6 @@
 package com.chinatelecom.xjdh.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.androidannotations.annotations.AfterViews;
@@ -16,7 +17,9 @@ import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.AlarmItem;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.DevTypeItem;
+import com.chinatelecom.xjdh.bean.LoginResponse;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
+import com.chinatelecom.xjdh.rest.client.ApiRestClientInterfaceV1;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
@@ -69,9 +72,9 @@ public class AlarmDetailActivity extends BaseActivity {
 	@Extra("alarmItem")
 	AlarmItem alarmItem;
 	@RestService
-	ApiRestClientInterface mApiClient;
+	ApiRestClientInterfaceV1 mApiClient;
 	ProgressDialog pDialog;
-
+	LoginResponse response;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,6 +90,15 @@ public class AlarmDetailActivity extends BaseActivity {
 	@AfterViews
 	void bindData() {
 		setTitle("告警详情");
+		
+		String infoStr = PreferenceUtils.getPrefString(this, PreferenceConstants.USER_INFO, "");
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			response = mapper.readValue(infoStr, LoginResponse.class);
+		} catch (Exception ex) {
+
+		}
+		
 		tvAlarmDetailAddDatetime.setText(alarmItem.getAdded_datetime());
 		tvAlarmDetailCity.setText(alarmItem.getCity());
 		tvAlarmDetailContent.setText(alarmItem.getSubject());
@@ -123,14 +135,14 @@ public class AlarmDetailActivity extends BaseActivity {
 		if (modelKey.equalsIgnoreCase("smd_device"))
 			btnMonitor.setVisibility(View.GONE);
 		tvAlarmDetailRoom.setText(alarmItem.getRoom_name());
-		if (alarmItem.getStatus().equalsIgnoreCase("unsloved")) {
-			tvAlarmDetailStatus.setText("未处理");
+		if (alarmItem.getStatus().equalsIgnoreCase("unresolved")) {
+			tvAlarmDetailStatus.setText("正在告警");
 			tvAlarmDetailStatus.setTextColor(Color.RED);
-		} else if (alarmItem.getStatus().equalsIgnoreCase("sloving")) {
-			tvAlarmDetailStatus.setText("处理中");
+		} else if (alarmItem.getStatus().equalsIgnoreCase("solving")) {
+			tvAlarmDetailStatus.setText("告警结束未确认恢复");
 			tvAlarmDetailStatus.setTextColor(Color.YELLOW);
-		} else if (alarmItem.getStatus().equalsIgnoreCase("sloved")) {
-			tvAlarmDetailStatus.setText("处理完成");
+		} else if (alarmItem.getStatus().equalsIgnoreCase("solved")) {
+			tvAlarmDetailStatus.setText("已确认恢复");
 			tvAlarmDetailStatus.setTextColor(Color.GREEN);
 		}
 		tvAlarmDetailSubstation.setText(alarmItem.getSubstation_name());
@@ -138,41 +150,42 @@ public class AlarmDetailActivity extends BaseActivity {
 
 	@Click(R.id.btn_monitor)
 	void onBtnMonitorClicked() {
-		String type = "", typeName = "";
-		if (alarmItem.getDev_model().equalsIgnoreCase("water") || alarmItem.getDev_model().equalsIgnoreCase("smoke")) {
-			type = "di";
-			typeName = "开关量";
-		} else if (alarmItem.getDev_model().equalsIgnoreCase("temperature") || alarmItem.getDev_model().equalsIgnoreCase("humid")) {
-			type = "ad";
-			typeName = "模拟量";
-		} else if (alarmItem.getDev_model().equalsIgnoreCase("imem_12")) {
-			type = "imem12";
-			typeName = "智能电表";
-		}
-		if (type.equalsIgnoreCase("ad") || type.equalsIgnoreCase("di") || type.equalsIgnoreCase("imem12")) {
-			String originalUrl=URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + alarmItem.getRoom_code() + "&model=" + type + "&access_token="
+//		String type = "", typeName = "";
+//		if (alarmItem.getDev_model().equalsIgnoreCase("water") || alarmItem.getDev_model().equalsIgnoreCase("smoke")) {
+//			type = "di";
+//			typeName = "开关量";
+//		} else if (alarmItem.getDev_model().equalsIgnoreCase("temperature") || alarmItem.getDev_model().equalsIgnoreCase("humid")) {
+//			type = "ad";
+//			typeName = "模拟量";
+//		} else if (alarmItem.getDev_model().equalsIgnoreCase("imem_12")) {
+//			type = "imem12";
+//			typeName = "智能电表";
+//		}
+//		if (type.equalsIgnoreCase("ad") || type.equalsIgnoreCase("di") || type.equalsIgnoreCase("imem12")) {
+			String originalUrl=URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + alarmItem.getData_id() + "&model=" + alarmItem.getDev_model() + "&access_token="
 					+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION);
-			WebViewActivity_.intent(this).originalUrl(originalUrl).title(typeName).start();
-			L.v("状态："+alarmItem.getRoom_code());
-		} else {
-			pDialog.show();
-			getData();
-		}
+			L.d("----------",originalUrl);
+			WebViewActivity_.intent(this).originalUrl(originalUrl).title(alarmItem.getDev_name()).start();
+//			L.v("状态："+alarmItem.getRoom_code());
+//		} else {
+//			pDialog.show();
+//			getData();
+//		}
 	}
-
+	List<DevTypeItem> l;
 	@Background
 	void getData() {
+		Looper.prepare();
 		try {
-			Looper.prepare();
-			L.d("@@@@@@@@@@@@", alarmItem.getRoom_code());
-			L.d("##########", alarmItem.getDev_model());
-			ApiResponse apiResp = mApiClient.getRoomDeviceList(alarmItem.getRoom_code(), alarmItem.getDev_model());
+			ApiResponse apiResp = mApiClient.get_room_dev_list(alarmItem.getRoom_code(),alarmItem.getDev_model());
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
-				List<DevTypeItem> l = mapper.readValue(apiResp.getData(), new TypeReference<List<DevTypeItem>>() {
+				l = mapper.readValue(apiResp.getData(), new TypeReference<List<DevTypeItem>>() {
 				});
+//				mTypeList.clear();
+//				mTypeList.addAll(l);
 				if (l.size() > 0) {
-					onResult(true, l.get(0));
+					onResult(true);
 					Looper.loop();
 					return;
 				}
@@ -180,17 +193,17 @@ public class AlarmDetailActivity extends BaseActivity {
 		} catch (Exception e) {
 			L.e(e.toString());
 		}
-		onResult(false, null);
+		onResult(false);
 		Looper.loop();
 	}
 
 	@UiThread
-	void onResult(boolean isSuccess, DevTypeItem devTypeItem) {
+	void onResult(boolean isSuccess) {
 		if (pDialog.isShowing()) {
 			pDialog.dismiss();
 		}
 		if (isSuccess) {
-			RealtimeActivity_.intent(this).devTypeItem(devTypeItem).start();
+			RealtimeActivity_.intent(this).devTypeItem(l.get(0)).start();
 		} else {
 			T.showShort(this, "加载数据失败");
 		}

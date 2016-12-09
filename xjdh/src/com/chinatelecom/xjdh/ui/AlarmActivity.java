@@ -491,12 +491,12 @@ public class AlarmActivity extends BaseActivity {
 			String model = selModel > 0 ? modelList.get(selModel - 1).getKey() : "";
 			String startdatetime = mEtStartDatetime.getText().toString();
 			String enddatetime = mEtEndDatetime.getText().toString();
-			String lastId = (!isRefreshing && alarmList.size() > 0) ? alarmList.get(0).getId() : "-1";
+			String lastId = (isRefreshing && alarmList.size() > 0) ? alarmList.get(0).getId() : "-1";
 //			ScheduleService.SetRequestParams(citycode, countycode, substationId, roomId, level, model, startdatetime,
 //					enddatetime, String.valueOf(isRefreshing ? 0 : alarmList.size()),
 //					String.valueOf(SharedConst.DEFAULT_PAGE_SIZE), lastId);
 			ApiResponse apiResp = mApiClient.getAlarmList(citycode, countycode, substationId, roomId, level, model,startdatetime, enddatetime, String.valueOf(isRefreshing ? 0 : alarmList.size()),String.valueOf(SharedConst.DEFAULT_PAGE_SIZE), lastId);
-			L.e("ggggggggggg"+apiResp.getData()+""+apiResp.getRet());
+			
 			// 请求加载数据
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
