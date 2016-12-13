@@ -129,7 +129,7 @@ public class RoomDevListActivity extends BaseActivity {
 			DoorListActivity_.intent(this).devTypeItem(mDevTypeList.get(pos)).start();
 			//DoorActivity_.intent(this).Name(mDevTypeList.get(pos).getDevlist()[0].getName()).DataId(mDevTypeList.get(pos).getDevlist()[0].getData_id()).CanOpen(mDevTypeList.get(pos).getDevlist()[0].getCan_open()).start();
 		}else if (Arrays.asList(WEBVIEW_MODEL).contains(mDevTypeList.get(pos).getType())) {
-			String loadUrl = URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + mRoomCode + "&model="
+			String loadUrl = URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + mRoomCode + "&model="
 					+ mDevTypeList.get(pos).getType() + "&access_token="
 					+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION);
 			L.d("=================", loadUrl);
