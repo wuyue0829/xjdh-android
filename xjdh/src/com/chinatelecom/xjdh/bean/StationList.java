@@ -84,4 +84,9 @@ public class StationList implements Serializable {
 		this.substation_id = substation_id;
 	}
 
+	@Override
+	public String toString() {
+		return name;
+	}
+
 }

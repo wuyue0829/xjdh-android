@@ -13,14 +13,13 @@
 
         <EditText
             android:id="@+id/et_search"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:background="@drawable/tiao"
             android:drawableLeft="@drawable/search"
-            android:ems="10"
             android:layout_gravity="center_vertical"
             android:hint="搜索"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:paddingLeft="4dp"
             android:paddingRight="40dp"
             android:singleLine="true"
@@ -29,10 +28,11 @@
         </EditText>
         <Button
             android:id="@+id/btn_seach"
-            android:layout_width="60dp"
+            android:layout_width="100dp"
             android:layout_height="38dp"
             android:layout_weight="1"
             android:text="查询"
+            android:singleLine="true"
             android:padding="5dp"
             android:background="@drawable/btn_login"
             android:layout_gravity="center_vertical"

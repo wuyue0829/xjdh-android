@@ -2,6 +2,7 @@ package com.chinatelecom.xjdh.ui;
 
 import java.io.IOException;
 
+import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -14,6 +15,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.BoardSettingData;
 import com.chinatelecom.xjdh.tool.BluetoothTool;
+import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.T;
 
 import android.util.Log;
@@ -31,6 +33,11 @@ public class BoardSettingActivity extends BaseActivity {
 	
 	private ObjectMapper objectMapper = new ObjectMapper();
 	
+	@AfterViews
+	void showData(){
+		BluetoothTool.SendCmd("{\"cmd\": \"call_setting\"}\r\n");
+		ReadData();
+	}
 	
 	@Click(R.id.btnReadSetting)
 	void ReadSetting()
@@ -44,6 +51,7 @@ public class BoardSettingActivity extends BaseActivity {
 	public void ReadData()
 	{
 		String jsonData = BluetoothTool.readMsg();
+		L.d("?????????????", jsonData);
 		if(jsonData.isEmpty())
 		{
 			ShowMessage("请求数据失败");
@@ -51,6 +59,7 @@ public class BoardSettingActivity extends BaseActivity {
 		}else{
 			try {
 				boardData = (BoardSettingData)objectMapper.readValue(jsonData, BoardSettingData.class);
+				L.d("<><><><><><><><>", boardData.toString());
 				ShowData();
 				ShowMessage("请求数据成功");
 			}
@@ -84,6 +93,7 @@ public class BoardSettingActivity extends BaseActivity {
 	@Click(R.id.btnWriteSetting)
 	void SaveSetting()
 	{
+//		boardData = new BoardSettingData();
 		boardData.setServer_addr(etServerAddr.getText().toString());
 		boardData.setDevice_id(etDeviceId.getText().toString());
 		boardData.setIp0(etIP0.getText().toString());
@@ -95,6 +105,7 @@ public class BoardSettingActivity extends BaseActivity {
 		boardData.setGateway1(etGateway1.getText().toString());
 		boardData.setDns1(etDns1.getText().toString());
 		boardData.setCmd("send_setting");
+		L.d(">>>>>>>>>>>>>>>>>>", boardData.toString());
 		try {
 			String content = objectMapper.writeValueAsString(boardData);
 			content += "\r\n";

@@ -17,7 +17,7 @@ public class PortView extends LinearLayout{
         super(context);
     }
 
-    public void setTexts(String index, String value, String display1, String display2) {
+    public void setTexts(String index, String value, String display1,String display2) {
     	tvPortIndex.setText(index);
     	tvPortValue.setText(value);
     	tvPortDisplay1.setText(display1);

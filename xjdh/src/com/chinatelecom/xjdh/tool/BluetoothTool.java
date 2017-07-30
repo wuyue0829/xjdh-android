@@ -17,18 +17,16 @@ public class BluetoothTool extends Thread {
 	public static BufferedReader br;
 
 	public static boolean setup(BluetoothDevice device) {
-		//for (int i = 1; i <= 30; i++) {
+		// for (int i = 1; i <= 30; i++) {
 		try {
-			if(bluetoothSocket != null)
-			{
+			if (bluetoothSocket != null) {
 				bluetoothSocket.close();
 			}
-			} catch (IOException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 		}
 		try {
-			if(bluetoothSocket != null)
-			{
+			if (bluetoothSocket != null) {
 				bluetoothSocket.close();
 			}
 			bluetoothSocket = initSocket(device, 3);
@@ -39,7 +37,7 @@ public class BluetoothTool extends Thread {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 		}
-		//}
+		// }
 		return false;
 	}
 
@@ -78,23 +76,23 @@ public class BluetoothTool extends Thread {
 	}
 
 	public static boolean SendCmd(String cmd) {
-		if(!bluetoothSocket.isConnected())
-		{
-			return false;
-		}
-		try {
-			bw.write(cmd);
-			bw.flush();// 刷新
-			return true;
-		} catch (IOException e) {
-			//e.printStackTrace();
+		if (bluetoothSocket != null) {
+			if (!bluetoothSocket.isConnected()) {
+				return false;
+			}
+			try {
+				bw.write(cmd);
+				bw.flush();// 刷新
+				return true;
+			} catch (IOException e) {
+				// e.printStackTrace();
+			}
 		}
 		return false;
 	}
 
 	public static String readMsg() {
-		if(!bluetoothSocket.isConnected())
-		{
+		if (!bluetoothSocket.isConnected()) {
 			return "";
 		}
 		String msg;
@@ -102,8 +100,8 @@ public class BluetoothTool extends Thread {
 			msg = br.readLine();
 			return msg;
 		} catch (IOException e) {
-			//e.printStackTrace();
-		}// 读取一行数据
+			// e.printStackTrace();
+		} // 读取一行数据
 		return "";
 	}
 }

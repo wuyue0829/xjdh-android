@@ -17,6 +17,7 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.ApiResponseStationList;
 import com.chinatelecom.xjdh.bean.StationList;
@@ -28,9 +29,12 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,10 +85,30 @@ public class StationGroupingActivity extends Activity {
 		lv_grouping_name.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 	}
-
+	@SuppressWarnings("deprecation")
+	@UiThread
+	void onPreferenceLogoutClicked() {
+		final AlertDialog mExitDialog = new AlertDialog.Builder(StationGroupingActivity.this).create();
+		mExitDialog.setTitle("下线提示");
+		mExitDialog.setIcon(R.drawable.index_btn_exit);
+		mExitDialog.setMessage("您的账户已在另一个设备登录,请尝试重新登陆");
+		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mExitDialog.dismiss();
+				String account = PreferenceUtils.getPrefString(StationGroupingActivity.this, PreferenceConstants.ACCOUNT, "");
+				PreferenceUtils.clearPreference(StationGroupingActivity.this, PreferenceManager.getDefaultSharedPreferences(StationGroupingActivity.this));
+				PreferenceUtils.setPrefString(StationGroupingActivity.this, PreferenceConstants.ACCOUNT, account);
+				AppManager.getAppManager().finishAllActivity();
+				LoginActivity_.intent(StationGroupingActivity.this).start();
+			}
+		});
+		mExitDialog.show();
+	}
 	@Background
 	public void getData(String substation_id) {
 		ApiResponse apiResp = mApiClient.Group(substation_id);
+		L.d("55555555555", apiResp.getData());
 		if (apiResp.getRet() == 0) {
 			ObjectMapper mapper = new ObjectMapper();
 			ApiResponseStationList apiResponseStationList;
@@ -100,6 +124,8 @@ public class StationGroupingActivity extends Activity {
 			if (apiResp.getRet() == 0) {
 				ShowResponse(apiResp);
 			}
+		}else if(apiResp.getData().equals("Access token is not valid")){
+			onPreferenceLogoutClicked();
 		}
 	}
 

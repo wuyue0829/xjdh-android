@@ -63,4 +63,10 @@ public class OauthRespose {
 		return expires;
 	}
 
+	@Override
+	public String toString() {
+		return "OauthRespose [refresh_token=" + refresh_token + ", token_type=" + token_type + ", expires_in="
+				+ expires_in + ", access_token=" + access_token + ", expires=" + expires + "]";
+	}
+
 }

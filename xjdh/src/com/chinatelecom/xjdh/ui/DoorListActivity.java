@@ -12,6 +12,7 @@ import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.adapter.WebviewFragmentAdapter;
 import com.chinatelecom.xjdh.bean.DevItem;
 import com.chinatelecom.xjdh.bean.DevTypeItem;
+import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.view.DoorView_;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 
@@ -45,6 +46,7 @@ public class DoorListActivity extends BaseActivity {
 		setTitle(devTypeItem.getName());
 		myAdapter = new WebPagerAdapter();
 		for (DevItem e : devTypeItem.getDevlist()) {
+			L.d("================", e.toString());
 			DoorView_ newDv = (DoorView_)DoorView_.build(this);
 			newDv.SetPara(e.getName(), e.getData_id(), e.getCan_open());
 			mListViews.add(newDv);

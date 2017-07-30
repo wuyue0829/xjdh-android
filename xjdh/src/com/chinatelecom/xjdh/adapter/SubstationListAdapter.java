@@ -8,7 +8,6 @@ import com.chinatelecom.xjdh.bean.SubstationItem;
 import com.chinatelecom.xjdh.utils.L;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +46,6 @@ public class SubstationListAdapter extends BaseAdapter {
 	public Object getItem(int position) {
 		return listItems.get(position);
 	}
-
 	@Override
 	public long getItemId(int position) {
 		return position;
@@ -66,6 +64,7 @@ public class SubstationListAdapter extends BaseAdapter {
 			listItemView = (ListItemView) convertView.getTag();
 		}
 		SubstationItem substationItem = listItems.get(position);
+		L.d("00000000000000", substationItem.toString());
 		listItemView.num.setText(String.valueOf(position +1));
 		listItemView.roomName.setText(substationItem.getName());
 		return convertView;

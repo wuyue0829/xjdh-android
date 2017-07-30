@@ -15,8 +15,8 @@ import org.androidannotations.annotations.ViewById;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.tool.BluetoothTool;
+import com.chinatelecom.xjdh.utils.L;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -60,7 +60,6 @@ public class TestEquipmentActivity extends BaseActivity {
 		pDialog = new ProgressDialog(this);
 		
 		deviceList = new ArrayList<String>();
-
 		mAdapter = BluetoothAdapter.getDefaultAdapter();
 		/**
 		 * 检查手机的蓝牙设备是否打开，未打开则 强制 打开蓝牙设备
@@ -72,6 +71,18 @@ public class TestEquipmentActivity extends BaseActivity {
 			}
 		}
 		devices = new ArrayList<BluetoothDevice>();
+		Set<BluetoothDevice> pairedDevices = mAdapter.getBondedDevices();
+//
+		// If there are paired devices, add each one to the ArrayAdapter
+		if (pairedDevices.size() > 0) {
+			for (BluetoothDevice device : pairedDevices) {
+				devices.add(device);
+				deviceList.add(device.getAddress() + " " + device.getName());
+			}
+		}
+
+		deviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, deviceList);
+		lvDevice.setAdapter(deviceAdapter);
 
 	}
 
@@ -96,19 +107,7 @@ public class TestEquipmentActivity extends BaseActivity {
 		filter = new IntentFilter(BluetoothDevice.ACTION_UUID);
 		registerReceiver(mReceiver, filter);
 
-		Set<BluetoothDevice> pairedDevices = mAdapter.getBondedDevices();
-
-		// If there are paired devices, add each one to the ArrayAdapter
-		if (pairedDevices.size() > 0) {
-			for (BluetoothDevice device : pairedDevices) {
-				devices.add(device);
-				deviceList.add(device.getAddress() + " " + device.getName());
-			}
-		}
-
-		deviceAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, deviceList);
-		lvDevice.setAdapter(deviceAdapter);
-
+		
 	}
 
 	/**
@@ -138,11 +137,22 @@ public class TestEquipmentActivity extends BaseActivity {
 				BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 				// Only get not bounded devices
 				if (device.getBondState() != BluetoothDevice.BOND_BONDED) {// 判断给定地址下的device是否已经配对
-					// 保存设备地址与名字
+					// 保存设备地址与名字、
+					if (devices.indexOf(device) == -1)
 					devices.add(device);
+					deviceList.clear();
 					deviceList.add(device.getAddress() + " " + device.getName());
+					L.d("未配对 |============= " + device.getName() + "（" + device.getAddress() + "）");
+					deviceAdapter.notifyDataSetChanged();
 				}
-				deviceAdapter.notifyDataSetChanged();
+				
+//				if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
+//					// 防止重复添加
+//					if (devices.indexOf(device) == -1)
+//						devices.add(device);
+//					L.d("未配对 |============= " + device.getName() + "（" + device.getAddress() + "）");
+//					deviceAdapter.notifyDataSetChanged();
+//				}
 				// When discovery is finished, change the Activity title搜索结束
 			} else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
 				Toast.makeText(getBaseContext(), "discovery finished", Toast.LENGTH_LONG);

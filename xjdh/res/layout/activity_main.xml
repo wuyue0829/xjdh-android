@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -19,4 +19,15 @@
         android:verticalSpacing="@dimen/space_5" >
     </GridView>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/user_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textSize="22sp"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:text="该用户无法进行操作！！！" />
+
+</RelativeLayout>

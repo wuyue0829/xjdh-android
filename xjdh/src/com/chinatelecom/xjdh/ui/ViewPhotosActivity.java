@@ -25,14 +25,15 @@ import android.view.ViewGroup.LayoutParams;
 
 @EActivity(R.layout.view_photos)
 public class ViewPhotosActivity extends BaseActivity {
-	@ViewById(R.id.vpGallery)ViewPagerFixed vpGallery;
+	@ViewById(R.id.vpGallery)
+	ViewPagerFixed vpGallery;
 	
 	@Extra
 	int position;
 	@Extra
 	ArrayList<String> imagePathList;
 	@Extra
-	ArrayList<String> imageUrlList;
+	ArrayList<String> image_list;
 	
 	private MyPageAdapter adapter;
 	private ArrayList<View> listViews = null;
@@ -77,12 +78,12 @@ public class ViewPhotosActivity extends BaseActivity {
 						LayoutParams.MATCH_PARENT));
 				listViews.add(img);
 			}
-		}else if(imageUrlList.size() > 0)
+		}else if(image_list.size() > 0)
 		{
 			//hide the buttons
 			ViewGroup view = (ViewGroup) getWindow().getDecorView();
 			view.findViewById(R.id.bottom_layout).setVisibility(View.GONE);
-			for(String url : imageUrlList)
+			for(String url : image_list)
 			{
 				PhotoView img = new PhotoView(this);
 				img.setBackgroundColor(0xff000000);
@@ -162,6 +163,7 @@ public class ViewPhotosActivity extends BaseActivity {
 
 		public void destroyItem(View arg0, int arg1, Object arg2) {
 				((ViewPagerFixed) arg0).removeView(listViews.get(arg1 % size));
+				
 		}
 
 		public void finishUpdate(View arg0) {

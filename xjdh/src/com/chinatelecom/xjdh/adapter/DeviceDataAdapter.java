@@ -75,12 +75,13 @@ public class DeviceDataAdapter extends BaseAdapter{
 		PortView_ portView = (PortView_)convertView;
 		if(model.equals("302A"))
 		{
-			if(position < 6)
+			if(position+1 < 7)
 			{
 				//di
 				int value = boardData.getDi()[position] > 48 ? boardData.getDi()[position] - 48 : 0;
-				portView.setTexts("DI" + Integer.toString(position), "值:" + Integer.toString(value), "烟感:" + (value == 1?"正常":"告警"), "水浸:" + (value == 1?"正常":"告警"));
-			}else if(position >=6 && position < 10){
+				//"水浸:" + (value == 1?"正常":"告警")
+				portView.setTexts("DI" + Integer.toString(position+1), "值:" + Integer.toString(value), "状态:" + (value == 1?"正常":"告警"),"");
+			}else if(position+1 >=7 && position+1 < 11){
 				//ai
 				int value = boardData.getAi()[position-6];
 				if(value < 200)
@@ -88,10 +89,30 @@ public class DeviceDataAdapter extends BaseAdapter{
 				float realV = ((float)value * 5 )/10000;
 				float tempV = ((float)value * 120)/10000 - 40;
 				float humidV = ((float)value * 100)/10000;
-				portView.setTexts("AI" + Integer.toString(position), "值:" + String.format("%.2fV",realV), "温度:" + String.format("%.2f",tempV), "湿度:" + String.format("%.2f",humidV));
+				portView.setTexts("AI" + Integer.toString(position-5), "值:" + String.format("%.2fV",realV), "温度:" + String.format("%.2f",tempV), "湿度:" + String.format("%.2f",humidV));
 			}
 		}
 		return convertView;
+	}
+	
+	
+	@Override
+	public int getItemViewType(int position) {
+		int type;
+		if (position+1<7) {
+			type = 0;
+		}else{
+			type = 1;
+		}
+		return type;
+	}
+
+	/**
+	 * 该方法返回值为当前适配器Item样式的数量
+	 */
+	@Override
+	public int getViewTypeCount() {
+		return 2;
 	}
 	
 }

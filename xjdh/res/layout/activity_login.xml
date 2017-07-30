@@ -9,11 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="160dp" />
 
-    <View
+    <LinearLayout
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/view1" />
+        android:layout_below="@+id/view1" >
+        <TextView
+            android:id="@+id/msg"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_width="match_parent"
+        	android:layout_height="40dp"
+        	android:textSize="12sp"
+        	android:textColor="#f00"
+        	android:text="重要提醒：请于7月30日前修改密码，否则无法登录，密码长度大于8小于16，且包括大小写字母，数字。"
+            />
+        
+        </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout1"

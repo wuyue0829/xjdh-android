@@ -15,4 +15,9 @@ public class CmdResult {
 	}
 	private String cmd;
 	private String result;
+	@Override
+	public String toString() {
+		return "CmdResult [cmd=" + cmd + ", result=" + result + "]";
+	}
+	
 }

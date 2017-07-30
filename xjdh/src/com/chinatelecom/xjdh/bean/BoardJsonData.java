@@ -1,5 +1,7 @@
 package com.chinatelecom.xjdh.bean;
 
+import java.util.Arrays;
+
 public class BoardJsonData {
 	@org.codehaus.jackson.annotate.JsonProperty("di")
 	private int di[];
@@ -25,5 +27,12 @@ public class BoardJsonData {
 	public void setD_o(int[] d_o) {
 		this.d_o = d_o;
 	}
+	@Override
+	public String toString() {
+		return "BoardJsonData [di=" + Arrays.toString(di) + ", ai=" + Arrays.toString(ai) + ", d_o="
+				+ Arrays.toString(d_o) + "]";
+	}
+	
+	
 	
 }

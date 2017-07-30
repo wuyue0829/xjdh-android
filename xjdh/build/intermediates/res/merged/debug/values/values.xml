@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="checklist_values">
+        <item>温度</item>
+        <item>湿度</item>
+    </string-array>
+    <string-array name="spdev_array">
+        <item>串口0</item>
+        <item>串口1</item>
+        <item>串口2</item>
+        <item>串口3</item>
+        <item>串口4</item>
+    </string-array>
+    <string-array name="spdev_rate_array">
+        <item>1200</item>
+        <item>2400</item>
+        <item>4800</item>
+        <item>9600</item>
+        <item>19200</item>
+        <item>115200</item>
+    </string-array>
+    <attr format="integer" name="item_count"/>
+    <attr format="integer" name="visible_tab_count"/>
+    <color name="ads_bg">#dddddd</color>
+    <color name="albumback">#E1E0DE</color>
+    <color name="aliceblue">#f0f8ff</color>
+    <color name="antiquewhite">#faebd7</color>
+    <color name="aqua">#00ffff</color>
+    <color name="aquamarine">#7fffd4</color>
+    <color name="author_text">#0e5986</color>
+    <color name="azure">#f0ffff</color>
+    <color name="beige">#f5f5dc</color>
+    <color name="bg_gray">#e1e1e1</color>
+    <color name="bisque">#ffe4c4</color>
+    <color name="black">#000000</color>
+    <color name="blanchedalmond">#ffebcd</color>
+    <color name="blue">#0000FF</color>
+    <color name="blueviolet">#8a2be2</color>
+    <color name="border_gray">#d9dfe5</color>
+    <color name="bright_foreground_light">#ff000000</color>
+    <color name="bright_foreground_light_disabled">#80000000</color>
+    <color name="bright_foreground_light_inverse">#ffffffff</color>
+    <color name="brown">#a52a2a</color>
+    <color name="btn_gray">#d1d1d1</color>
+    <color name="burlywood">#deb887</color>
+    <color name="cadetblue">#5f9ea0</color>
+    <color name="chartreuse">#7fff00</color>
+    <color name="chat_area_bg">#e0e0e0</color>
+    <color name="chat_time">#FFFFFF</color>
+    <color name="chocolate">#d2691e</color>
+    <color name="color_hei_8">#00000000</color>
+    <color name="contents_text">#ff000000</color>
+    <color name="coral">#ff7f50</color>
+    <color name="cornflowerblue">#6495ed</color>
+    <color name="cornsilk">#fff8dc</color>
+    <color name="crimson">#dc143c</color>
+    <color name="cut_off_line">#1f000000</color>
+    <color name="cyan">#00ffff</color>
+    <color name="darkblue">#00008b</color>
+    <color name="darkcyan">#008b8b</color>
+    <color name="darkgoldenrod">#b8860b</color>
+    <color name="darkgray">#a9a9a9</color>
+    <color name="darkgreen">#006400</color>
+    <color name="darkgrey">#a9a9a9</color>
+    <color name="darkkhaki">#bdb76b</color>
+    <color name="darkmagenta">#8b008b</color>
+    <color name="darkolivegreen">#556b2f</color>
+    <color name="darkorange">#ff8c00</color>
+    <color name="darkorchid">#9932cc</color>
+    <color name="darkred">#8b0000</color>
+    <color name="darksalmon">#e9967a</color>
+    <color name="darkseagreen">#8fbc8f</color>
+    <color name="darkslateblue">#483d8b</color>
+    <color name="darkslategray">#2f4f4f</color>
+    <color name="darkslategrey">#2f4f4f</color>
+    <color name="darkturquoise">#00ced1</color>
+    <color name="darkviolet">#9400d3</color>
+    <color name="deep_gray">#394257</color>
+    <color name="deeppink">#ff1493</color>
+    <color name="deepskyblue">#00bfff</color>
+    <color name="dim_foreground_light">#808080</color>
+    <color name="dim_foreground_light_disabled">#80323232</color>
+    <color name="dim_foreground_light_inverse">#ff006eaa</color>
+    <color name="dim_foreground_light_inverse_disabled">#80bebebe</color>
+    <color name="dimgray">#696969</color>
+    <color name="dimgrey">#696969</color>
+    <color name="dodgerblue">#1e90ff</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="face_bg">#eef1f4</color>
+    <color name="ff40ab54">#ff40ab54</color>
+    <color name="fff1f2f3">#fff1f2f3</color>
+    <color name="firebrick">#b22222</color>
+    <color name="floralwhite">#fffaf0</color>
+    <color name="font_color">#27abfe</color>
+    <color name="footer_bg">#f1f1f1</color>
+    <color name="forestgreen">#228b22</color>
+    <color name="frame_button_text_nor">#033a5c</color>
+    <color name="frame_button_text_select">#FFFFFF</color>
+    <color name="fuchsia">#ff00ff</color>
+    <color name="full_transparent">#00000000</color>
+    <color name="gainsboro">#dcdcdc</color>
+    <color name="ghostwhite">#f8f8ff</color>
+    <color name="glass_gall">#c2ebef</color>
+    <color name="gold">#FFD700</color>
+    <color name="goldenrod">#daa520</color>
+    <color name="gray">#808080</color>
+    <color name="grayslate">#708090</color>
+    <color name="graywhite">#F5F5F5</color>
+    <color name="green">#008000</color>
+    <color name="greenyellow">#adff2f</color>
+    <color name="grey">#808080</color>
+    <color name="half_transparent">#aa000000</color>
+    <color name="head_text">#0e5986</color>
+    <color name="header_bg">#c91300</color>
+    <color name="honeydew">#f0fff0</color>
+    <color name="hotpink">#ff69b4</color>
+    <color name="indianred">#cd5c5c</color>
+    <color name="indigo">#4b0082</color>
+    <color name="ivory">#fffff0</color>
+    <color name="khaki">#f0e68c</color>
+    <color name="lavender">#e6e6fa</color>
+    <color name="lavenderblush">#fff0f5</color>
+    <color name="lawngreen">#7cfc00</color>
+    <color name="lemonchiffon">#fffacd</color>
+    <color name="lemonyellow">#FFFACD</color>
+    <color name="light_blue">#87d0f2</color>
+    <color name="light_gray">#99a4b7</color>
+    <color name="lightblue">#0083FF</color>
+    <color name="lightcoral">#f08080</color>
+    <color name="lightcyan">#e0ffff</color>
+    <color name="lightgoldenrodyellow">#fafad2</color>
+    <color name="lightgray">#d3d3d3</color>
+    <color name="lightgreen">#90ee90</color>
+    <color name="lightgrey">#d3d3d3</color>
+    <color name="lightpink">#ffb6c1</color>
+    <color name="lightsalmon">#ffa07a</color>
+    <color name="lightseagreen">#20b2aa</color>
+    <color name="lightskyblue">#87cefa</color>
+    <color name="lightslategray">#778899</color>
+    <color name="lightslategrey">#778899</color>
+    <color name="lightsteelblue">#b0c4de</color>
+    <color name="lightyellow">#ffffe0</color>
+    <color name="lime">#00ff00</color>
+    <color name="limegreen">#32cd32</color>
+    <color name="linen">#faf0e6</color>
+    <color name="list_item_select_color">#f0f0f0</color>
+    <color name="list_item_sub_title">#999999</color>
+    <color name="listitem_black">#ff000000</color>
+    <color name="listitem_blue">#0e5986</color>
+    <color name="listitem_gray">#ff9da19e</color>
+    <color name="listitem_green">#ffe3ffc6</color>
+    <color name="listitem_greenyellow">#ff87b869</color>
+    <color name="listitem_transparent">#00000000</color>
+    <color name="listitem_white">#ffffffff</color>
+    <color name="listitem_yellow">#fffaffbf</color>
+    <color name="magenta">#ff00ff</color>
+    <color name="main_bg_color">#c91300</color>
+    <color name="maroon">#800000</color>
+    <color name="mediumaquamarine">#66cdaa</color>
+    <color name="mediumblue">#0000cd</color>
+    <color name="mediumorchid">#ba55d3</color>
+    <color name="mediumpurple">#9370db</color>
+    <color name="mediumseagreen">#3cb371</color>
+    <color name="mediumslateblue">#7b68ee</color>
+    <color name="mediumspringgreen">#00fa9a</color>
+    <color name="mediumturquoise">#48d1cc</color>
+    <color name="mediumvioletred">#c71585</color>
+    <color name="midnightblue">#191970</color>
+    <color name="mintcream">#f5fffa</color>
+    <color name="mistyrose">#ffe4e1</color>
+    <color name="moccasin">#ffe4b5</color>
+    <color name="navajowhite">#ffdead</color>
+    <color name="navy">#000080</color>
+    <color name="none_color">#00000000</color>
+    <color name="oldlace">#fdf5e6</color>
+    <color name="olive">#808000</color>
+    <color name="olivedrab">#6b8e23</color>
+    <color name="orange">#FFA500</color>
+    <color name="orangered">#ff4500</color>
+    <color name="orchid">#da70d6</color>
+    <color name="palegoldenrod">#eee8aa</color>
+    <color name="palegreen">#98fb98</color>
+    <color name="paleturquoise">#afeeee</color>
+    <color name="palevioletred">#db7093</color>
+    <color name="papayawhip">#ffefd5</color>
+    <color name="peachpuff">#ffdab9</color>
+    <color name="peru">#cd853f</color>
+    <color name="pink">#FFC0CB</color>
+    <color name="plugin_camera_black">#000000</color>
+    <color name="plum">#dda0dd</color>
+    <color name="possible_result_points">#c0ffbd21</color>
+    <color name="powderblue">#b0e0e6</color>
+    <color name="primary">#f08000</color>
+    <color name="primary_color">#f88b00</color>
+    <color name="primary_dark">#f88000</color>
+    <color name="primarytext" type="color">#de000000</color>
+    <color name="purple">#800080</color>
+    <color name="red">#FF0000</color>
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color>
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="rosybrown">#bc8f8f</color>
+    <color name="royalblue">#4169e1</color>
+    <color name="saddlebrown">#8b4513</color>
+    <color name="salmon">#fa8072</color>
+    <color name="sandybrown">#f4a460</color>
+    <color name="seaShell">#fff5ee</color>
+    <color name="seagreen">#2e8b57</color>
+    <color name="sienna">#a0522d</color>
+    <color name="silver">#c0c0c0</color>
+    <color name="skyblue">#87ceeb</color>
+    <color name="slateblue">#6a5acd</color>
+    <color name="slategray">#708090</color>
+    <color name="slategrey">#708090</color>
+    <color name="snow">#fffafa</color>
+    <color name="springgreen">#00ff7f</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="steelblue">#4682b4</color>
+    <color name="style_divider_color">#C9C7CD</color>
+    <color name="style_red">#ff4c41</color>
+    <color name="tan">#d2b48c</color>
+    <color name="teal">#008080</color>
+    <color name="thirty_transparent_black">#4d000000</color>
+    <color name="thistle">#d8bfd8</color>
+    <color name="tomato">#ff6347</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent2">#8000</color>
+    <color name="turquoise">#40e0d0</color>
+    <color name="viewfinder_laser">#ffcc0000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="violet">#ee82ee</color>
+    <color name="weight_bar_buttondown">#63A3D7</color>
+    <color name="weight_bar_buttonup">#A4A9AE</color>
+    <color name="wheat">#f5deb3</color>
+    <color name="white">#ffffff</color>
+    <color name="whitesmoke">#f5f5f5</color>
+    <color name="widget_bar_text_color">#f88b00</color>
+    <color name="yellow">#FFFF00</color>
+    <declare-styleable name="DropEditText"><attr format="reference" name="drawableRight"/><attr name="dropMode">
+            <enum name="flower_parent" value="0"/>
+            <enum name="wrap_content" value="1"/>
+        </attr><attr format="string|reference" name="hint"/></declare-styleable>
+    <declare-styleable name="MyViewPagerIndicator"><attr name="visible_tab_count"/></declare-styleable>
+    <declare-styleable name="MyViewPagerIndicators"><attr name="item_count"/></declare-styleable>
+    <declare-styleable name="SignatureView"><attr format="dimension" name="minWidth"/><attr format="dimension" name="maxWidth"/><attr format="color" name="penColor"/><attr format="float" name="velocityFilterWeight"/></declare-styleable>
+    <declare-styleable name="innerrect"><attr format="integer" name="inner_width"/><attr format="integer" name="inner_height"/><attr format="integer" name="inner_margintop"/><attr format="color" name="inner_corner_color"/><attr format="integer" name="inner_corner_length"/><attr format="integer" name="inner_corner_width"/><attr format="reference" name="inner_scan_bitmap"/><attr format="integer" name="inner_scan_speed"/></declare-styleable>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="dialog_bottom_margin">10dp</dimen>
+    <dimen name="dialog_btn_close_right_margin">10dp</dimen>
+    <dimen name="dialog_btn_close_top_margin">10dp</dimen>
+    <dimen name="dialog_left_margin">10dp</dimen>
+    <dimen name="dialog_right_margin">10dp</dimen>
+    <dimen name="dialog_title_height">30dp</dimen>
+    <dimen name="dialog_title_logo_left_margin">5dp</dimen>
+    <dimen name="dialog_top_margin">30dp</dimen>
+    <dimen name="gd_arrow_offset">5dp</dimen>
+    <dimen name="slidingmenu_offset">70dp</dimen>
+    <dimen name="space_1">1.0dp</dimen>
+    <dimen name="space_10">10.0dp</dimen>
+    <dimen name="space_11">11.0dp</dimen>
+    <dimen name="space_12">12.0dp</dimen>
+    <dimen name="space_13">13.0dp</dimen>
+    <dimen name="space_14">14.0dp</dimen>
+    <dimen name="space_15">15.0dp</dimen>
+    <dimen name="space_16">16.0dp</dimen>
+    <dimen name="space_17">17.0dp</dimen>
+    <dimen name="space_18">18.0dp</dimen>
+    <dimen name="space_19">19.0dp</dimen>
+    <dimen name="space_2">2.0dp</dimen>
+    <dimen name="space_20">20.0dp</dimen>
+    <dimen name="space_21">21.0dp</dimen>
+    <dimen name="space_22">22.0dp</dimen>
+    <dimen name="space_23">23.0dp</dimen>
+    <dimen name="space_24">24.0dp</dimen>
+    <dimen name="space_25">25.0dp</dimen>
+    <dimen name="space_26">26.0dp</dimen>
+    <dimen name="space_27">27.0dp</dimen>
+    <dimen name="space_28">28.0dp</dimen>
+    <dimen name="space_29">29.0dp</dimen>
+    <dimen name="space_3">3.0dp</dimen>
+    <dimen name="space_30">30.0dp</dimen>
+    <dimen name="space_4">4.0dp</dimen>
+    <dimen name="space_5">5.0dp</dimen>
+    <dimen name="space_6">6.0dp</dimen>
+    <dimen name="space_7">7.0dp</dimen>
+    <dimen name="space_8">8.0dp</dimen>
+    <dimen name="space_9">9.0dp</dimen>
+    <dimen name="text_size_10">10.0dp</dimen>
+    <dimen name="text_size_11">11.0dp</dimen>
+    <dimen name="text_size_12">12.0dp</dimen>
+    <dimen name="text_size_13">13.0dp</dimen>
+    <dimen name="text_size_14">14.0dp</dimen>
+    <dimen name="text_size_15">15.0dp</dimen>
+    <dimen name="text_size_16">16.0dp</dimen>
+    <dimen name="text_size_17">17.0dp</dimen>
+    <dimen name="text_size_18">18.0dp</dimen>
+    <dimen name="text_size_19">19.0dp</dimen>
+    <dimen name="text_size_20">20.0dp</dimen>
+    <dimen name="text_size_21">21.0dp</dimen>
+    <dimen name="text_size_22">22.0dp</dimen>
+    <dimen name="text_size_23">23.0dp</dimen>
+    <dimen name="text_size_24">24.0dp</dimen>
+    <dimen name="text_size_25">25.0dp</dimen>
+    <dimen name="text_size_26">26.0dp</dimen>
+    <dimen name="text_size_27">27.0dp</dimen>
+    <dimen name="text_size_28">28.0dp</dimen>
+    <dimen name="text_size_29">29.0dp</dimen>
+    <dimen name="text_size_30">30.0dp</dimen>
+    <dimen name="text_size_31">31.0dp</dimen>
+    <dimen name="text_size_32">32.0dp</dimen>
+    <dimen name="text_size_7">7.0dp</dimen>
+    <dimen name="text_size_8">8.0dp</dimen>
+    <dimen name="text_size_9">9.0dp</dimen>
+    <dimen name="ui_10_dip">10dip</dimen>
+    <drawable name="transparent_background">#20000000</drawable>
+    <item name="auto_focus" type="id"/>
+    <item name="decode" type="id"/>
+    <item name="decode_failed" type="id"/>
+    <item name="decode_succeeded" type="id"/>
+    <item name="encode_failed" type="id"/>
+    <item name="encode_succeeded" type="id"/>
+    <item name="launch_product_query" type="id"/>
+    <item name="quit" type="id"/>
+    <item name="restart_preview" type="id"/>
+    <item name="return_scan_result" type="id"/>
+    <item name="search_book_contents_failed" type="id"/>
+    <item name="search_book_contents_succeeded" type="id"/>
+    <string name="action_settings">设置</string>
+    <string name="album">相册</string>
+    <string name="app_about">app_about</string>
+    <string name="app_exit">app_exit</string>
+    <string name="app_feedback">app_feedback</string>
+    <string name="app_names">新疆动环测试</string>
+    <string name="app_update">app_update</string>
+    <string name="bus_search">公交搜索</string>
+    <string name="camera_cancel">取消</string>
+    <string name="cancel">取消</string>
+    <string name="destination">终点:</string>
+    <string name="drive_search">驾车搜索</string>
+    <string name="feedback_msg">App不好用，有意见、建议，反馈一下，帮助我们做的更好。</string>
+    <string name="finish">完成</string>
+    <string name="invalidSD">sdcard无效或没有插入！</string>
+    <string name="login_prompt">登录中</string>
+    <string name="logout">logout</string>
+    <string name="my_location">我的位置</string>
+    <string name="network_down">网络连接已断开</string>
+    <string name="network_err_msg">您的网络好像出问题了，请连接网络重新试试...</string>
+    <string name="network_up">网络连接已恢复</string>
+    <string name="new_message_background">new_message_background</string>
+    <string name="new_message_sound">new_message_sound</string>
+    <string name="new_message_vibrate">new_message_vibrate</string>
+    <string name="photo">选择相册</string>
+    <string name="preview">预览</string>
+    <string name="progress_loading_msg">加载数据中...</string>
+    <string name="route_info">路线详情</string>
+    <string name="select_from_local">从相册中选取</string>
+    <string name="starting_point">起点：</string>
+    <string name="take_photo">拍照</string>
+    <string name="unfinished">完成</string>
+    <string name="walk_search">步行搜索</string>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <item name="android:actionMenuTextColor">@color/white</item>
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+    </style>
+    <style name="AppTheme" parent="AppTheme.Base"/>
+    <style name="AppTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+        <item name="actionMenuTextColor">@color/white</item>
+    </style>
+    <style name="CustomDialogTheme" parent="android:Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 去掉dialog标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 设置dialog背景，这里也可以在XML布局里面写 -->
+        <!-- 设置是否悬浮 -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="MENU_Dialog_Fullscreen">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@+android:style/Animation.Translucent</item>
+    </style>
+    <style mce_bogus="1" name="PopupAnimation" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/activity_translate_in</item>
+        <item name="android:windowExitAnimation">@anim/activity_translate_out</item>
+    </style>
+    <style mce_bogus="1" name="PopupAnimation1" parent="android:Animation">          
+        <item name="android:windowEnterAnimation">@anim/popup_enter</item>     
+        <item name="android:windowExitAnimation">@anim/popup_exit</item>     
+    </style>
+    <style name="Widget.Styled.ActionBar" parent="@android:style/Widget.ActionBar">
+        <item name="background">@drawable/actionbar_bg</item>
+        <item name="titleTextStyle">@style/AppTheme.ActionBar.TitleTextStyle</item>
+        <item name="android:titleTextStyle">@style/AppTheme.ActionBar.TitleTextStyle</item>
+    </style>
+    <style name="activityAnimation" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_right_out</item>
+    </style>
+    <style name="footbar">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/text_size_10</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:paddingTop">@dimen/space_1</item>
+        <item name="android:paddingBottom">@dimen/space_5</item>
+    </style>
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/full_transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    <style name="main_footbar_radio" parent="footbar">
+        <item name="android:background">@color/transparent</item>
+    </style>
+    <style name="qZonePublishProgressStyle">
+        <item name="android:maxWidth">30.0dip</item>
+        <item name="android:maxHeight">30.0dip</item>
+        <item name="android:minWidth">30.0dip</item>
+        <item name="android:minHeight">30.0dip</item>
+    </style>
+</resources>

@@ -83,6 +83,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
+	
+
 
 	public static ArrayList<BackPressHandler> mListeners = new ArrayList<BackPressHandler>();
 

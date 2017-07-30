@@ -9,7 +9,6 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.ItemSelect;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.res.StringArrayRes;
@@ -18,10 +17,8 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
 import com.chinatelecom.xjdh.R;
-import com.chinatelecom.xjdh.bean.CityItem;
 import com.chinatelecom.xjdh.bean.CmdResult;
 import com.chinatelecom.xjdh.bean.CmdSPDev;
 import com.chinatelecom.xjdh.bean.SPDev;
@@ -29,8 +26,6 @@ import com.chinatelecom.xjdh.bean.SPDevResponse;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.tool.BluetoothTool;
 import com.chinatelecom.xjdh.utils.FileUtils;
-import com.chinatelecom.xjdh.utils.L;
-import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 
 import android.app.ProgressDialog;

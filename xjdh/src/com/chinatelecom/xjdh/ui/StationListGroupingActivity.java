@@ -15,6 +15,7 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.ApiResponseStationList;
 import com.chinatelecom.xjdh.bean.StationList;
@@ -26,9 +27,12 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +54,7 @@ public class StationListGroupingActivity extends Activity {
 	ApiRestClientInterface mApiClient;
 	private stationGroupingAdapter adapter;
 	private ProgressDialog pDialog;
-	private String stationName = "all";
+//	private String stationName = "all";
 	private List<StationList> stList = new ArrayList<StationList>();
 	private Double Longitude;
 	private Double latitude;;
@@ -59,6 +63,7 @@ public class StationListGroupingActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		setTitle("局站列表");
 		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
 		pDialog = new ProgressDialog(this);
@@ -69,16 +74,46 @@ public class StationListGroupingActivity extends Activity {
 	@AfterViews
 	void initData() {
 		pDialog.show();
-		getData(stationName);
+		getData();
 		adapter.setData(stList);
 		lv_stationName_grouping.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 	}
-
+	
+	@Click(R.id.all_left_img)
+	void goBack(){
+		finish();
+	}
+	
+//	@Click(R.id.navigation)
+//	void goNavigation(){
+//		NavigationActivity_.intent(this).start();
+//	}
+	@SuppressWarnings("deprecation")
+	@UiThread
+	void onPreferenceLogoutClicked() {
+		final AlertDialog mExitDialog = new AlertDialog.Builder(StationListGroupingActivity.this).create();
+		mExitDialog.setTitle("下线提示");
+		mExitDialog.setIcon(R.drawable.index_btn_exit);
+		mExitDialog.setMessage("您的账户已在另一个设备登录,请尝试重新登陆");
+		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mExitDialog.dismiss();
+				String account = PreferenceUtils.getPrefString(StationListGroupingActivity.this, PreferenceConstants.ACCOUNT, "");
+				PreferenceUtils.clearPreference(StationListGroupingActivity.this, PreferenceManager.getDefaultSharedPreferences(StationListGroupingActivity.this));
+				PreferenceUtils.setPrefString(StationListGroupingActivity.this, PreferenceConstants.ACCOUNT, account);
+				AppManager.getAppManager().finishAllActivity();
+				LoginActivity_.intent(StationListGroupingActivity.this).start();
+			}
+		});
+		mExitDialog.show();
+	}
 	@Background
-	public void getData(String stationName) {
+	public void getData() {
 		try {
-			ApiResponse apiResp = mApiClient.stationList(stationName);
+			ApiResponse apiResp = mApiClient.stationList();
+			L.d("55555555555", apiResp.toString());
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
 				ApiResponseStationList apiResponseStationList = mapper.readValue(apiResp.getData(),
@@ -86,12 +121,14 @@ public class StationListGroupingActivity extends Activity {
 				List<StationList> list = Arrays.asList(apiResponseStationList.getStationLists());
 				stList.addAll(list);
 
-				L.e("stationName  :" + stationName + "data :" + apiResp.getData());
+				L.e( "data :" + apiResp.getData());
 				adapter.setData(stList);
 				L.e("getRet  :" + apiResp.getRet());
 				if (apiResp.getRet() == 0) {
 					ShowResponse(apiResp);
 				}
+			}else if(apiResp.getData().equals("Access token is not valid")){
+				onPreferenceLogoutClicked();
 			}
 		} catch (Exception e) {
 			L.e("Exception" + e.toString());
@@ -177,7 +214,7 @@ public class StationListGroupingActivity extends Activity {
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			holder.tv_id.setText(data.get(position).getId().toString());
+			holder.tv_id.setText(String.valueOf(position +1));
 			holder.tv_station_name.setText(data.get(position).getName().toString());
 			holder.tv_grouping.setText(data.get(position).getNewGrouping());
 			return convertView;

@@ -35,8 +35,33 @@ public class DevItem implements Parcelable {
 		return name;
 	}
 
+	@org.codehaus.jackson.annotate.JsonProperty("room_id")
+	private java.lang.String room_id;
+	
+	public java.lang.String getRoom_id() {
+		return room_id;
+	}
+
+	public void setRoom_id(java.lang.String room_id) {
+		this.room_id = room_id;
+	}
+
 	@org.codehaus.jackson.annotate.JsonProperty("data_id")
 	private java.lang.String data_id;
+	
+	
+	
+	@org.codehaus.jackson.annotate.JsonProperty("dev_group")
+	private java.lang.String dev_group;
+
+
+	public java.lang.String getDev_group() {
+		return dev_group;
+	}
+
+	public void setDev_group(java.lang.String dev_group) {
+		this.dev_group = dev_group;
+	}
 
 	public void setData_id(java.lang.String data_id) {
 		this.data_id = data_id;
@@ -68,7 +93,9 @@ public class DevItem implements Parcelable {
 		out.writeString(model);
 		out.writeString(name);
 		out.writeString(data_id);
+		out.writeString(room_id);
 		out.writeInt(can_open);
+		out.writeString(dev_group);
 	}
 
 	public static final Parcelable.Creator<DevItem> CREATOR = new Creator<DevItem>() {
@@ -91,6 +118,8 @@ public class DevItem implements Parcelable {
 		model = in.readString();
 		name = in.readString();
 		data_id = in.readString();
+		room_id = in.readString();
 		can_open = in.readInt();
+		dev_group= in.readString();
 	}
 }

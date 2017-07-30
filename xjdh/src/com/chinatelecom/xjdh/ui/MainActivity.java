@@ -3,6 +3,8 @@ package com.chinatelecom.xjdh.ui;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -20,8 +22,10 @@ import com.chinatelecom.xjdh.app.AppContext_;
 import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.LoginResponse;
+import com.chinatelecom.xjdh.bean.MobileAuth;
 import com.chinatelecom.xjdh.bean.OauthParam;
 import com.chinatelecom.xjdh.bean.OauthRespose;
+import com.chinatelecom.xjdh.bean.UserInfo;
 import com.chinatelecom.xjdh.receiver.AppBroadcastReceiver;
 import com.chinatelecom.xjdh.receiver.AppBroadcastReceiver.EventHandler;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
@@ -37,7 +41,9 @@ import com.chinatelecom.xjdh.utils.T;
 import com.chinatelecom.xjdh.utils.Update;
 import com.chinatelecom.xjdh.utils.UpdateManager;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -48,6 +54,7 @@ import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -72,14 +79,20 @@ public class MainActivity extends BaseActivity implements EventHandler {
 	// main board
 	@ViewById(R.id.main_gridview)
 	GridView mMainGrid;
+	@ViewById
+	TextView user_info;
+	@Extra("Auth")
+	MobileAuth Auth;
 	@Extra("isDoLogin")
 	boolean isDoLogin = false;
 	SimpleAdapter mMainGridAdapter;
-	private List<DashboardItem> dashboardList = new ArrayList<MainActivity.DashboardItem>() {
+
+	private List<DashboardItem> dashboardList = new ArrayList<DashboardItem>() {
 		private static final long serialVersionUID = 6541190919019797339L;
 
 		{
-			//add(new DashboardItem(R.drawable.ic_compass, "地图", LocationDemo_.class));
+			// add(new DashboardItem(R.drawable.ic_compass,
+			// "地图",LocationDemo_.class));
 			add(new DashboardItem(R.drawable.ic_monitor, "实时监控", MonSeachActivity_.class));
 			add(new DashboardItem(R.drawable.ic_chart, "数据报表", ChartActivity_.class));
 			add(new DashboardItem(R.drawable.ic_bell, "告警处理", AlarmActivity_.class));
@@ -87,22 +100,28 @@ public class MainActivity extends BaseActivity implements EventHandler {
 			add(new DashboardItem(R.drawable.ic_bell, "预告警处理", PreAlarmActivity_.class));
 			add(new DashboardItem(R.drawable.station_collect, "局站采集", StationCollectActivity_.class));
 			add(new DashboardItem(R.drawable.list, "局站列表", StationListGroupingActivity_.class));
-			add(new DashboardItem(R.drawable.nfc,"读取卡号", ReadNfcNumber_.class));
-			add(new DashboardItem(R.drawable.ic_device,"现场测试", TestEquipmentActivity_.class));
+			// add(new DashboardItem(R.drawable.wifi1, "WIFI测试",
+			// PingActivity_.class));
+			add(new DashboardItem(R.drawable.gz, "工作写实", WorkRealismActivity_.class));
+			add(new DashboardItem(R.drawable.nfc, "读取卡号", ReadNfcNumber_.class));
+
+			add(new DashboardItem(R.drawable.ic_device, "蓝牙测试", TextBluetoothActivity_.class));
 			add(new DashboardItem(R.drawable.ic_message, "消息中心", MessageCenterActivity_.class));
-			add(new DashboardItem(R.drawable.ic_help, "帮助中心", null));
+			// add(new DashboardItem(R.drawable.ic_help, "帮助中心", null));
 			add(new DashboardItem(R.drawable.ic_user, "用户中心", UserDetailActivity_.class));
 			add(new DashboardItem(R.drawable.ic_setting, "设置", SettingActivity_.class));
 		}
 	};
+
 	@RestService
 	ApiRestClientInterface mApiClient;
 	private int curVersionCode;
 	private Update mUpdate;
 	private String curVersionName = "";
+	private Timer timer;
 
 	@AfterViews
-	void initData() {
+	void MobileAuth() {
 		ArrayList<HashMap<String, Object>> menuData = new ArrayList<HashMap<String, Object>>();
 		for (DashboardItem item : dashboardList) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
@@ -117,12 +136,60 @@ public class MainActivity extends BaseActivity implements EventHandler {
 		if (!AppContext.getInstance().isNetworkConnected()) {
 			T.showLong(this, "网络未连接，无法登陆");
 		}
+
 		pDialog = new ProgressDialog(this);
 		pDialog.setCancelable(true);
 		pDialog.setMessage("正在验证登录，请稍后...");
 		if (isDoLogin && !pDialog.isShowing()) {
 			pDialog.show();
 			doLogin();
+		}
+		// if (timer == null) {
+		// timer = new Timer();
+		// timer.scheduleAtFixedRate(new RefreshTask(), 0, 30000);
+		// }
+		getFilterData();
+
+	}
+
+	@SuppressWarnings("deprecation")
+	@UiThread
+	void onPreferenceLogoutClicked() {
+		final AlertDialog mExitDialog = new AlertDialog.Builder(MainActivity.this).create();
+		mExitDialog.setTitle("下线提示");
+		mExitDialog.setIcon(R.drawable.index_btn_exit);
+		mExitDialog.setMessage("您的账户已在另一个设备登录,请尝试重新登陆");
+		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mExitDialog.dismiss();
+				String account = PreferenceUtils.getPrefString(MainActivity.this, PreferenceConstants.ACCOUNT, "");
+				PreferenceUtils.clearPreference(MainActivity.this,
+						PreferenceManager.getDefaultSharedPreferences(MainActivity.this));
+				PreferenceUtils.setPrefString(MainActivity.this, PreferenceConstants.ACCOUNT, account);
+				AppManager.getAppManager().finishAllActivity();
+				LoginActivity_.intent(MainActivity.this).start();
+			}
+		});
+		mExitDialog.show();
+	}
+
+	ApiResponse mApiResps;
+	UserInfo mUserInfo;
+
+	@Background
+	void getUserInfo() {
+		try {
+			mApiResps = mApiClient.getUserInfo();
+			if (mApiResps.getRet() == 0) {
+				ObjectMapper mapper = new ObjectMapper();
+				L.d("555555555", mApiResps.getData());
+				mUserInfo = mapper.readValue(mApiResps.getData(), UserInfo.class);
+				L.d("++++++++++++", mapper.writeValueAsString(mUserInfo.toString()));
+				return;
+			}
+		} catch (Exception e) {
+			L.e(e.toString());
 		}
 
 	}
@@ -135,17 +202,22 @@ public class MainActivity extends BaseActivity implements EventHandler {
 		// TODO Auto-generated method stub
 		super.onRestart();
 		updateApp();
+		if (!AppContext.isServiceRunning(this, ScheduleService_.class.getName()))
+			ScheduleService_.intent(this).start();
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		updateApp();
+		if (!AppContext.isServiceRunning(this, ScheduleService_.class.getName()))
+			ScheduleService_.intent(this).start();
 	}
 
 	@ItemClick(R.id.main_gridview)
 	void onMainGridClicked(int position) {
-		if (position <= 12) {
+		if (position <= 15) {
 			Class<?> cls = dashboardList.get(position).activity;
 			if (cls != null) {
 				Intent i = new Intent(this, cls);
@@ -160,7 +232,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 	@Override
 	public void onBackPressed() {
 		moveTaskToBack(true);
-		
+
 	}
 
 	@Override
@@ -201,6 +273,34 @@ public class MainActivity extends BaseActivity implements EventHandler {
 				L.e(e.toString());
 			}
 		}
+
+		retryTimes = 0;
+		// while (retryTimes++ < 5) {
+		try {
+			ApiResponse apiResp = mApiClient.getSignalNamelData();
+			if (apiResp.getRet() == 0) {
+				L.d(">>>>>>>>>===========", apiResp.toString());
+				FileUtils.setToData(this, SharedConst.FILE_SIGNAL_JSON, apiResp.getData().getBytes());
+				// break;
+			}
+		} catch (Exception e) {
+			L.e(e.toString());
+		}
+		// }
+
+		retryTimes = 0;
+		// while (retryTimes++ < 5) {
+		try {
+			ApiResponse apiResp = mApiClient.getDevCategoryData();
+			if (apiResp.getRet() == 0) {
+				L.d("-------------->>>", apiResp.toString());
+				FileUtils.setToData(this, SharedConst.FILE_DEV_JSON, apiResp.getData().getBytes());
+				// break;
+			}
+		} catch (Exception e) {
+			L.e(e.toString());
+		}
+		// }
 	}
 
 	@RestService
@@ -243,7 +343,7 @@ public class MainActivity extends BaseActivity implements EventHandler {
 
 				if (AppContext.getInstance().isNetworkConnected())
 					UpdateManager.getUpdateManager().checkAppUpdate(this, false);
-				getFilterData();
+
 				return;
 			} catch (Exception e) {
 				L.e(e.toString());
@@ -330,10 +430,19 @@ public class MainActivity extends BaseActivity implements EventHandler {
 		}).start();
 	}
 
-	final Handler handler=new Handler(){public void handleMessage(Message msg){
-	// 显示检测结果
-	if(msg.what==1){mUpdate=(Update)msg.obj;if(mUpdate!=null){if(curVersionCode<mUpdate.getVersionCode()){UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this,true);// 检测更新APP版本
-	}}}}};
+	final Handler handler = new Handler() {
+		public void handleMessage(Message msg) {
+			// 显示检测结果
+			if (msg.what == 1) {
+				mUpdate = (Update) msg.obj;
+				if (mUpdate != null) {
+					if (curVersionCode < mUpdate.getVersionCode()) {
+						UpdateManager.getUpdateManager().checkAppUpdate(MainActivity.this, true);// 检测更新APP版本
+					}
+				}
+			}
+		}
+	};
 
 	/**
 	 * 获取当前客户端版本信息
@@ -347,6 +456,4 @@ public class MainActivity extends BaseActivity implements EventHandler {
 			e.printStackTrace(System.err);
 		}
 	}
-	
-	
 }

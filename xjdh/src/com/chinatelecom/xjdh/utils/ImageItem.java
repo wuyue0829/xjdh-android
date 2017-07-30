@@ -9,15 +9,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 
-public class ImageItem {
-	/**
-	 * 
-	 */
+public class ImageItem{
 	public String imageId;
 	public String thumbnailPath;
 	public String imagePath;
 	private Bitmap bitmap;
 	public boolean isSelected = false;
+	
 	public String getImageId() {
 		return imageId;
 	}

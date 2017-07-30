@@ -22,6 +22,7 @@ import org.springframework.util.MultiValueMap;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.adapter.UserDetailListAdapter;
+import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.UserDetailListItem;
 import com.chinatelecom.xjdh.bean.UserInfo;
@@ -47,6 +48,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.DisplayMetrics;
@@ -107,15 +109,39 @@ public class UserDetailActivity extends BaseActivity {
 			mApiResps = mApiClient.getUserInfo();
 			if (mApiResps.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
-				L.d("&&&&&&&&&&&&&&&&&&&&&&&&&&", mapper.writeValueAsString(mApiClient.getUserInfo().toString()));
+				L.d("&&&&&&&&&&&&&&&&&&&&&&&&&&",mApiResps.getData());
+				
 				mUserInfo = mapper.readValue(mApiResps.getData(), UserInfo.class);
+				L.d("++++++++++++", mapper.writeValueAsString(mUserInfo.toString()));
 				updateView(true);
 				return;
+			}else if(mApiResps.getData().equals("Access token is not valid")){
+				onPreferenceLogoutClicked();
 			}
 		} catch (Exception e) {
 			L.e(e.toString());
 		}
 		updateView(false);
+	}
+	@SuppressWarnings("deprecation")
+	@UiThread
+	void onPreferenceLogoutClicked() {
+		final AlertDialog mExitDialog = new AlertDialog.Builder(UserDetailActivity.this).create();
+		mExitDialog.setTitle("下线提示");
+		mExitDialog.setIcon(R.drawable.index_btn_exit);
+		mExitDialog.setMessage("您的账户已在另一个设备登录,请尝试重新登陆");
+		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mExitDialog.dismiss();
+				String account = PreferenceUtils.getPrefString(UserDetailActivity.this, PreferenceConstants.ACCOUNT, "");
+				PreferenceUtils.clearPreference(UserDetailActivity.this, PreferenceManager.getDefaultSharedPreferences(UserDetailActivity.this));
+				PreferenceUtils.setPrefString(UserDetailActivity.this, PreferenceConstants.ACCOUNT, account);
+				AppManager.getAppManager().finishAllActivity();
+				LoginActivity_.intent(UserDetailActivity.this).start();
+			}
+		});
+		mExitDialog.show();
 	}
 
 	@UiThread
@@ -222,6 +248,8 @@ public class UserDetailActivity extends BaseActivity {
 		// other
 		else if(userDetailListItem.getId() == 9){
 			CaptureActivity_.intent(this).startForResult(TICKET_DETAIL);
+		}else if(userDetailListItem.getId() == 7){
+			PWDActivity_.intent(this).start();
 		}
 		else {
 			showModifyDialog();

@@ -25,6 +25,32 @@ public class SubstationItem implements Parcelable {
 		return roomlist;
 	}
 
+	
+	@org.codehaus.jackson.annotate.JsonProperty("lat")
+	private double lat;
+	@org.codehaus.jackson.annotate.JsonProperty("lng")
+	private double lng;
+	
+	
+
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+
+
 	@org.codehaus.jackson.annotate.JsonProperty("name")
 	private java.lang.String name;
 
@@ -57,6 +83,8 @@ public class SubstationItem implements Parcelable {
 		out.writeParcelableArray(roomlist, flags);
 		out.writeString(code);
 		out.writeString(name);
+		out.writeDouble(lat);
+		out.writeDouble(lng);
 	}
 
 	public static final Parcelable.Creator<SubstationItem> CREATOR = new Creator<SubstationItem>() {
@@ -78,12 +106,26 @@ public class SubstationItem implements Parcelable {
 		}
 		code = in.readString();
 		name = in.readString();
+		lat = in.readDouble();
+		lng = in.readDouble();
 	}
 
 	public SubstationItem() {
 		roomlist = new RoomItem[0];
 		code = "";
 		name = "";
+		lat = 0;
+		lat = 0;
 	}
+
+	@Override
+	public String toString() {
+		return "SubstationItem [roomlist=" + Arrays.toString(roomlist) + ", lat=" + lat + ", lng=" + lng + ", name="
+				+ name + ", code=" + code + "]";
+	}
+
+	
+	
+	
 
 }

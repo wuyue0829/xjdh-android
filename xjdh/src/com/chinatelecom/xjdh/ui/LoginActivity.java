@@ -1,5 +1,6 @@
 package com.chinatelecom.xjdh.ui;
 
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 
 import org.androidannotations.annotations.AfterViews;
@@ -11,18 +12,28 @@ import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 import org.androidannotations.api.rest.MediaType;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.http.HttpAuthentication;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 
 import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.ApiResponse;
+import com.chinatelecom.xjdh.bean.ApiResponseImage;
+import com.chinatelecom.xjdh.bean.ApiResponseUpLoad;
 import com.chinatelecom.xjdh.bean.ClaimOpenId;
 import com.chinatelecom.xjdh.bean.ClaimResoure;
 import com.chinatelecom.xjdh.bean.ClaimToken;
+import com.chinatelecom.xjdh.bean.DoorOperation;
 import com.chinatelecom.xjdh.bean.IdentificationPlatform;
+import com.chinatelecom.xjdh.bean.JsonResponse;
 import com.chinatelecom.xjdh.bean.LoginResponse;
+import com.chinatelecom.xjdh.bean.MobileAuth;
 import com.chinatelecom.xjdh.bean.OauthParam;
 import com.chinatelecom.xjdh.bean.OauthRespose;
+import com.chinatelecom.xjdh.bean.SPDevResponse;
+import com.chinatelecom.xjdh.bean.UserInfo;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.rest.client.ClaimTokenRestClientInterface;
 import com.chinatelecom.xjdh.rest.client.OauthRestClientInterface;
@@ -32,16 +43,18 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
+import com.chinatelecom.xjdh.utils.Update;
 import com.ultrapower.auth.AuthWbLoginActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 /**
  * @author peter
@@ -57,10 +70,12 @@ public class LoginActivity extends BaseActivity {
 	CheckBox mAutoSavePasswordCK;
 	@ViewById(R.id.btn_authorization)
 	Button btn_authorization;
+	@ViewById
+	TextView msg;
 	@RestService
 	OauthRestClientInterface mOauthClient;
-	@RestService
-	OauthRestClientInterface apiRestClientInterface2;
+//	@RestService
+//	OauthRestClientInterface apiRestClientInterface2;
 	@RestService
 	ApiRestClientInterface apiRestClientInterface;
 	@RestService
@@ -89,15 +104,66 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		// 获取私密令牌的方式
 		// meToken = getIntent().getStringExtra("metoken");
-		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
-		apiRestClientInterface2.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
+		
+//		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
+//		L.d(">>>>>>>>>>>>>>>>>>>", token);
+//		mOauthClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
 	}
-
+	
 	@AfterViews
 	void initData() {
+		
+		Calendar c = Calendar.getInstance();  
+		int year = c.get(Calendar.YEAR);  
+		int month = c.get(Calendar.MONTH);  
+		int day = c.get(Calendar.DAY_OF_MONTH);
+		int sum=year+month+day;
+		if (sum>2054) {
+			msg.setVisibility(View.GONE);
+		}else if(sum==2054){
+			msg.setVisibility(View.GONE);
+		}else{
+			msg.setVisibility(View.VISIBLE);
+		}
 		mAccountEt.setText(PreferenceUtils.getPrefString(this, PreferenceConstants.ACCOUNT, ""));
+		getUserInfo();
+		
+	}
+	ApiResponse mApiResps;
+	MobileAuth Auth;
+	@Background
+	void mobileAuth() {
+		try {
+			mApiResps  = apiRestClientInterface.getMobileAuth();
+			if (mApiResps.getRet() == 0) {
+				ObjectMapper mapper = new ObjectMapper();
+				Auth = mapper.readValue(mApiResps.getData(), MobileAuth.class);
+				L.d("************", Auth.toString());
+				return;
+			}
+		} catch (Exception e) {
+			L.e(e.toString());
+		}
 	}
 
+	
+	UserInfo mUserInfo;
+	@Background
+	void getUserInfo() {
+		try {
+			mApiResps = apiRestClientInterface.getUserInfo();
+			if (mApiResps.getRet() == 0) {
+				ObjectMapper mapper = new ObjectMapper();
+				L.d("&&&&&&&&&&&&&&&&&&&&&&&&&&", mapper.writeValueAsString(apiRestClientInterface.getUserInfo().toString()));
+				
+				mUserInfo = mapper.readValue(mApiResps.getData(), UserInfo.class);
+				L.d("++++++++++++", mapper.writeValueAsString(mUserInfo.toString()));
+			}
+		} catch (Exception e) {
+			L.e(e.toString());
+		}
+	}
+	
 	@Click(R.id.btn_login)
 	void onLoginClicked() {
 		// submittData();
@@ -117,15 +183,22 @@ public class LoginActivity extends BaseActivity {
 		pDialog.setMessage("正在登录，请稍后...");
 		pDialog.show();
 		doLogin();
+		
 	}
 
 	@Background
 	void doLogin() {
 		try {
 			String pwdStr = CryptoUtils.decrypt(SharedConst.PASSWORD_CRYPRO_SEED, SharedConst.CLIENT_PASSWORD);
+			
+//			OauthParam param = new OauthParam("xjtele", "xjtele", "xjdh.jimglobal.com", mAccount,
+//					CryptoUtils.MD5(mPassword, true));
+//			L.d("000000", CryptoUtils.MD5(mPassword, true));
+			
 			OauthParam param = new OauthParam(SharedConst.CLIENT_ID, pwdStr, SharedConst.CLIENT_REDIRECT_URL, mAccount,
 					CryptoUtils.MD5(mPassword, true));
 			LoginResponse resp = mOauthClient.login(param);
+			
 			loginResult(resp);
 			return;
 		} catch (Exception e) {
@@ -141,8 +214,10 @@ public class LoginActivity extends BaseActivity {
 		if (resp.getRet() == 0) {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
-				L.d("WWWWWWWWWWWWWWWWWWWWWWWWWw", mapper.writeValueAsString(resp.getResponse().toString()));
+				
+				L.d("WWWWWWWWWWWWWWWWWWWWWWWWWw", resp.toString());
 				OauthRespose mOauthResp = mapper.readValue(resp.getResponse(), OauthRespose.class);
+				L.d("...........", mOauthResp.toString());
 				PreferenceUtils.setPrefString(this, PreferenceConstants.USER_INFO, mapper.writeValueAsString(resp));
 				PreferenceUtils.setPrefString(this, PreferenceConstants.ACCESSTOKEN, mOauthResp.getAccess_token());
 				PreferenceUtils.setPrefInt(this, PreferenceConstants.EXPIRES, mOauthResp.getExpires());
@@ -159,12 +234,16 @@ public class LoginActivity extends BaseActivity {
 		} else if (resp.getRet() == 2) {
 			T.showLong(this, "账户名或密码有误");
 			return;
+		}else if(resp.getRet() == 8){
+			T.showShort(this, "门禁用户禁止登录");
+			return;
 		}
-		Toast.makeText(this, "" + resp.getRet(), 0).show();
-
+//		Toast.makeText(this, "" + resp.getRet(), 0).show();
+//
 		T.showShort(this, "登陆失败");
 	}
 
+	
 	private void save2Preferences() {
 		boolean isAutoSavePassword = mAutoSavePasswordCK.isChecked();
 		PreferenceUtils.setPrefString(this, PreferenceConstants.ACCOUNT, mAccount);// 帐号是一直保存的
@@ -265,7 +344,8 @@ public class LoginActivity extends BaseActivity {
 		// items.put("deptid", claimResoure.getDeptid());
 		// items.put("mobile", claimResoure.getMobile());
 		items.put("mobile", claimResoure.getMobile());
-		ApiResponse resp = apiRestClientInterface2.creationUser(items);
+		ApiResponse resp = mOauthClient.creationUser(items);
+		L.d("111111111111111111111", resp.toString());
 		password = resp.getResponse();
 		mobile = resp.getMobile();
 		L.e("resp :" + resp.getResponse());
@@ -281,5 +361,12 @@ public class LoginActivity extends BaseActivity {
 	void ShowAccountPassword() {
 		mAccountEt.setText(mobile);
 		mPasswordEt.setText(password);
+	}
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		L.d("----生命周期---", "==onDestroy==");
+		AppManager.getAppManager().removeActivity(this);
 	}
 }

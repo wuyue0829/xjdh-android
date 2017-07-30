@@ -89,4 +89,12 @@ public class BoardSettingData {
 	private String gateway1;
 	@org.codehaus.jackson.annotate.JsonProperty("DNS1")
 	private String dns1;
+	@Override
+	public String toString() {
+		return "BoardSettingData [cmd=" + cmd + ", server_addr=" + server_addr + ", device_id=" + device_id + ", ip0="
+				+ ip0 + ", netmask0=" + netmask0 + ", gateway0=" + gateway0 + ", dns0=" + dns0 + ", ip1=" + ip1
+				+ ", netmask1=" + netmask1 + ", gateway1=" + gateway1 + ", dns1=" + dns1 + "]";
+	}
+	
+	
 }

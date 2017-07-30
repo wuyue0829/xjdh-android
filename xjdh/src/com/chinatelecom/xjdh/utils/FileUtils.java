@@ -5,7 +5,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +18,9 @@ import java.util.Locale;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Log;
 
 /**
  * 文件处理工具包
@@ -52,7 +58,25 @@ public class FileUtils {
 		}
 		return false;
 	}
+	
+	public static String getCanonical(File f) {
+		if (f == null)
+			return null;
 
+		try {
+			return f.getCanonicalPath();
+		} catch (IOException e) {
+			return f.getAbsolutePath();
+		}
+	}
+	public static String getPath(String uri) {
+		Log.i("FileUtils#getPath(%s)", uri);
+		if (TextUtils.isEmpty(uri))
+			return null;
+		if (uri.startsWith("file://") && uri.length() > 7)
+			return Uri.decode(uri.substring(7));
+		return Uri.decode(uri);
+	}
 	public static byte[] getFileData(Context ctx, String fileName) {
 		try {
 			FileInputStream fis = ctx.openFileInput(fileName);
@@ -107,5 +131,66 @@ public class FileUtils {
 		String fileName = file + name;
 		return fileName;
 
+	}
+
+	// 在SD卡上创建目录
+	public File creatSDDir(String dirName) {
+		File dir = new File(SDPATH + dirName);
+		dir.mkdir();
+		return dir;
+	}
+	// 在SD卡上创建文件
+		public File creatSDfile(String fileName) throws IOException {
+			File file = new File(SDPATH + fileName);
+			file.createNewFile();
+			return file;
+		}
+
+	public File writeToSDFromIuput(String path, String fileName,
+			InputStream input) {
+		File file = null;
+		OutputStream output = null;
+		try {
+			creatSDDir(path);
+			file = creatSDfile(path + fileName);
+			output = new FileOutputStream(file);
+			byte buffer[] = new byte[4 * 1024];
+			while ((input.read(buffer)) != -1) {
+				output.write(buffer);
+			}
+			output.flush();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			try {
+				output.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return file;
+	}
+	
+	public void writeToSDFromStr(String path,String fileName,String str){
+		File file=null;
+		FileOutputStream fos=null;
+		try {
+			file=new File(path, fileName);
+			fos=new FileOutputStream(file);
+			
+//			fos.write(str.getBytes());
+//			fos.write("\r\n".getBytes());
+//			fos.write("I am lilu".getBytes());
+//			fos.close();
+			PrintWriter pw=new PrintWriter(fos,true);
+			pw.println(str);;
+			pw.close();
+			Log.i("TAG", "====保存成功====:");
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 }

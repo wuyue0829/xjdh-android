@@ -68,6 +68,16 @@ public class AlarmItem implements Serializable {
 		return dev_model;
 	}
 
+	@org.codehaus.jackson.annotate.JsonProperty("room_id")
+	private java.lang.String room_id;
+	public java.lang.String getRoom_id() {
+		return room_id;
+	}
+
+	public void setRoom_id(java.lang.String room_id) {
+		this.room_id = room_id;
+	}
+
 	@org.codehaus.jackson.annotate.JsonProperty("room_name")
 	private java.lang.String room_name;
 
@@ -244,14 +254,12 @@ public class AlarmItem implements Serializable {
 	@Override
 	public String toString() {
 		return "AlarmItem [id=" + id + ", substation_name=" + substation_name + ", room_location=" + room_location
-				+ ", status=" + status + ", dev_model=" + dev_model + ", room_name=" + room_name + ", data_id="
-				+ data_id + ", city_code=" + city_code + ", room_code=" + room_code + ", county=" + county
-				+ ", confirm_datetime=" + confirm_datetime + ", added_datetime=" + added_datetime
+				+ ", status=" + status + ", dev_model=" + dev_model + ", room_id=" + room_id + ", room_name="
+				+ room_name + ", data_id=" + data_id + ", city_code=" + city_code + ", room_code=" + room_code
+				+ ", county=" + county + ", confirm_datetime=" + confirm_datetime + ", added_datetime=" + added_datetime
 				+ ", restore_datetime=" + restore_datetime + ", dev_name=" + dev_name + ", subject=" + subject
 				+ ", level=" + level + ", city=" + city + ", county_code=" + county_code + ", signalName=" + signalName
 				+ ", signalId=" + signalId + "]";
 	}
-	
-	
 
 }

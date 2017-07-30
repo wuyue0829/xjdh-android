@@ -2,6 +2,8 @@ package com.chinatelecom.xjdh.utils;
 
 import java.io.Serializable;
 
+import org.codehaus.jackson.annotate.JsonProperty;
+
 /**
  * 应用程序更新实体类
  * 
@@ -11,17 +13,17 @@ import java.io.Serializable;
  */
 public class Update implements Serializable {
 	private static final long serialVersionUID = -4181397418247151521L;
-	@org.codehaus.jackson.annotate.JsonProperty("id")
+	@JsonProperty("id")
 	private java.lang.Integer id;
-	@org.codehaus.jackson.annotate.JsonProperty("version_code")
+	@JsonProperty("version_code")
 	private java.lang.Integer versionCode;
-	@org.codehaus.jackson.annotate.JsonProperty("version_name")
+	@JsonProperty("version_name")
 	private java.lang.String versionName;
-	@org.codehaus.jackson.annotate.JsonProperty("download_url")
+	@JsonProperty("download_url")
 	private java.lang.String downloadUrl;
-	@org.codehaus.jackson.annotate.JsonProperty("update_log")
+	@JsonProperty("update_log")
 	private java.lang.String updateLog;
-	@org.codehaus.jackson.annotate.JsonProperty("update_datetime")
+	@JsonProperty("update_datetime")
 	private java.lang.String updateDatetime;
 
 	public java.lang.String getUpdateDatetime() {

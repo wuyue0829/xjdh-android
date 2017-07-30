@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -56,10 +57,17 @@ public class WebViewActivity extends BaseActivity {
 	@SuppressLint("SetJavaScriptEnabled")
 	@AfterViews
 	void bindData() {
-		webview.getSettings().setJavaScriptEnabled(true);
-		webview.getSettings().setUseWideViewPort(true);
-		webview.getSettings().setBuiltInZoomControls(true);
-		webview.getSettings().setAllowFileAccess(true); 
+		webview.getSettings().setJavaScriptEnabled(true);   
+		// 设置可以支持缩放   
+		webview.getSettings().setSupportZoom(true);   
+		// 设置出现缩放工具   
+//		webview.getSettings().setBuiltInZoomControls(true);  
+		//扩大比例的缩放  
+		webview.getSettings().setUseWideViewPort(true);  
+		//自适应屏幕  
+		webview.setWebViewClient(new NoAdWebViewClient(this,webview));
+		webview.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);  
+		webview.getSettings().setLoadWithOverviewMode(true); 
 		webview.setWebViewClient(new WebViewClient() {
 			@SuppressLint("NewApi")
 			@Override

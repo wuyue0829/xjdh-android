@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.androidannotations.annotations.EApplication;
 import org.androidannotations.annotations.rest.RestService;
+import org.xutils.x;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
@@ -27,6 +28,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.StrictMode;
 import android.telephony.TelephonyManager;
+
 /**
  * @author peter
  * 
@@ -37,11 +39,12 @@ public class AppContext extends Application {
 	public static int NUM = 20;// 每页20个表情,还有最后一个删除button
 	private static AppContext mApplication;
 	private TelephonyManager mTelephonyMgr;
-
 	public synchronized static AppContext getInstance() {
 		return mApplication;
 	}
-
+	public static Context getAppContext() {
+		return mApplication;
+	}
 	public static class Config {
 		public static final boolean DEVELOPER_MODE = false;
 	}
@@ -58,7 +61,9 @@ public class AppContext extends Application {
 			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyDialog().build());
 			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyDeath().build());
 		}
+				x.Ext.init(this);
 		initImageLoader(getApplicationContext());
+//		Vitamio.isInitialized(this);
 		SDKInitializer.initialize(this);
 		//创建默认的ImageLoader配置参数
 		ImageLoaderConfiguration configuration = ImageLoaderConfiguration
@@ -68,6 +73,7 @@ public class AppContext extends Application {
 		ImageLoader.getInstance().init(configuration);
 
 	}
+	
 
 	public static void initImageLoader(Context context) {
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2)

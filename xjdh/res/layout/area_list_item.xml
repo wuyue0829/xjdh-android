@@ -26,7 +26,6 @@
         android:id="@+id/imageView1"
         android:layout_width="@dimen/space_30"
         android:layout_height="@dimen/space_30"
-        android:rotation="180"
         android:src="@drawable/common_btn_back_normal" />
 
 </LinearLayout>

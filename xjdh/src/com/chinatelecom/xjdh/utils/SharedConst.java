@@ -15,6 +15,8 @@ public class SharedConst {
 	public static String HTTP_AUTHORIZATION = "Authorization";
 	public static String FILE_AREA_JSON = "area.json";
 	public static String FILE_MODEL_JSON = "model.json";
+	public static String FILE_SIGNAL_JSON = "signal.json";
+	public static String FILE_DEV_JSON = "dev.json";
 	public static String USER_IMAGE = "user_image";
 	public static String UPLOAD_IMG = "uploadImg";// 向服务器上传的参数
 	public static int DEFAULT_PAGE_SIZE = 10;

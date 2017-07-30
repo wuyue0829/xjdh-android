@@ -5,8 +5,10 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EService;
 import org.androidannotations.annotations.SystemService;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -19,6 +21,7 @@ import com.chinatelecom.xjdh.receiver.AppBroadcastReceiver;
 import com.chinatelecom.xjdh.receiver.AppBroadcastReceiver.EventHandler;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.ui.AlarmActivity_;
+import com.chinatelecom.xjdh.ui.AlarmDetailActivity_;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
@@ -34,6 +37,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
 
 /**
@@ -46,7 +50,7 @@ public class ScheduleService extends Service implements EventHandler {
 	@SystemService
 	NotificationManager mNotificationManager;
 	private Intent mNotificationIntent;
-
+	String[] statusArr=new String[0];
 	public static String ALARM_ACTIVITY_RECEIVER_ACTION = "com.chinatelecom.xjdh.ALARM_ACTIVITY_ACTION";
 	BroadcastReceiver alarmActivityReceiver = new BroadcastReceiver() {
 
@@ -62,7 +66,7 @@ public class ScheduleService extends Service implements EventHandler {
 	@RestService
 	ApiRestClientInterface mApiClient;
 	private Timer timer;
-	private static String citycode = "", countycode = "", substationId = "", roomId = "", level = "", model = "", startdatetime = "", enddatetime = "";
+	private static String citycode = "", countycode = "", substationId = "", roomId = "", level = "", model = "",signal = "", startdatetime = "", enddatetime = "";
 
 	public static onNewAlarmServiceListener getNewAlarmServiceListener() {
 		return ScheduleService.newAlarmListener;
@@ -81,13 +85,25 @@ public class ScheduleService extends Service implements EventHandler {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		mNotificationIntent = new Intent(this, AlarmActivity_.class);
+		
+	}
+	
+	@UiThread
+	void alarmIntent(AlarmItem alarmItem){
+		mNotificationIntent = new Intent(this, AlarmDetailActivity_.class);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable(AlarmDetailActivity_.ALARM_ITEM_EXTRA, alarmItem);
+		mNotificationIntent.putExtras(bundle);
 		mNotificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	}
-
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
+	}
+	
+	@Background
+	void alarmAsny(AlarmItem alarmItem){
+		
 	}
 
 	@Override
@@ -99,7 +115,7 @@ public class ScheduleService extends Service implements EventHandler {
 		// 开启定时器，每隔60秒刷新一次
 		if (timer == null) {
 			timer = new Timer();
-			timer.scheduleAtFixedRate(new RefreshTask(), 0, 60000);
+			timer.scheduleAtFixedRate(new RefreshTask(), 0, 5000);
 		}
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -112,24 +128,26 @@ public class ScheduleService extends Service implements EventHandler {
 		timer = null;
 		super.onDestroy();
 	}
-
 	class RefreshTask extends TimerTask {
 
 		@Override
 		public void run() {
-			L.i("ScheduleService timer task run");
+//			L.i("ScheduleService timer task run");
 			String latestId = "-1";
 			String token = PreferenceUtils.getPrefString(getApplicationContext(), PreferenceConstants.ACCESSTOKEN, "");
 			mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
 			try {
-				ApiResponse apiResp = mApiClient.getAlarmList(citycode, countycode, substationId, roomId, level, model, startdatetime, enddatetime, "0",
+				ApiResponse apiResp = mApiClient.getAlarmList(citycode, countycode, substationId, roomId, level, model,signal, startdatetime, enddatetime, "0",
 						String.valueOf(1), "-1");
 				if (apiResp.getRet() == 0) {
 					ObjectMapper mapper = new ObjectMapper();
 					AlarmResp alarmResp = mapper.readValue(apiResp.getData(), AlarmResp.class);
 					if (alarmResp.getAlarmlist().length > 0) {
 						AlarmItem alarmItem = alarmResp.getAlarmlist()[0];
+						
+//						L.d("===ScheduleService====", alarmResp.getAlarmlist()[0].toString());
 						latestId = alarmItem.getId();
+						alarmIntent(alarmItem);
 						if (Double.parseDouble(alarmItem.getId()) > currentMaxAlarmId) {
 							if (currentMaxAlarmId != 0 && !AppManager.getAppManager().isCurrentActivity(AlarmActivity_.class)) {
 								sendAlarmNotification(alarmItem);
@@ -148,13 +166,14 @@ public class ScheduleService extends Service implements EventHandler {
 	}
 
 	public static void SetRequestParams(String citycode, String countycode, String substationId, String roomId, String level, String model,
-			String startdatetime, String enddatetime, String offset, String count, String lastId) {
+			String signal,String startdatetime, String enddatetime, String offset, String count, String lastId) {
 		ScheduleService.citycode = citycode;
 		ScheduleService.countycode = countycode;
 		ScheduleService.substationId = substationId;
 		ScheduleService.roomId = roomId;
 		ScheduleService.level = level;
 		ScheduleService.model = model;
+		ScheduleService.signal = signal;
 		ScheduleService.startdatetime = startdatetime;
 		ScheduleService.enddatetime = enddatetime;
 	}

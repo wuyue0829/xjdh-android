@@ -8,6 +8,11 @@ package com.chinatelecom.xjdh.bean;
  */
 @org.codehaus.jackson.annotate.JsonIgnoreProperties(ignoreUnknown = true)
 public class LoginResponse {
+	@Override
+	public String toString() {
+		return "LoginResponse [error=" + error + ", ret=" + ret + ", response=" + response + "]";
+	}
+
 	public LoginResponse(Integer ret, String response, String error) {
 		super();
 		this.error = error;

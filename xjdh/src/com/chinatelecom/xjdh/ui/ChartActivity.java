@@ -11,6 +11,7 @@ import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.AlarmChartsItem;
 import com.chinatelecom.xjdh.bean.AlarmChartsResp;
 import com.chinatelecom.xjdh.bean.ApiResponse;
@@ -34,8 +35,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Highlight;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.widget.TextView;
 /**
  * @author peter
@@ -105,16 +109,38 @@ public class ChartActivity extends BaseActivity {
 		pDialog.show();
 		getChartsData();
 	}
-
+	@SuppressWarnings("deprecation")
+	@UiThread
+	void onPreferenceLogoutClicked() {
+		final AlertDialog mExitDialog = new AlertDialog.Builder(ChartActivity.this).create();
+		mExitDialog.setTitle("下线提示");
+		mExitDialog.setIcon(R.drawable.index_btn_exit);
+		mExitDialog.setMessage("您的账户已在另一个设备登录,请尝试重新登陆");
+		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mExitDialog.dismiss();
+				String account = PreferenceUtils.getPrefString(ChartActivity.this, PreferenceConstants.ACCOUNT, "");
+				PreferenceUtils.clearPreference(ChartActivity.this, PreferenceManager.getDefaultSharedPreferences(ChartActivity.this));
+				PreferenceUtils.setPrefString(ChartActivity.this, PreferenceConstants.ACCOUNT, account);
+				AppManager.getAppManager().finishAllActivity();
+				LoginActivity_.intent(ChartActivity.this).start();
+			}
+		});
+		mExitDialog.show();
+	}
 	@Background
 	void getChartsData() {
 		try {
 			ApiResponse mApiResp = mApiClient.getAlarmChartsData();
+			L.d("aaaaaaaaaaaaaaaaaaa" ,mApiResp.toString());
 			if (mApiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
 				AlarmChartsResp alarmChartsResp = mapper.readValue(mApiResp.getData(), AlarmChartsResp.class);
 				onResult(true, alarmChartsResp);
 				return;
+			}else if(mApiResp.getData().equals("Access token is not valid")){
+				onPreferenceLogoutClicked();
 			}
 		} catch (Exception e) {
 			L.e(e.toString());

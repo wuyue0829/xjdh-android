@@ -1,9 +1,15 @@
 package com.chinatelecom.xjdh.rest.interceptor;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.RootContext;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.params.HttpConnectionParams;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -28,10 +34,10 @@ public class HttpBasicAuthenticatorInterceptor implements ClientHttpRequestInter
 	@Override
 	public ClientHttpResponse intercept(HttpRequest request, byte[] data, ClientHttpRequestExecution execution)
 			throws IOException {
-		ClientHttpResponse response;
+		ClientHttpResponse response = null;
 		String token = PreferenceUtils.getPrefString(context, PreferenceConstants.ACCESSTOKEN, "");
 		if (!token.isEmpty())
-			request.getHeaders().set(SharedConst.HTTP_AUTHORIZATION, token);
+		request.getHeaders().set(SharedConst.HTTP_AUTHORIZATION, token);
 		response = execution.execute(request, data);
 		response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
 		return response;

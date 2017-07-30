@@ -30,6 +30,7 @@ import com.chinatelecom.xjdh.bean.CityItem;
 import com.chinatelecom.xjdh.bean.CountyItem;
 import com.chinatelecom.xjdh.bean.DevModelItem;
 import com.chinatelecom.xjdh.bean.RoomItem;
+import com.chinatelecom.xjdh.bean.SignalItem;
 import com.chinatelecom.xjdh.bean.SubstationItem;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.service.ScheduleService;
@@ -43,18 +44,19 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.StringUtils;
 import com.chinatelecom.xjdh.utils.T;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
@@ -74,8 +76,6 @@ import android.widget.TextView;
  */
 @EActivity(R.layout.activity_alarm)
 public class AlarmActivity extends BaseActivity {
-	@ViewById(R.id.tv_refresh)
-	TextView tvRefresh;
 	@ViewById(R.id.lv_alarm)
 	ListView mLvAlarm;
 	@ViewById(R.id.srl_alarm)
@@ -94,6 +94,8 @@ public class AlarmActivity extends BaseActivity {
 	Spinner mSpLevel;
 	@ViewById(R.id.sp_model)
 	Spinner mSpModel;
+	@ViewById(R.id.sp_signal)
+	Spinner mSpSignal;
 	@ViewById(R.id.et_start_datetime)
 	EditText mEtStartDatetime;
 	@ViewById(R.id.et_end_datetime)
@@ -107,6 +109,7 @@ public class AlarmActivity extends BaseActivity {
 	private HashMap<String, String> alarmLevelList = new LinkedHashMap<String, String>();
 	private List<CityItem> cityList = new ArrayList<CityItem>(0);
 	private List<DevModelItem> modelList = new ArrayList<DevModelItem>(0);
+	private List<SignalItem> signalList = new ArrayList<SignalItem>(0);
 	List<AlarmItem> alarmList = new ArrayList<AlarmItem>(0);
 	private AlarmListAdapter mAlarmListAdapter;
 	private ArrayAdapter<String> mCityAdapter;
@@ -114,11 +117,13 @@ public class AlarmActivity extends BaseActivity {
 	private ArrayAdapter<String> mSubstationtyAdapter;
 	private ArrayAdapter<String> mRoomAdapter;
 	private ArrayAdapter<String> mModelAdapter;
+	private ArrayAdapter<String> mSignalAdapter;
 	private int selCity = 0;
 	private int selCounty = 0;
 	private int selSubstation = 0;
 	private int selRoom = 0;
 	private int selModel = 0;
+	private int selSignal = 0;
 	private int selLevel = 0;
 	private DatePickerDialog mDpDlg;
 	private int selDateField = 0;
@@ -132,17 +137,6 @@ public class AlarmActivity extends BaseActivity {
 		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
 		mAlarmListAdapter = new AlarmListAdapter(this, alarmList);
-//		footerView = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.listview_footer, null);
-//		footerMsg = (TextView) footerView.findViewById(R.id.footer_msg);
-//		//点击加载更多
-//		footerMsg.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				footerMsg.setText("加载中....");
-//				pDialog.show();
-//				getData(false);
-//			}
-//		});
 		if (pDialog == null) {
 			pDialog = new ProgressDialog(this);
 			pDialog.setMessage("加载数据中...");
@@ -181,7 +175,7 @@ public class AlarmActivity extends BaseActivity {
 					}
 				}
 				if (modelList.size() == 0) {
-					String modelData = new String(FileUtils.getFileData(this, SharedConst.FILE_MODEL_JSON));
+					String modelData = new String(FileUtils.getFileData(this, SharedConst.FILE_DEV_JSON));
 					try {
 						List<DevModelItem> l = mapper.readValue(modelData, new TypeReference<List<DevModelItem>>() {
 						});
@@ -194,6 +188,24 @@ public class AlarmActivity extends BaseActivity {
 						mModelAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, models);
 						mModelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 						mSpModel.setAdapter(mModelAdapter);
+					} catch (Exception e) {
+						L.e(e.toString());
+					}
+				}
+				if (signalList.size() == 0) {
+					String signalData = new String(FileUtils.getFileData(this, SharedConst.FILE_SIGNAL_JSON));
+					try {
+						List<SignalItem> l = mapper.readValue(signalData, new TypeReference<List<SignalItem>>() {
+						});
+						signalList.addAll(l);
+						List<String> signals = new ArrayList<>();
+						signals.add("所有类型");
+						for (int index = 0; index < signalList.size(); index++) {
+							signals.add(signalList.get(index).getVal());
+						}
+						mSignalAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, signals);
+						mSignalAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+						mSpSignal.setAdapter(mSignalAdapter);
 					} catch (Exception e) {
 						L.e(e.toString());
 					}
@@ -222,7 +234,7 @@ public class AlarmActivity extends BaseActivity {
 			public void onHasNewAlarm(String latestId) {
 				long latest = Long.parseLong(latestId);
 				long currentMax = alarmList.size() > 0 ? Long.parseLong(alarmList.get(0).getId()) : 0;
-				updateTvRefreshVisibility(latest > currentMax);
+//				updateTvRefreshVisibility(latest > currentMax);
 				// L.i("Refreshing alarm latestId:" + latestId + " currentMax:"
 				// + currentMax);
 			}
@@ -247,14 +259,7 @@ public class AlarmActivity extends BaseActivity {
 				this.totalItemCount = totalItemCount;
 			}
 		});
-//		mSrlAlarm.setOnRefreshListener(new OnRefreshListener() {
-//			@Override
-//			public void onRefresh() {
-//				mSrlAlarm.setRefreshing(false);
-//				pDialog.show();
-//				getData(true);
-//			}
-//		});
+		
 		Calendar c = Calendar.getInstance();
 		mEtStartDatetime
 				.setText(c.get(Calendar.YEAR) + "-" + c.get(Calendar.MONTH) + "-" + c.get(Calendar.DAY_OF_MONTH));
@@ -370,6 +375,18 @@ public class AlarmActivity extends BaseActivity {
 
 			}
 		});
+		mSpSignal.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View v, int position, long arg3) {
+				selSignal = position;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+
+			}
+		});
 
 		mSpModel.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -395,15 +412,17 @@ public class AlarmActivity extends BaseActivity {
 			pDialog.show();
 			getData(true);
 		}
-		
 		mSrlAlarm.setOnRefreshListener(new OnRefreshListener() {
-
 			@Override
 			public void onRefresh() {
+				mSrlAlarm.setRefreshing(false);
+				alarmList.clear();
 				pDialog.show();
 				getData(true);
 			}
 		});
+		
+		
 	}
 
 	@Touch(R.id.et_start_datetime)
@@ -465,6 +484,27 @@ public class AlarmActivity extends BaseActivity {
 		mAlarmListAdapter.notifyDataSetChanged();
 		getData(true);
 	}
+	
+	@SuppressWarnings("deprecation")
+	@UiThread
+	void onPreferenceLogoutClicked() {
+		final AlertDialog mExitDialog = new AlertDialog.Builder(AlarmActivity.this).create();
+		mExitDialog.setTitle("下线提示");
+		mExitDialog.setIcon(R.drawable.index_btn_exit);
+		mExitDialog.setMessage("您的账户已在另一个设备登录,请尝试重新登陆");
+		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mExitDialog.dismiss();
+				String account = PreferenceUtils.getPrefString(AlarmActivity.this, PreferenceConstants.ACCOUNT, "");
+				PreferenceUtils.clearPreference(AlarmActivity.this, PreferenceManager.getDefaultSharedPreferences(AlarmActivity.this));
+				PreferenceUtils.setPrefString(AlarmActivity.this, PreferenceConstants.ACCOUNT, account);
+				AppManager.getAppManager().finishAllActivity();
+				LoginActivity_.intent(AlarmActivity.this).start();
+			}
+		});
+		mExitDialog.show();
+	}
 
 	@Background
 	void getData(boolean isRefreshing) {
@@ -489,14 +529,16 @@ public class AlarmActivity extends BaseActivity {
 			}
 			String level = String.valueOf(selLevel);
 			String model = selModel > 0 ? modelList.get(selModel - 1).getKey() : "";
+			String signal = selSignal > 0 ? signalList.get(selSignal - 1).getVal() : "";
 			String startdatetime = mEtStartDatetime.getText().toString();
 			String enddatetime = mEtEndDatetime.getText().toString();
 			String lastId = (isRefreshing && alarmList.size() > 0) ? alarmList.get(0).getId() : "-1";
 //			ScheduleService.SetRequestParams(citycode, countycode, substationId, roomId, level, model, startdatetime,
 //					enddatetime, String.valueOf(isRefreshing ? 0 : alarmList.size()),
 //					String.valueOf(SharedConst.DEFAULT_PAGE_SIZE), lastId);
-			ApiResponse apiResp = mApiClient.getAlarmList(citycode, countycode, substationId, roomId, level, model,startdatetime, enddatetime, String.valueOf(isRefreshing ? 0 : alarmList.size()),String.valueOf(SharedConst.DEFAULT_PAGE_SIZE), lastId);
-			
+			L.d("00000000", citycode+"==="+countycode+"==="+substationId+"==="+roomId+"==="+level+"==="+model+"==="+startdatetime+"==="+enddatetime+"==="+lastId);
+			ApiResponse apiResp = mApiClient.getAlarmList(citycode, countycode, substationId, roomId, level, model,signal,startdatetime, enddatetime, String.valueOf(isRefreshing ? 0 : alarmList.size()),String.valueOf(SharedConst.DEFAULT_PAGE_SIZE), lastId);
+			L.d("------*****", apiResp.toString());
 			// 请求加载数据
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
@@ -509,11 +551,13 @@ public class AlarmActivity extends BaseActivity {
 					alarmList.addAll(l);
 				}
 				updateAlarmListView(isRefreshing, l.size() > 0, l.size() < 10);
-			} else {
+			} else if(apiResp.getData().equals("Access token is not valid")){
+				onPreferenceLogoutClicked();
+			}else{
 				updateAlarmListView(isRefreshing, true, true);
 			}
 		} catch (Exception e) {
-			L.e(e.toString());
+			L.d("000000000000000",e.toString());
 			updateAlarmListView(isRefreshing, false, false);
 		}
 	}
@@ -526,12 +570,12 @@ public class AlarmActivity extends BaseActivity {
 			pDialog.dismiss();
 		}
 
-		if (isRefreshing) {
-			if (isSuccess)
-				tvRefresh.setVisibility(View.GONE);
-			else
-				tvRefresh.setText("加载失败，点击重试");
-		}
+//		if (isRefreshing) {
+//			if (isSuccess)
+//				tvRefresh.setVisibility(View.GONE);
+//			else
+//				tvRefresh.setText("加载失败，点击重试");
+//		}
 		
 
 //		if (!isLoadAll) {
@@ -547,20 +591,20 @@ public class AlarmActivity extends BaseActivity {
 		}
 	}
 
-	@Click(R.id.tv_refresh)
-	void onTvRefreshClicked() {
-		pDialog.show();
-		getData(true);
-	}
-
-	@UiThread
-	void updateTvRefreshVisibility(boolean isVisiable) {
-		tvRefresh.setVisibility(isVisiable ? View.VISIBLE : View.GONE);
-	}
+//	@Click(R.id.tv_refresh)
+//	void onTvRefreshClicked() {
+//		pDialog.show();
+//		getData(true);
+//	}
+//
+//	@UiThread
+//	void updateTvRefreshVisibility(boolean isVisiable) {
+//		tvRefresh.setVisibility(isVisiable ? View.VISIBLE : View.GONE);
+//	}
 
 	@Override
 	protected void onDestroy() {
-		ScheduleService_.SetRequestParams("", "", "", "", "", "", "", "", "", "", "");
+		ScheduleService_.SetRequestParams("", "", "", "", "", "", "", "", "", "","", "");
 		if (AppManager.getAppManager().getActivityStackSize() > 1) {
 			super.onDestroy();
 		} else {

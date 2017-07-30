@@ -9,17 +9,6 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/tv_refresh"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:padding="@dimen/space_20"
-            android:text="有新告警，点击刷新"
-            android:textColor="@color/primary_color"
-            android:textSize="@dimen/text_size_18"
-            android:visibility="gone" />
-
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/srl_alarm"
             android:layout_width="fill_parent"

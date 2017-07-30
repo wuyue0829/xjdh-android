@@ -7,6 +7,7 @@ import org.androidannotations.annotations.PreferenceScreen;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.app.AppManager;
+import com.chinatelecom.xjdh.ui.AboutActivity_;
 import com.chinatelecom.xjdh.ui.FeedBackActivity_;
 import com.chinatelecom.xjdh.ui.LoginActivity_;
 import com.chinatelecom.xjdh.utils.DialogUtils;
@@ -18,6 +19,8 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.UpdateManager;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -30,6 +33,7 @@ import android.preference.SwitchPreference;
 @PreferenceScreen(R.xml.preferences)
 @EFragment
 public class SettingFragment extends PreferenceFragment {
+	private Dialog latestOrFailDialog;
 	@PreferenceByKey(R.string.new_message_background)
 	SwitchPreference spfBackground;
 
@@ -67,15 +71,15 @@ public class SettingFragment extends PreferenceFragment {
 		mExitDialog.show();
 	}
 
-	@PreferenceClick(R.string.app_update)
-	void onPreferenceUpdateClicked() {
-		UpdateManager.getUpdateManager().checkAppUpdate(getActivity(), true);
-	}
-
-	@PreferenceClick(R.string.app_feedback)
-	void onPreferenceFeedbackClicked() {
-		FeedBackActivity_.intent(getActivity()).start();
-	}
+//	@PreferenceClick(R.string.app_update)
+//	void onPreferenceUpdateClicked() {
+//		UpdateManager.getUpdateManager().checkAppUpdate(getActivity(), true);
+//	}
+//
+//	@PreferenceClick(R.string.app_feedback)
+//	void onPreferenceFeedbackClicked() {
+//		FeedBackActivity_.intent(getActivity()).start();
+//	}
 
 	@PreferenceClick(R.string.app_exit)
 	void onPreferenceExitClicked() {
@@ -84,6 +88,6 @@ public class SettingFragment extends PreferenceFragment {
 
 	@PreferenceClick(R.string.app_about)
 	void onPreferenceAboutClicked() {
-
+		AboutActivity_.intent(getActivity()).start();
 	}
 }

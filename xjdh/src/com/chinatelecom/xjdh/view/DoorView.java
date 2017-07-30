@@ -3,11 +3,9 @@ package com.chinatelecom.xjdh.view;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EViewGroup;
-import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
@@ -16,12 +14,16 @@ import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.DoorOperation;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
+import com.chinatelecom.xjdh.ui.RstpVideoActivity;
+import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.T;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Handler;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
@@ -67,7 +69,22 @@ public class DoorView extends LinearLayout {
 	private Timer timer;
 	
 	ProgressDialog pDialog;
+	private MyTimerTask task;
 	
+	private Handler handler = new Handler(){
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case 10000:
+				timer.cancel();
+				pDialog.dismiss();
+				break;
+
+			default:
+				break;
+			}
+		};
+	};
+
 	void Show() {
 		tvName.setText(Name);
 		pDialog = new ProgressDialog(super.getContext());
@@ -81,7 +98,7 @@ public class DoorView extends LinearLayout {
 		// Start Timer to refresh status
 		if (timer == null) {
 			timer = new Timer();
-			timer.scheduleAtFixedRate(new RefreshTask(), 0, 10000);
+			timer.scheduleAtFixedRate(new RefreshTask(), 0, 2000);
 		}
 	}
 	
@@ -134,38 +151,38 @@ public class DoorView extends LinearLayout {
         });
         builder.show();
 	}
-	
+	ApiResponse resp;
 	@Background
 	void doOpenDoor(String action, String message)
 	{
 		try
 		{
+			checkTimeOut();
 			DoorOperation op = new DoorOperation();
 			op.setData_id(DataId);
 			op.setAction(action);
 			op.setMessage(message);
-			ApiResponse ret = mApiClient.OpenDoor(op);
-			if(ret.getRet() == 0)
-			{
-				ShowResult(0);
+			resp = mApiClient.OpenDoor(op);
+			if (resp.getRet() == 0) {
+				ShowResult(resp.getRet());
 				return;
-			}			
+			}
+			
 		}catch(Exception e)
 		{
-			
+			L.e(e.toString());
 		}
 		ShowResult(1);
 	}
-
 	@UiThread
-	void ShowResult(int ret)
+	void ShowResult(int Ret)
 	{
 		pDialog.dismiss();
-		if(ret == 0)
+		if(Ret == 0)
 		{
-			T.showLong(super.getContext(), "开门成功");
+			T.showLong(getContext(), "开门成功");
 		}else{
-			T.showLong(super.getContext(), "开门失败");
+			T.showLong(getContext(), "开门失败");
 		}
 	}
 	@Click(R.id.btnForceOpen)
@@ -191,5 +208,25 @@ public class DoorView extends LinearLayout {
                 }
         });
         builder.show();
+	}
+	
+	private void checkTimeOut(){
+		try {
+			timer = new Timer();
+			task = new MyTimerTask();
+			timer.schedule(task, 10000);
+		} catch (Exception e) {
+			// TODO: handle exception
+			L.e(e.toString());;
+		}
+	}
+	class MyTimerTask extends TimerTask{
+
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			handler.sendEmptyMessage(10000);
+		}
+		
 	}
 }

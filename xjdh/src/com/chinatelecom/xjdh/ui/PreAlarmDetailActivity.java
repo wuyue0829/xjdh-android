@@ -109,18 +109,18 @@ public class PreAlarmDetailActivity extends BaseActivity {
 		} else {
 			tvAlarmDetailModel.setText("其他设备类型");
 		}
-		// if (modelKey.equalsIgnoreCase("smd_device"))
-		// btnMonitor.setVisibility(View.GONE);
-		// tvAlarmDetailRoom.setText(alarmItem.getRoom_name());
-		// if (alarmItem.getStatus().equalsIgnoreCase("unresolved")) {
-		// tvAlarmDetailStatus.setText("未处理");
-		// tvAlarmDetailStatus.setTextColor(Color.RED);
-		// } else if (alarmItem.getStatus().equalsIgnoreCase("sloving")) {
-		// tvAlarmDetailStatus.setText("处理中");
-		// tvAlarmDetailStatus.setTextColor(Color.YELLOW);
-		// } else if (alarmItem.getStatus().equalsIgnoreCase("sloved")) {
-		// tvAlarmDetailStatus.setText("处理完成");
-		// tvAlarmDetailStatus.setTextColor(Color.GREEN);
+//		 if (modelKey.equalsIgnoreCase("smd_device"))
+//		 btnMonitor.setVisibility(View.GONE);
+		 tvAlarmDetailRoom.setText(alarmItem.getRoom_name());
+//		 if (alarmItem.getStatus().equalsIgnoreCase("unresolved")) {
+//		 tvAlarmDetailStatus.setText("未处理");
+//		 tvAlarmDetailStatus.setTextColor(Color.RED);
+//		 } else if (alarmItem.getStatus().equalsIgnoreCase("sloving")) {
+//		 tvAlarmDetailStatus.setText("处理中");
+//		 tvAlarmDetailStatus.setTextColor(Color.YELLOW);
+//		 } else if (alarmItem.getStatus().equalsIgnoreCase("sloved")) {
+//		 tvAlarmDetailStatus.setText("处理完成");
+//		 tvAlarmDetailStatus.setTextColor(Color.GREEN);
 		//// }
 		if (alarmItem.getStatus().equalsIgnoreCase("unresolved")) {
 			tvAlarmDetailStatus.setText("未处理");

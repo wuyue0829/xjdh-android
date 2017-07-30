@@ -14,9 +14,11 @@ import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.adapter.WebviewFragmentAdapter;
 import com.chinatelecom.xjdh.bean.DevItem;
 import com.chinatelecom.xjdh.bean.DevTypeItem;
+import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.URLs;
+import com.viewpagerindicator.TitlePageIndicator;
 import com.viewpagerindicator.TitlePageIndicator.IndicatorStyle;
 
 import android.annotation.SuppressLint;
@@ -24,15 +26,19 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings.LayoutAlgorithm;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 /**
  * @author peter
@@ -41,7 +47,7 @@ import android.webkit.WebViewClient;
 @EActivity(R.layout.activity_realtime)
 public class RealtimeActivity extends BaseActivity {
 	@ViewById(R.id.webview_indicator)
-	com.viewpagerindicator.TitlePageIndicator mWebviewIndicator;
+	TitlePageIndicator mWebviewIndicator;
 	@ViewById(R.id.webview_pager)
 	ViewPager mWebviewPager;
 	@Extra("model")
@@ -50,22 +56,25 @@ public class RealtimeActivity extends BaseActivity {
 	DevTypeItem devTypeItem;
 	WebviewFragmentAdapter mPagerAdapter;
 	ProgressDialog pDialog;
-
+	double nLenStart = 0; 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		pDialog = new ProgressDialog(this);
 		pDialog.setMessage(getResources().getString(R.string.progress_loading_msg));
 	}
+	
 
 	@AfterViews
 	void bindData() {
 		setTitle(devTypeItem.getName());
 		myAdapter = new WebPagerAdapter();
 		for (DevItem e : devTypeItem.getDevlist()) {
+			String loadurl = URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + e.getData_id() + "&model=" + devTypeItem.getType()
+			+ "&access_token="+ PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
+			L.d("555555555555", loadurl);
 			addView(mListViews,
-					URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + e.getData_id() + "&model=" + devTypeItem.getType()
-							+ "&access_token="+ PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, ""));
+					loadurl);
 		}
 		mWebviewPager.setAdapter(myAdapter);
 		mWebviewIndicator.setViewPager(mWebviewPager);
@@ -79,7 +88,14 @@ public class RealtimeActivity extends BaseActivity {
 	private void addView(List<WebView> viewList, String url) {
 		final WebView webView = new WebView(this);
 		webView.getSettings().setJavaScriptEnabled(true);
-		webView.getSettings().setUseWideViewPort(true);
+		// 设置可以支持缩放 
+		webView.getSettings().setSupportZoom(true); 
+		// 设置出现缩放工具 
+		webView.getSettings().setBuiltInZoomControls(true);
+		//扩大比例的缩放
+		webView.getSettings().setUseWideViewPort(true);  
+		webView.getSettings().setLayoutAlgorithm(LayoutAlgorithm.NORMAL);
+		webView.getSettings().setLoadWithOverviewMode(true);
 		webView.setWebViewClient(new WebViewClient() {
 			@SuppressLint("NewApi")
 			@Override
@@ -145,10 +161,12 @@ public class RealtimeActivity extends BaseActivity {
 
 	@Override
 	protected void onDestroy() {
-		for (WebView webView : mListViews) {
-			webView.destroy();
-		}
-		super.onDestroy();
+		super.onDestroy(); 
+		this.finish();
+//		for (WebView webView : mListViews) {
+//			webView.destroy();
+//		}
+		
 	}
 
 	private class WebPagerAdapter extends PagerAdapter {
@@ -165,7 +183,13 @@ public class RealtimeActivity extends BaseActivity {
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return devTypeItem.getDevlist()[position].getName();
+			if (devTypeItem.getName().equals("开关电源")) {
+				return devTypeItem.getDevlist()[position].getDev_group();
+			}else{
+				return devTypeItem.getDevlist()[position].getName();
+			}
+				
+			
 		}
 
 		@Override

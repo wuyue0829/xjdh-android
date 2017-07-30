@@ -1,6 +1,5 @@
 package com.chinatelecom.xjdh.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.androidannotations.annotations.AfterViews;
@@ -14,11 +13,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.AlarmItem;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.DevTypeItem;
 import com.chinatelecom.xjdh.bean.LoginResponse;
-import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterfaceV1;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
@@ -27,10 +26,13 @@ import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.T;
 import com.chinatelecom.xjdh.utils.URLs;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.support.annotation.UiThread;
 import android.view.View;
 import android.widget.Button;
@@ -150,7 +152,8 @@ public class AlarmDetailActivity extends BaseActivity {
 
 	@Click(R.id.btn_monitor)
 	void onBtnMonitorClicked() {
-//		String type = "", typeName = "";
+		String type = "", typeName = "";
+			
 //		if (alarmItem.getDev_model().equalsIgnoreCase("water") || alarmItem.getDev_model().equalsIgnoreCase("smoke")) {
 //			type = "di";
 //			typeName = "开关量";
@@ -162,50 +165,87 @@ public class AlarmDetailActivity extends BaseActivity {
 //			typeName = "智能电表";
 //		}
 //		if (type.equalsIgnoreCase("ad") || type.equalsIgnoreCase("di") || type.equalsIgnoreCase("imem12")) {
+//		if (alarmItem.getRoom_code().equals("")) {
+//			getData();
+//		}else{
+		if (alarmItem.getDev_model().equalsIgnoreCase("enviroment")) {
+			String originalUrl=URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + alarmItem.getRoom_id() + "&model=" + alarmItem.getDev_model() + "&access_token="
+					+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION);
+			L.d("----------",originalUrl);
+			WebViewActivity_.intent(this).originalUrl(originalUrl).title(alarmItem.getDev_name()).start();
+				L.v("状态："+alarmItem.getRoom_code());
+		}else{
 			String originalUrl=URLs.WAP_BASE_URL + "/loadrealtime?data_id=" + alarmItem.getData_id() + "&model=" + alarmItem.getDev_model() + "&access_token="
 					+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION);
 			L.d("----------",originalUrl);
 			WebViewActivity_.intent(this).originalUrl(originalUrl).title(alarmItem.getDev_name()).start();
-//			L.v("状态："+alarmItem.getRoom_code());
+				L.v("状态："+alarmItem.getRoom_code());
+		}
+			
+//		}
+		
 //		} else {
 //			pDialog.show();
-//			getData();
+			
 //		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	@UiThread
+	void onPreferenceLogoutClicked() {
+		final AlertDialog mExitDialog = new AlertDialog.Builder(AlarmDetailActivity.this).create();
+		mExitDialog.setTitle("下线提示");
+		mExitDialog.setIcon(R.drawable.index_btn_exit);
+		mExitDialog.setMessage("您的账户已在另一个设备登录,请尝试重新登陆");
+		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mExitDialog.dismiss();
+				String account = PreferenceUtils.getPrefString(AlarmDetailActivity.this, PreferenceConstants.ACCOUNT, "");
+				PreferenceUtils.clearPreference(AlarmDetailActivity.this, PreferenceManager.getDefaultSharedPreferences(AlarmDetailActivity.this));
+				PreferenceUtils.setPrefString(AlarmDetailActivity.this, PreferenceConstants.ACCOUNT, account);
+				AppManager.getAppManager().finishAllActivity();
+				LoginActivity_.intent(AlarmDetailActivity.this).start();
+			}
+		});
+		mExitDialog.show();
 	}
 	List<DevTypeItem> l;
 	@Background
 	void getData() {
-		Looper.prepare();
 		try {
-			ApiResponse apiResp = mApiClient.get_room_dev_list(alarmItem.getRoom_code(),alarmItem.getDev_model());
+			ApiResponse apiResp = mApiClient.get_room_dev_list(alarmItem.getRoom_code(),"");
+			L.d(">>>>>>>>>>>>>>>>>", apiResp.toString());
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
 				l = mapper.readValue(apiResp.getData(), new TypeReference<List<DevTypeItem>>() {
 				});
+				L.d(">>>>>>>>>>>>>>>>>", l.get(0).toString());
 //				mTypeList.clear();
 //				mTypeList.addAll(l);
 				if (l.size() > 0) {
-					onResult(true);
-					Looper.loop();
+					onResult(l.get(0));
 					return;
 				}
+			}else if(apiResp.getData().equals("Access token is not valid")){
+				onPreferenceLogoutClicked();
 			}
 		} catch (Exception e) {
 			L.e(e.toString());
 		}
-		onResult(false);
-		Looper.loop();
+//		onResult("");
 	}
 
 	@UiThread
-	void onResult(boolean isSuccess) {
+	void onResult(DevTypeItem devTypeItem) {
 		if (pDialog.isShowing()) {
 			pDialog.dismiss();
 		}
-		if (isSuccess) {
-			RealtimeActivity_.intent(this).devTypeItem(l.get(0)).start();
-		} else {
-			T.showShort(this, "加载数据失败");
-		}
+//		if (devTypeItem !="") {
+			L.d(">>>>>>>>>>>>>>>>>", l.get(0).toString());
+			RealtimeActivity_.intent(this).devTypeItem(devTypeItem).start();
+//		} else {
+//			T.showShort(this, "加载数据失败");
+//		}
 	}
 }

@@ -23,14 +23,6 @@
     </PreferenceCategory>
     <PreferenceCategory android:title="其他 " >
         <Preference
-            android:key="@string/app_feedback"
-            android:title="意见反馈" >
-        </Preference>
-        <Preference
-            android:key="@string/app_update"
-            android:title="检查更新" >
-        </Preference>
-        <Preference
             android:key="@string/app_about"
             android:title="关于" >
         </Preference>

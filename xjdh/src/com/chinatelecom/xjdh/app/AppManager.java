@@ -91,6 +91,10 @@ public class AppManager {
 			}
 		}
 	}
+	
+	    public void removeActivity(Activity aty) {
+	        activityStack.remove(aty);
+	    }
 
 	/**
 	 * 结束所有Activity

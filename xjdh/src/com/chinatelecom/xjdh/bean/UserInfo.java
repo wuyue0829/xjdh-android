@@ -132,4 +132,14 @@ public class UserInfo implements Serializable {
 	public java.lang.String getUser_image() {
 		return user_image;
 	}
+
+	@Override
+	public String toString() {
+		return "UserInfo [id=" + id + ", mobile=" + mobile + ", username=" + username + ", info=" + info + ", email="
+				+ email + ", substation_id=" + substation_id + ", added_datetime=" + added_datetime + ", full_name="
+				+ full_name + ", user_role=" + user_role + ", gender=" + gender + ", user_image=" + user_image + "]";
+	}
+	
+	
+	
 }

@@ -9,18 +9,17 @@ import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.rest.RestService;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.ApiResponseStationList;
 import com.chinatelecom.xjdh.bean.StationImg;
 import com.chinatelecom.xjdh.bean.StationList;
-import com.chinatelecom.xjdh.location.RoutePlanDemo_;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
@@ -33,13 +32,14 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +57,7 @@ import android.widget.TextView;
  *
  */
 @EActivity(R.layout.activity_station_list)
-public class StationListActivity extends Activity {
+public class StationListActivity extends BaseActivity {
 
 	@ViewById(R.id.list_station_cache)
 	ListView list_station_cache;
@@ -127,7 +127,26 @@ public class StationListActivity extends Activity {
 	}
 
 	// private String imgs[];
-
+	@SuppressWarnings("deprecation")
+	@UiThread
+	void onPreferenceLogoutClicked() {
+		final AlertDialog mExitDialog = new AlertDialog.Builder(StationListActivity.this).create();
+		mExitDialog.setTitle("下线提示");
+		mExitDialog.setIcon(R.drawable.index_btn_exit);
+		mExitDialog.setMessage("您的账户已在另一个设备登录,请尝试重新登陆");
+		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mExitDialog.dismiss();
+				String account = PreferenceUtils.getPrefString(StationListActivity.this, PreferenceConstants.ACCOUNT, "");
+				PreferenceUtils.clearPreference(StationListActivity.this, PreferenceManager.getDefaultSharedPreferences(StationListActivity.this));
+				PreferenceUtils.setPrefString(StationListActivity.this, PreferenceConstants.ACCOUNT, account);
+				AppManager.getAppManager().finishAllActivity();
+				LoginActivity_.intent(StationListActivity.this).start();
+			}
+		});
+		mExitDialog.show();
+	}
 	@Background
 	public void getData(String stationName) {
 
@@ -145,6 +164,8 @@ public class StationListActivity extends Activity {
 				if (apiResp.getRet() == 0) {
 					ShowResponse(apiResp);
 				}
+			}else if(apiResp.getData().equals("Access token is not valid")){
+				onPreferenceLogoutClicked();
 			}
 		} catch (Exception e) {
 			L.e("Exception" + e.toString());
@@ -240,14 +261,14 @@ public class StationListActivity extends Activity {
 		}
 	}
 
-	@ItemClick(R.id.list_station_cache)
-	void cacheImagClicked(int position) {
-		Intent intent = new Intent(StationListActivity.this, RoutePlanDemo_.class);
-		intent.putExtra("longitude", Longitude);
-		intent.putExtra("latitude", latitude);
-		intent.putExtra("adress", station_name);
-		startActivity(intent);
-	}
+//	@ItemClick(R.id.list_station_cache)
+//	void cacheImagClicked(int position) {
+//		Intent intent = new Intent(StationListActivity.this, RoutePlanDemo_.class);
+//		intent.putExtra("longitude", Longitude);
+//		intent.putExtra("latitude", latitude);
+//		intent.putExtra("adress", station_name);
+//		startActivity(intent);
+//	}
 
 	/*@Click(R.id.img_btn_search)
 	void searchClicked() {
@@ -259,12 +280,12 @@ public class StationListActivity extends Activity {
 	/**
 	 * 返回
 	 */
-	@Click(R.id.img_btn_left)
-	void rebackClicked() {
-		list_station_cache.setVisibility(View.VISIBLE);
-		ll_search.setVisibility(View.GONE);
-		this.finish();
-	}
+//	@Click(R.id.img_btn_left)
+//	void rebackClicked() {
+//		list_station_cache.setVisibility(View.VISIBLE);
+//		ll_search.setVisibility(View.GONE);
+//		this.finish();
+//	}
 
 	/**
 	 * 确定搜索局站

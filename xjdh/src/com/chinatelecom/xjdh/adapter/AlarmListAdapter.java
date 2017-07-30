@@ -1,5 +1,6 @@
 package com.chinatelecom.xjdh.adapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.chinatelecom.xjdh.R;
@@ -21,7 +22,7 @@ import android.widget.TextView;
  * 
  */
 public class AlarmListAdapter extends BaseAdapter {
-	private List<AlarmItem> listItems;
+	private List<AlarmItem> listItems=new ArrayList<>();;
 	private Context context;// 运行上下文
 	private LayoutInflater listContainer;// 视图容器
 
@@ -32,11 +33,8 @@ public class AlarmListAdapter extends BaseAdapter {
 		public TextView status;
 	}
 
-	public AlarmListAdapter(Context context) {
-		super();
-	}
 
-	public AlarmListAdapter(Context context, List<AlarmItem> listItems) {
+	public AlarmListAdapter(Context context,List<AlarmItem> listItems) {
 		super();
 		this.listItems = listItems;
 		this.context = context;
@@ -83,7 +81,7 @@ public class AlarmListAdapter extends BaseAdapter {
 		} else if (alarmItem.getStatus().equalsIgnoreCase("solving")) {
 			listItemView.status.setText("告警结束未确认恢复");
 			listItemView.status.setBackgroundColor(Color.YELLOW);
-		} else if (alarmItem.getStatus().equalsIgnoreCase("solved")) {
+		}else if (alarmItem.getStatus().equalsIgnoreCase("solved")) {
 			listItemView.status.setText("已确认恢复");
 			listItemView.status.setBackgroundColor(Color.BLUE);
 		}
@@ -110,5 +108,6 @@ public class AlarmListAdapter extends BaseAdapter {
 
 	public void setListItems(List<AlarmItem> items) {
 		this.listItems = items;
+		this.notifyDataSetChanged();
 	}
 }

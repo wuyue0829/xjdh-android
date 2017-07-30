@@ -18,6 +18,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import com.chinatelecom.xjdh.R;
+import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.DevItem;
 import com.chinatelecom.xjdh.bean.DevTypeItem;
@@ -29,8 +30,11 @@ import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 import com.chinatelecom.xjdh.utils.URLs;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -44,8 +48,8 @@ public class RoomDevListActivity extends BaseActivity {
 
 	@ViewById(R.id.lv_items)
 	ListView mLvDevType;
-	@ViewById(R.id.tv_refresh)
-	TextView mTvRefresh;
+//	@ViewById(R.id.tv_refresh)
+//	TextView mTvRefresh;
 	@RestService
 	ApiRestClientInterface mApiClient;
 	
@@ -81,12 +85,32 @@ public class RoomDevListActivity extends BaseActivity {
 		getRoomDeviceList();
 	}
 
+	@SuppressWarnings("deprecation")
+	@UiThread
+	void onPreferenceLogoutClicked() {
+		final AlertDialog mExitDialog = new AlertDialog.Builder(RoomDevListActivity.this).create();
+		mExitDialog.setTitle("下线提示");
+		mExitDialog.setIcon(R.drawable.index_btn_exit);
+		mExitDialog.setMessage("您的账户已在另一个设备登录,请尝试重新登陆");
+		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mExitDialog.dismiss();
+				String account = PreferenceUtils.getPrefString(RoomDevListActivity.this, PreferenceConstants.ACCOUNT, "");
+				PreferenceUtils.clearPreference(RoomDevListActivity.this, PreferenceManager.getDefaultSharedPreferences(RoomDevListActivity.this));
+				PreferenceUtils.setPrefString(RoomDevListActivity.this, PreferenceConstants.ACCOUNT, account);
+				AppManager.getAppManager().finishAllActivity();
+				LoginActivity_.intent(RoomDevListActivity.this).start();
+			}
+		});
+		mExitDialog.show();
+	}
 	@Background
 	void getRoomDeviceList() {
 		try {
 			L.d("111111111111", mRoomCode);
 			ApiResponse apiResp = mApiClientV1.get_room_dev_list(mRoomCode, "");
-			L.e("12121212121213434535465768" + apiResp.getData());
+			L.d("aaaaaaaaaaaaaaaaaaa" ,apiResp.toString());
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
 				List<DevTypeItem> l = mapper.readValue(apiResp.getData(), new TypeReference<List<DevTypeItem>>() {
@@ -96,11 +120,14 @@ public class RoomDevListActivity extends BaseActivity {
 				mDevTypeList.addAll(l);
 				int index = 1;
 				for (DevTypeItem devTypeItem : l) {
+					L.d("============", mapper.writeValueAsString(devTypeItem));
 					Map<String, Object> item = new HashMap<>();
 					item.put("num", String.valueOf(index++));
 					item.put("name", devTypeItem.getName());
 					listItem.add(item);
 				}
+			}else if(apiResp.getData().equals("Access token is not valid")){
+				onPreferenceLogoutClicked();
 			}
 		} catch (Exception e) {
 			L.e(e.toString());
@@ -118,17 +145,23 @@ public class RoomDevListActivity extends BaseActivity {
 
 	@ItemClick(R.id.lv_items)
 	void onRoomItemClicked(int pos) {
-		List<DevItem> devList = Arrays.asList(mDevTypeList.get(pos).getDevlist());
-		String[] dataId = new String[devList.size()];
-		for (int i = 0; i < devList.size(); i++) {
-			DevItem devItem = devList.get(i);
-			dataId[i] = devItem.getData_id();
-		}
+//		List<DevItem> devList = Arrays.asList(mDevTypeList.get(pos).getDevlist());
+//		String[] dataId = new String[devList.size()];
+//		for (int i = 0; i < devList.size(); i++) {
+//			DevItem devItem = devList.get(i);
+//			dataId[i] = devItem.getData_id();
+//		}
 		if (mDevTypeList.get(pos).getType().equals("door"))
 		{
 			DoorListActivity_.intent(this).devTypeItem(mDevTypeList.get(pos)).start();
 			//DoorActivity_.intent(this).Name(mDevTypeList.get(pos).getDevlist()[0].getName()).DataId(mDevTypeList.get(pos).getDevlist()[0].getData_id()).CanOpen(mDevTypeList.get(pos).getDevlist()[0].getCan_open()).start();
-		}else if (Arrays.asList(WEBVIEW_MODEL).contains(mDevTypeList.get(pos).getType())) {
+		}
+		else if(mDevTypeList.get(pos).getType().equals("camera")){
+//			TestActivity_.intent(this).start();
+//			RtspPlayerActivity_.intent(this).devTypeItem(mDevTypeList.get(pos)).start();
+			RstpVideoActivity_.intent(this).devTypeItem(mDevTypeList.get(pos)).start();
+		}
+		else if (Arrays.asList(WEBVIEW_MODEL).contains(mDevTypeList.get(pos).getType())) {
 			String loadUrl = URLs.WAP_BASE_URL + "/loadrealtime?room_code=" + mRoomCode + "&model="
 					+ mDevTypeList.get(pos).getType() + "&access_token="
 					+ mApiClient.getHeader(SharedConst.HTTP_AUTHORIZATION);
@@ -136,9 +169,9 @@ public class RoomDevListActivity extends BaseActivity {
 			WebViewActivity_.intent(this)
 					.originalUrl(loadUrl)
 					.title(mDevTypeList.get(pos).getName()).start();
-		} else {
+		} 
+		else{
 			RealtimeActivity_.intent(this).devTypeItem(mDevTypeList.get(pos)).start();
 		}
-//		Toast.makeText(this, "------------"+mDevTypeList.get(pos).getType(), 0).show();
 	}
 }

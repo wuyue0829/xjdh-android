@@ -16,30 +16,31 @@ import org.codehaus.jackson.type.TypeReference;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.adapter.SubstationListAdapter;
+import com.chinatelecom.xjdh.app.AppManager;
 import com.chinatelecom.xjdh.bean.ApiResponse;
 import com.chinatelecom.xjdh.bean.SubstationItem;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
+import com.chinatelecom.xjdh.utils.DialogLogout;
+import com.chinatelecom.xjdh.utils.FileUtils;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
-import com.chinatelecom.xjdh.utils.T;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 @EActivity(R.layout.normal_seach_view)
 public class MonSeachActivity extends BaseActivity {
@@ -74,8 +75,8 @@ public class MonSeachActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setTitle("实时监控");
-		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
-		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
+//		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
+//		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
 		mSubstationAdapter = new SubstationListAdapter(this);
 		if (pDialog == null) {
 			pDialog = new ProgressDialog(this);
@@ -86,7 +87,8 @@ public class MonSeachActivity extends BaseActivity {
 
 	@AfterViews
 	void bindData() {
-
+		String token = PreferenceUtils.getPrefString(this, PreferenceConstants.ACCESSTOKEN, "");
+		L.d(">>>>>>******"+token);
 		mLvSubstation.setAdapter(mSubstationAdapter);
 
 		mLvSubstation.setOnScrollListener(new OnScrollListener() {
@@ -149,12 +151,31 @@ public class MonSeachActivity extends BaseActivity {
 		});
 
 	}
-
+	@SuppressWarnings("deprecation")
+	@UiThread
+	void onPreferenceLogoutClicked() {
+		final AlertDialog mExitDialog = new AlertDialog.Builder(MonSeachActivity.this).create();
+		mExitDialog.setTitle("下线提示");
+		mExitDialog.setIcon(R.drawable.index_btn_exit);
+		mExitDialog.setMessage("您的账户已在另一个设备登录,请尝试重新登陆");
+		mExitDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mExitDialog.dismiss();
+				String account = PreferenceUtils.getPrefString(MonSeachActivity.this, PreferenceConstants.ACCOUNT, "");
+				PreferenceUtils.clearPreference(MonSeachActivity.this, PreferenceManager.getDefaultSharedPreferences(MonSeachActivity.this));
+				PreferenceUtils.setPrefString(MonSeachActivity.this, PreferenceConstants.ACCOUNT, account);
+				AppManager.getAppManager().finishAllActivity();
+				LoginActivity_.intent(MonSeachActivity.this).start();
+			}
+		});
+		mExitDialog.show();
+	}
 	@Background
 	void getData(boolean isRefreshing, int offset) {
 		try {
 			apiResp = mApiClient.getSubstationList(sbarea, offset);
-
+			L.d("55555555555", apiResp.toString());
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
 				List<SubstationItem> item = mapper.readValue(apiResp.getData(),
@@ -162,9 +183,12 @@ public class MonSeachActivity extends BaseActivity {
 						});
 				mSubstationList.addAll(item);
 				notifld();
+			}else if(apiResp.getData().equals("Access token is not valid")){
+				onPreferenceLogoutClicked();
 			}
 		} catch (Exception e) {
 			L.e(e.toString());
+			
 		}
 
 	}
@@ -173,7 +197,7 @@ public class MonSeachActivity extends BaseActivity {
 	public void searchData(String station, int counts) {
 		try {
 			apiResp = mApiClient.getSubstationList(station, counts);
-
+			L.d("55555555555", apiResp.getData());
 			if (apiResp.getRet() == 0) {
 				ObjectMapper mapper = new ObjectMapper();
 				List<SubstationItem> item = mapper.readValue(apiResp.getData(),
