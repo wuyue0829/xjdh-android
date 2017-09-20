@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\wyj\\xjdh-android\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\qrcode.png",
+        "source": "D:\\wyj\\xjdh-android\\src\\main\\res\\drawable-ldpi\\qrcode.png"
+    },
+    {
+        "merged": "D:\\wyj\\xjdh-android\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\code.png",
+        "source": "D:\\wyj\\xjdh-android\\src\\main\\res\\drawable-ldpi\\code.png"
+    },
+    {
+        "merged": "D:\\wyj\\xjdh-android\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\scan_light.png",
+        "source": "D:\\wyj\\xjdh-android\\src\\main\\res\\drawable-ldpi\\scan_light.png"
+    },
+    {
+        "merged": "D:\\wyj\\xjdh-android\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\abc_ic_ab_back_mtrl_am_alpha.png",
+        "source": "D:\\wyj\\xjdh-android\\src\\main\\res\\drawable-ldpi\\abc_ic_ab_back_mtrl_am_alpha.png"
+    }
+]

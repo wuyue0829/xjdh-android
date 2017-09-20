@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "D:\\wyj\\xjdh-android\\build\\intermediates\\res\\merged\\debug\\raw\\sound_3.mp3",
+        "source": "D:\\wyj\\xjdh-android\\src\\main\\res\\raw\\sound_3.mp3"
+    },
+    {
+        "merged": "D:\\wyj\\xjdh-android\\build\\intermediates\\res\\merged\\debug\\raw\\beep.ogg",
+        "source": "D:\\wyj\\xjdh-android\\src\\main\\res\\raw\\beep.ogg"
+    }
+]
