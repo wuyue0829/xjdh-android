@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
-    abi="armeabi-v7a,armeabi"
-    api-level="21"
+    abi="arm64-v8a,armeabi-v7a,armeabi"
+    api-level="22"
     build-mode="FULL"
     density="xxhdpi"
     format="10"
     plugin-version="2.3.3"
-    timestamp="1505869547262"
+    timestamp="1506073383652"
     token="-9032812157554739765"
     verifier="FULL_BUILD_REQUESTED" >
 
@@ -18,11 +18,23 @@
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="0" />
+        duration="2876" />
     <task
         name="verifier"
         duration="0" />
 
+    <artifact
+        location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_8.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_0.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_3.apk"
+        type="SPLIT" />
+    <artifact
+        location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_6.apk"
+        type="SPLIT" />
     <artifact
         location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_4.apk"
         type="SPLIT" />
@@ -30,10 +42,10 @@
         location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_5.apk"
         type="SPLIT" />
     <artifact
-        location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\dep\dependencies.apk"
-        type="SPLIT" />
+        location="D:\wyj\xjdh-android\build\outputs\apk\xjdh-android-debug.apk"
+        type="SPLIT_MAIN" />
     <artifact
-        location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_0.apk"
+        location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\dep\dependencies.apk"
         type="SPLIT" />
     <artifact
         location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_1.apk"
@@ -42,28 +54,28 @@
         location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_2.apk"
         type="SPLIT" />
     <artifact
-        location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_6.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_3.apk"
-        type="SPLIT" />
-    <artifact
         location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_9.apk"
-        type="SPLIT" />
-    <artifact
-        location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_8.apk"
         type="SPLIT" />
     <artifact
         location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_7.apk"
         type="SPLIT" />
-    <artifact
-        location="D:\wyj\xjdh-android\build\outputs\apk\xjdh-android-debug.apk"
-        type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
-        timestamp="1505869547262"
+        timestamp="1506073383652"
         verifier="FULL_BUILD_REQUESTED" >
+        <artifact
+            location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_8.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_3.apk"
+            type="SPLIT" />
+        <artifact
+            location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            type="SPLIT" />
         <artifact
             location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_4.apk"
             type="SPLIT" />
@@ -71,10 +83,10 @@
             location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_5.apk"
             type="SPLIT" />
         <artifact
-            location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\dep\dependencies.apk"
-            type="SPLIT" />
+            location="D:\wyj\xjdh-android\build\outputs\apk\xjdh-android-debug.apk"
+            type="SPLIT_MAIN" />
         <artifact
-            location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\dep\dependencies.apk"
             type="SPLIT" />
         <artifact
             location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_1.apk"
@@ -83,23 +95,11 @@
             location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_2.apk"
             type="SPLIT" />
         <artifact
-            location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_6.apk"
-            type="SPLIT" />
-        <artifact
-            location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_3.apk"
-            type="SPLIT" />
-        <artifact
             location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_9.apk"
-            type="SPLIT" />
-        <artifact
-            location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_8.apk"
             type="SPLIT" />
         <artifact
             location="D:\wyj\xjdh-android\build\intermediates\split-apk\debug\slices\slice_7.apk"
             type="SPLIT" />
-        <artifact
-            location="D:\wyj\xjdh-android\build\outputs\apk\xjdh-android-debug.apk"
-            type="SPLIT_MAIN" />
     </build>
 
 </instant-run>

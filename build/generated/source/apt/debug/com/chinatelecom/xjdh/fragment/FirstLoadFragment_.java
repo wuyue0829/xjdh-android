@@ -78,24 +78,10 @@ public final class FirstLoadFragment_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
-        btnRefresh = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.btnRefresh));
         devList = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.devList));
+        btnRefresh = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.btnRefresh));
+        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
         Show();
-    }
-
-    @Override
-    public void ShowMessage(final String msg) {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                FirstLoadFragment_.super.ShowMessage(msg);
-            }
-
-        }
-        );
     }
 
     @Override
@@ -106,6 +92,20 @@ public final class FirstLoadFragment_
             @Override
             public void run() {
                 FirstLoadFragment_.super.ShowData();
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void ShowMessage(final String msg) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                FirstLoadFragment_.super.ShowMessage(msg);
             }
 
         }

@@ -74,9 +74,9 @@ public final class AllStationFragment_
     @Override
     public void onViewChanged(HasViews hasViews) {
         spRoom = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.spRoom));
-        spSub = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.spSub));
-        spPren = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.spPren));
         spCity = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.spCity));
+        spPren = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.spPren));
+        spSub = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.spSub));
         {
             View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.btn_search);
             if (view!= null) {

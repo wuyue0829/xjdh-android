@@ -86,31 +86,16 @@ public final class BoardSettingActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        etGateway1 = ((EditText) hasViews.findViewById(id.etGateway1));
-        etIP1 = ((EditText) hasViews.findViewById(id.etIP1));
-        etDeviceId = ((EditText) hasViews.findViewById(id.etDeviceId));
-        etGateway0 = ((EditText) hasViews.findViewById(id.etGateway0));
-        etNetmask0 = ((EditText) hasViews.findViewById(id.etNetmask0));
-        etNetmask1 = ((EditText) hasViews.findViewById(id.etNetmask1));
-        etDns1 = ((EditText) hasViews.findViewById(id.etDns1));
-        etServerAddr = ((EditText) hasViews.findViewById(id.etServerAddr));
         etDns0 = ((EditText) hasViews.findViewById(id.etDns0));
         etIP0 = ((EditText) hasViews.findViewById(id.etIP0));
-        {
-            View view = hasViews.findViewById(id.btnWriteSetting);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        BoardSettingActivity_.this.SaveSetting();
-                    }
-
-                }
-                );
-            }
-        }
+        etServerAddr = ((EditText) hasViews.findViewById(id.etServerAddr));
+        etDns1 = ((EditText) hasViews.findViewById(id.etDns1));
+        etNetmask1 = ((EditText) hasViews.findViewById(id.etNetmask1));
+        etNetmask0 = ((EditText) hasViews.findViewById(id.etNetmask0));
+        etGateway0 = ((EditText) hasViews.findViewById(id.etGateway0));
+        etGateway1 = ((EditText) hasViews.findViewById(id.etGateway1));
+        etDeviceId = ((EditText) hasViews.findViewById(id.etDeviceId));
+        etIP1 = ((EditText) hasViews.findViewById(id.etIP1));
         {
             View view = hasViews.findViewById(id.btnReadSetting);
             if (view!= null) {
@@ -126,21 +111,22 @@ public final class BoardSettingActivity_
                 );
             }
         }
-        showData();
-    }
-
-    @Override
-    public void ShowMessage(final String msg) {
-        handler_.post(new Runnable() {
+        {
+            View view = hasViews.findViewById(id.btnWriteSetting);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
 
 
-            @Override
-            public void run() {
-                BoardSettingActivity_.super.ShowMessage(msg);
+                    @Override
+                    public void onClick(View view) {
+                        BoardSettingActivity_.this.SaveSetting();
+                    }
+
+                }
+                );
             }
-
         }
-        );
+        showData();
     }
 
     @Override
@@ -151,6 +137,20 @@ public final class BoardSettingActivity_
             @Override
             public void run() {
                 BoardSettingActivity_.super.ShowData();
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void ShowMessage(final String msg) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                BoardSettingActivity_.super.ShowMessage(msg);
             }
 
         }

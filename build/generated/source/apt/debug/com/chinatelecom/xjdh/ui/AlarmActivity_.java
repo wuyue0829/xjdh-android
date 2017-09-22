@@ -95,18 +95,18 @@ public final class AlarmActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        mSpRoom = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_room));
         mSpModel = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_model));
-        mSpLevel = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_level));
-        mLvAlarm = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_alarm));
-        mSpSignal = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_signal));
-        mEtEndDatetime = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.et_end_datetime));
-        mEtStartDatetime = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.et_start_datetime));
-        mSpCounty = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_county));
-        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
-        mSpCity = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_city));
-        mSvAlarmFilter = ((ScrollView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sv_alarm_filter));
         mSpSubstation = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_substation));
+        mSpSignal = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_signal));
+        mSpCounty = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_county));
+        mSpRoom = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_room));
+        mEtEndDatetime = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.et_end_datetime));
+        mSpCity = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_city));
+        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
+        mSpLevel = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_level));
+        mEtStartDatetime = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.et_start_datetime));
+        mLvAlarm = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_alarm));
+        mSvAlarmFilter = ((ScrollView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sv_alarm_filter));
         {
             View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.btn_confirm);
             if (view!= null) {
@@ -122,19 +122,6 @@ public final class AlarmActivity_
                 );
             }
         }
-        if (mEtEndDatetime!= null) {
-            mEtEndDatetime.setOnTouchListener(new OnTouchListener() {
-
-
-                @Override
-                public boolean onTouch(View view, MotionEvent event) {
-                    AlarmActivity_.this.onEndDatetimeClicked();
-                    return true;
-                }
-
-            }
-            );
-        }
         if (mEtStartDatetime!= null) {
             mEtStartDatetime.setOnTouchListener(new OnTouchListener() {
 
@@ -142,6 +129,19 @@ public final class AlarmActivity_
                 @Override
                 public boolean onTouch(View view, MotionEvent event) {
                     AlarmActivity_.this.onStartDatetimeClicked();
+                    return true;
+                }
+
+            }
+            );
+        }
+        if (mEtEndDatetime!= null) {
+            mEtEndDatetime.setOnTouchListener(new OnTouchListener() {
+
+
+                @Override
+                public boolean onTouch(View view, MotionEvent event) {
+                    AlarmActivity_.this.onEndDatetimeClicked();
                     return true;
                 }
 
@@ -163,20 +163,6 @@ public final class AlarmActivity_
         bindData();
     }
 
-    @Override
-    public void updateAlarmListView(final boolean isRefreshing, final boolean isSuccess, final boolean isLoadAll) {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                AlarmActivity_.super.updateAlarmListView(isRefreshing, isSuccess, isLoadAll);
-            }
-
-        }
-        );
-    }
-
     @SuppressWarnings({
         "deprecation"
     })
@@ -188,6 +174,20 @@ public final class AlarmActivity_
             @Override
             public void run() {
                 AlarmActivity_.super.onPreferenceLogoutClicked();
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void updateAlarmListView(final boolean isRefreshing, final boolean isSuccess, final boolean isLoadAll) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                AlarmActivity_.super.updateAlarmListView(isRefreshing, isSuccess, isLoadAll);
             }
 
         }

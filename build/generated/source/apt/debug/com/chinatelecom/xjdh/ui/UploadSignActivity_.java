@@ -36,8 +36,8 @@ public final class UploadSignActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String QUESTION_ID_EXTRA = "question_ID";
     public final static String STATION_CODE_EXTRA = "station_code";
+    public final static String QUESTION_ID_EXTRA = "question_ID";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -95,8 +95,8 @@ public final class UploadSignActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        up_sign = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.up_sign));
         gridview = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.gridview));
+        up_sign = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.up_sign));
         con_sign = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.con_sign));
         if (con_sign!= null) {
             con_sign.setOnClickListener(new OnClickListener() {
@@ -140,11 +140,11 @@ public final class UploadSignActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(QUESTION_ID_EXTRA)) {
-                question_ID = extras_.getInt(QUESTION_ID_EXTRA);
-            }
             if (extras_.containsKey(STATION_CODE_EXTRA)) {
                 station_code = extras_.getInt(STATION_CODE_EXTRA);
+            }
+            if (extras_.containsKey(QUESTION_ID_EXTRA)) {
+                question_ID = extras_.getInt(QUESTION_ID_EXTRA);
             }
         }
     }
@@ -170,14 +170,14 @@ public final class UploadSignActivity_
     }
 
     @Override
-    public void getUserInfo() {
+    public void DoWorkerUpload(final int station_code, final int user_ID, final int question_ID) {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    UploadSignActivity_.super.getUserInfo();
+                    UploadSignActivity_.super.DoWorkerUpload(station_code, user_ID, question_ID);
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }
@@ -188,14 +188,14 @@ public final class UploadSignActivity_
     }
 
     @Override
-    public void DoWorkerUpload(final int station_code, final int user_ID, final int question_ID) {
+    public void getUserInfo() {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    UploadSignActivity_.super.DoWorkerUpload(station_code, user_ID, question_ID);
+                    UploadSignActivity_.super.getUserInfo();
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }
@@ -244,12 +244,12 @@ public final class UploadSignActivity_
             }
         }
 
-        public UploadSignActivity_.IntentBuilder_ question_ID(int question_ID) {
-            return super.extra(QUESTION_ID_EXTRA, question_ID);
-        }
-
         public UploadSignActivity_.IntentBuilder_ station_code(int station_code) {
             return super.extra(STATION_CODE_EXTRA, station_code);
+        }
+
+        public UploadSignActivity_.IntentBuilder_ question_ID(int question_ID) {
+            return super.extra(QUESTION_ID_EXTRA, question_ID);
         }
 
     }

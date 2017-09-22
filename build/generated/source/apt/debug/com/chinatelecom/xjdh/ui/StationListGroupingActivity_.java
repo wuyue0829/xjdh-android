@@ -81,8 +81,20 @@ public final class StationListGroupingActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        img_btn_reback = ((ImageButton) hasViews.findViewById(com.chinatelecom.xjdh.R.id.img_btn_reback));
         lv_stationName_grouping = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_stationName_grouping));
+        img_btn_reback = ((ImageButton) hasViews.findViewById(com.chinatelecom.xjdh.R.id.img_btn_reback));
+        if (img_btn_reback!= null) {
+            img_btn_reback.setOnClickListener(new OnClickListener() {
+
+
+                @Override
+                public void onClick(View view) {
+                    StationListGroupingActivity_.this.rebackButtonClicked();
+                }
+
+            }
+            );
+        }
         {
             View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.all_left_img);
             if (view!= null) {
@@ -97,18 +109,6 @@ public final class StationListGroupingActivity_
                 }
                 );
             }
-        }
-        if (img_btn_reback!= null) {
-            img_btn_reback.setOnClickListener(new OnClickListener() {
-
-
-                @Override
-                public void onClick(View view) {
-                    StationListGroupingActivity_.this.rebackButtonClicked();
-                }
-
-            }
-            );
         }
         if (lv_stationName_grouping!= null) {
             lv_stationName_grouping.setOnItemClickListener(new OnItemClickListener() {

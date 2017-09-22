@@ -30,8 +30,8 @@ public final class WebViewActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String TITLE_EXTRA = "title";
     public final static String ORIGINAL_URL_EXTRA = "originalUrl";
+    public final static String TITLE_EXTRA = "title";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,11 +107,11 @@ public final class WebViewActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(TITLE_EXTRA)) {
-                title = extras_.getString(TITLE_EXTRA);
-            }
             if (extras_.containsKey(ORIGINAL_URL_EXTRA)) {
                 originalUrl = extras_.getString(ORIGINAL_URL_EXTRA);
+            }
+            if (extras_.containsKey(TITLE_EXTRA)) {
+                title = extras_.getString(TITLE_EXTRA);
             }
         }
     }
@@ -161,12 +161,12 @@ public final class WebViewActivity_
             }
         }
 
-        public WebViewActivity_.IntentBuilder_ title(String title) {
-            return super.extra(TITLE_EXTRA, title);
-        }
-
         public WebViewActivity_.IntentBuilder_ originalUrl(String originalUrl) {
             return super.extra(ORIGINAL_URL_EXTRA, originalUrl);
+        }
+
+        public WebViewActivity_.IntentBuilder_ title(String title) {
+            return super.extra(TITLE_EXTRA, title);
         }
 
     }

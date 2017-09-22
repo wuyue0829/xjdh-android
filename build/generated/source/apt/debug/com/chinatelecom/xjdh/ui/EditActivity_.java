@@ -38,12 +38,12 @@ public final class EditActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String STATION_CODE_EXTRA = "station_code";
+    public final static String QUESTION_EXTRA = "question";
     public final static String QUESTION_ID_EXTRA = "question_ID";
     public final static String EDITIMGPATH_EXTRA = "editimgpath";
-    public final static String TITLES_EXTRA = "Titles";
     public final static String DEVICE_ID_EXTRA = "Device_id";
-    public final static String QUESTION_EXTRA = "question";
+    public final static String STATION_CODE_EXTRA = "station_code";
+    public final static String TITLES_EXTRA = "Titles";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -102,9 +102,9 @@ public final class EditActivity_
     @Override
     public void onViewChanged(HasViews hasViews) {
         submit = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.submit));
+        gridview = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.gridview));
         title_name = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.title_name));
         name = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.name));
-        gridview = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.gridview));
         answer_gridview = ((AutoGridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.answer_gridview));
         if (submit!= null) {
             submit.setOnClickListener(new OnClickListener() {
@@ -113,18 +113,6 @@ public final class EditActivity_
                 @Override
                 public void onClick(View view) {
                     EditActivity_.this.submitClick();
-                }
-
-            }
-            );
-        }
-        if (gridview!= null) {
-            gridview.setOnItemClickListener(new OnItemClickListener() {
-
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    EditActivity_.this.OnGridItemClick(position);
                 }
 
             }
@@ -142,14 +130,26 @@ public final class EditActivity_
             }
             );
         }
+        if (gridview!= null) {
+            gridview.setOnItemClickListener(new OnItemClickListener() {
+
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    EditActivity_.this.OnGridItemClick(position);
+                }
+
+            }
+            );
+        }
         showView();
     }
 
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(STATION_CODE_EXTRA)) {
-                station_code = extras_.getInt(STATION_CODE_EXTRA);
+            if (extras_.containsKey(QUESTION_EXTRA)) {
+                question = extras_.getString(QUESTION_EXTRA);
             }
             if (extras_.containsKey(QUESTION_ID_EXTRA)) {
                 question_ID = extras_.getInt(QUESTION_ID_EXTRA);
@@ -157,14 +157,14 @@ public final class EditActivity_
             if (extras_.containsKey(EDITIMGPATH_EXTRA)) {
                 editimgpath = extras_.getStringArray(EDITIMGPATH_EXTRA);
             }
-            if (extras_.containsKey(TITLES_EXTRA)) {
-                Titles = extras_.getString(TITLES_EXTRA);
-            }
             if (extras_.containsKey(DEVICE_ID_EXTRA)) {
                 Device_id = extras_.getString(DEVICE_ID_EXTRA);
             }
-            if (extras_.containsKey(QUESTION_EXTRA)) {
-                question = extras_.getString(QUESTION_EXTRA);
+            if (extras_.containsKey(STATION_CODE_EXTRA)) {
+                station_code = extras_.getInt(STATION_CODE_EXTRA);
+            }
+            if (extras_.containsKey(TITLES_EXTRA)) {
+                Titles = extras_.getString(TITLES_EXTRA);
             }
         }
     }
@@ -190,14 +190,14 @@ public final class EditActivity_
     }
 
     @Override
-    public void getUserInfo() {
+    public void DoWorkerUpload(final int station_code, final int user_ID, final int question_ID) {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    EditActivity_.super.getUserInfo();
+                    EditActivity_.super.DoWorkerUpload(station_code, user_ID, question_ID);
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }
@@ -208,14 +208,14 @@ public final class EditActivity_
     }
 
     @Override
-    public void DoWorkerUpload(final int station_code, final int user_ID, final int question_ID) {
+    public void getUserInfo() {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    EditActivity_.super.DoWorkerUpload(station_code, user_ID, question_ID);
+                    EditActivity_.super.getUserInfo();
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }
@@ -264,8 +264,8 @@ public final class EditActivity_
             }
         }
 
-        public EditActivity_.IntentBuilder_ station_code(int station_code) {
-            return super.extra(STATION_CODE_EXTRA, station_code);
+        public EditActivity_.IntentBuilder_ question(String question) {
+            return super.extra(QUESTION_EXTRA, question);
         }
 
         public EditActivity_.IntentBuilder_ question_ID(int question_ID) {
@@ -276,16 +276,16 @@ public final class EditActivity_
             return super.extra(EDITIMGPATH_EXTRA, editimgpath);
         }
 
-        public EditActivity_.IntentBuilder_ Titles(String Titles) {
-            return super.extra(TITLES_EXTRA, Titles);
-        }
-
         public EditActivity_.IntentBuilder_ Device_id(String Device_id) {
             return super.extra(DEVICE_ID_EXTRA, Device_id);
         }
 
-        public EditActivity_.IntentBuilder_ question(String question) {
-            return super.extra(QUESTION_EXTRA, question);
+        public EditActivity_.IntentBuilder_ station_code(int station_code) {
+            return super.extra(STATION_CODE_EXTRA, station_code);
+        }
+
+        public EditActivity_.IntentBuilder_ Titles(String Titles) {
+            return super.extra(TITLES_EXTRA, Titles);
         }
 
     }

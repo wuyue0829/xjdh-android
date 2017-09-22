@@ -78,24 +78,10 @@ public final class ForeLoadFragment_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
+        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
         btnRefresh = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.btnRefresh));
         devList = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.devList));
-        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
         Show();
-    }
-
-    @Override
-    public void ShowData() {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                ForeLoadFragment_.super.ShowData();
-            }
-
-        }
-        );
     }
 
     @Override
@@ -106,6 +92,20 @@ public final class ForeLoadFragment_
             @Override
             public void run() {
                 ForeLoadFragment_.super.ShowMessage(msg);
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void ShowData() {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                ForeLoadFragment_.super.ShowData();
             }
 
         }

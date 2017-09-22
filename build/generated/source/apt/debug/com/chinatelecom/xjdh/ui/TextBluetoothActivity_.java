@@ -89,11 +89,11 @@ public final class TextBluetoothActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        rd302A = ((RadioButton) hasViews.findViewById(id.rd302A));
-        btn_search_devices = ((Button) hasViews.findViewById(id.btn_search_devices));
+        list_search_devices = ((ListView) hasViews.findViewById(id.list_search_devices));
         rd301E = ((RadioButton) hasViews.findViewById(id.rd301E));
         list_bonded_devices = ((ListView) hasViews.findViewById(id.list_bonded_devices));
-        list_search_devices = ((ListView) hasViews.findViewById(id.list_search_devices));
+        rd302A = ((RadioButton) hasViews.findViewById(id.rd302A));
+        btn_search_devices = ((Button) hasViews.findViewById(id.btn_search_devices));
         btn_close_devices = ((Button) hasViews.findViewById(id.btn_close_devices));
         if (btn_search_devices!= null) {
             btn_search_devices.setOnClickListener(new OnClickListener() {

@@ -85,20 +85,6 @@ public final class ThreeLoadFragment_
     }
 
     @Override
-    public void ShowData() {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                ThreeLoadFragment_.super.ShowData();
-            }
-
-        }
-        );
-    }
-
-    @Override
     public void ShowMessage(final String msg) {
         handler_.post(new Runnable() {
 
@@ -106,6 +92,20 @@ public final class ThreeLoadFragment_
             @Override
             public void run() {
                 ThreeLoadFragment_.super.ShowMessage(msg);
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void ShowData() {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                ThreeLoadFragment_.super.ShowData();
             }
 
         }

@@ -89,8 +89,8 @@ public final class RstpVideoActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        recycler = ((RecyclerView) hasViews.findViewById(id.recycler));
         mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(id.srl_alarm));
+        recycler = ((RecyclerView) hasViews.findViewById(id.recycler));
         showView();
     }
 

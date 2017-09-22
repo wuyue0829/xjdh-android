@@ -30,8 +30,8 @@ public final class RealtimeActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String DEV_TYPE_ITEM_EXTRA = "devTypeItem";
     public final static String MODEL_EXTRA = "model";
+    public final static String DEV_TYPE_ITEM_EXTRA = "devTypeItem";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -95,11 +95,11 @@ public final class RealtimeActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(DEV_TYPE_ITEM_EXTRA)) {
-                devTypeItem = extras_.getParcelable(DEV_TYPE_ITEM_EXTRA);
-            }
             if (extras_.containsKey(MODEL_EXTRA)) {
                 model = extras_.getString(MODEL_EXTRA);
+            }
+            if (extras_.containsKey(DEV_TYPE_ITEM_EXTRA)) {
+                devTypeItem = extras_.getParcelable(DEV_TYPE_ITEM_EXTRA);
             }
         }
     }
@@ -149,12 +149,12 @@ public final class RealtimeActivity_
             }
         }
 
-        public RealtimeActivity_.IntentBuilder_ devTypeItem(DevTypeItem devTypeItem) {
-            return super.extra(DEV_TYPE_ITEM_EXTRA, devTypeItem);
-        }
-
         public RealtimeActivity_.IntentBuilder_ model(String model) {
             return super.extra(MODEL_EXTRA, model);
+        }
+
+        public RealtimeActivity_.IntentBuilder_ devTypeItem(DevTypeItem devTypeItem) {
+            return super.extra(DEV_TYPE_ITEM_EXTRA, devTypeItem);
         }
 
     }

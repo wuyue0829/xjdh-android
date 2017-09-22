@@ -91,8 +91,8 @@ public final class SMDDeviceMonitor_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(id.srl_alarm));
         devList = ((ListView) hasViews.findViewById(id.devList));
+        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(id.srl_alarm));
         btnRefresh = ((Button) hasViews.findViewById(id.btnRefresh));
         if (btnRefresh!= null) {
             btnRefresh.setOnClickListener(new OnClickListener() {

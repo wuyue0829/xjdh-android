@@ -35,8 +35,8 @@ public final class FaultDetailActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String ID_EXTRA = "ID";
     public final static String CONTENT_EXTRA = "content";
+    public final static String ID_EXTRA = "ID";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -117,11 +117,11 @@ public final class FaultDetailActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(ID_EXTRA)) {
-                ID = extras_.getInt(ID_EXTRA);
-            }
             if (extras_.containsKey(CONTENT_EXTRA)) {
                 content = extras_.getString(CONTENT_EXTRA);
+            }
+            if (extras_.containsKey(ID_EXTRA)) {
+                ID = extras_.getInt(ID_EXTRA);
             }
         }
     }
@@ -203,12 +203,12 @@ public final class FaultDetailActivity_
             }
         }
 
-        public FaultDetailActivity_.IntentBuilder_ ID(int ID) {
-            return super.extra(ID_EXTRA, ID);
-        }
-
         public FaultDetailActivity_.IntentBuilder_ content(String content) {
             return super.extra(CONTENT_EXTRA, content);
+        }
+
+        public FaultDetailActivity_.IntentBuilder_ ID(int ID) {
+            return super.extra(ID_EXTRA, ID);
         }
 
     }

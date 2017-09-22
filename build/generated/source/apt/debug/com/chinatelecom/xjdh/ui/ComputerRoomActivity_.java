@@ -95,8 +95,8 @@ public final class ComputerRoomActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        img_btn_reback = ((ImageButton) hasViews.findViewById(com.chinatelecom.xjdh.R.id.img_btn_reback));
         mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
+        img_btn_reback = ((ImageButton) hasViews.findViewById(com.chinatelecom.xjdh.R.id.img_btn_reback));
         lv_stationName_grouping = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_stationName_grouping));
         if (lv_stationName_grouping!= null) {
             lv_stationName_grouping.setOnItemClickListener(new OnItemClickListener() {

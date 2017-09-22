@@ -6,11 +6,11 @@ package com.chinatelecom.xjdh.utils;
  * 
  */
 public class URLs {
-//	public final static String HOST = "xt.jimglobal.com";
-	public final static String HOST = "jt3.jimglobal.com";
+	public final static String HOST = "xt.jimglobal.com";
+//	public final static String HOST = "jt3.jimglobal.com";
 //	public final static String HOST = "192.168.3.112";//
-//	public final static String CODE = "https://xt.jimglobal.com/Welcome/qrcode";
-	public final static String CODE = "http://jt3.jimglobal.com/Welcome/qrcode";
+	public final static String CODE = "https://xt.jimglobal.com/Welcome/qrcode";
+//	public final static String CODE = "http://jt3.jimglobal.com/Welcome/qrcode";
 //   public final static String HOST = "xt.jimglobal.com";//0
 //	 public final static String HOST = "192.168.1.100";//
 //	 public final static String HOST = "192.168.1.112";//

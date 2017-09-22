@@ -104,25 +104,10 @@ public final class CollectActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        tv_Longitude = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tv_Longitude));
-        tv_Latitude = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tv_Latitude));
         noScrollgridview = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.noScrollgridview));
         mMapView = ((MapView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.bmapView));
-        {
-            View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.btn_gps_collect);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        CollectActivity_.this.collectClicked();
-                    }
-
-                }
-                );
-            }
-        }
+        tv_Latitude = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tv_Latitude));
+        tv_Longitude = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tv_Longitude));
         {
             View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.btn_upload_);
             if (view!= null) {
@@ -132,6 +117,21 @@ public final class CollectActivity_
                     @Override
                     public void onClick(View view) {
                         CollectActivity_.this.uploadClicked();
+                    }
+
+                }
+                );
+            }
+        }
+        {
+            View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.btn_gps_collect);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        CollectActivity_.this.collectClicked();
                     }
 
                 }

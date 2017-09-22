@@ -89,8 +89,8 @@ public final class PWDActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        pwd_old = ((EditText) hasViews.findViewById(id.pwd_old));
         pwd_agin = ((EditText) hasViews.findViewById(id.pwd_agin));
+        pwd_old = ((EditText) hasViews.findViewById(id.pwd_old));
         pwd_new = ((EditText) hasViews.findViewById(id.pwd_new));
         {
             View view = hasViews.findViewById(id.pwd_arrage);

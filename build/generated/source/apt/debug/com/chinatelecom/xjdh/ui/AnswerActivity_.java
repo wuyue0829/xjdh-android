@@ -38,9 +38,9 @@ public final class AnswerActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String STATION_CODE_EXTRA = "station_code";
     public final static String ROOM_ID_EXTRA = "room_ID";
     public final static String QUESTION_DEV_ID_EXTRA = "question_DevID";
+    public final static String STATION_CODE_EXTRA = "station_code";
     public final static String QUESTION_EXTRA = "question";
     public final static String QUESTION_ID_EXTRA = "question_ID";
     private Handler handler_ = new Handler(Looper.getMainLooper());
@@ -102,8 +102,8 @@ public final class AnswerActivity_
     public void onViewChanged(HasViews hasViews) {
         question_name = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.question_name));
         submit = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.submit));
-        img_gridview = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.img_gridview));
         yes = ((RadioButton) hasViews.findViewById(com.chinatelecom.xjdh.R.id.yes));
+        img_gridview = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.img_gridview));
         if (submit!= null) {
             submit.setOnClickListener(new OnClickListener() {
 
@@ -134,14 +134,14 @@ public final class AnswerActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(STATION_CODE_EXTRA)) {
-                station_code = extras_.getInt(STATION_CODE_EXTRA);
-            }
             if (extras_.containsKey(ROOM_ID_EXTRA)) {
                 room_ID = extras_.getInt(ROOM_ID_EXTRA);
             }
             if (extras_.containsKey(QUESTION_DEV_ID_EXTRA)) {
                 question_DevID = extras_.getDouble(QUESTION_DEV_ID_EXTRA);
+            }
+            if (extras_.containsKey(STATION_CODE_EXTRA)) {
+                station_code = extras_.getInt(STATION_CODE_EXTRA);
             }
             if (extras_.containsKey(QUESTION_EXTRA)) {
                 question = extras_.getString(QUESTION_EXTRA);
@@ -247,16 +247,16 @@ public final class AnswerActivity_
             }
         }
 
-        public AnswerActivity_.IntentBuilder_ station_code(int station_code) {
-            return super.extra(STATION_CODE_EXTRA, station_code);
-        }
-
         public AnswerActivity_.IntentBuilder_ room_ID(int room_ID) {
             return super.extra(ROOM_ID_EXTRA, room_ID);
         }
 
         public AnswerActivity_.IntentBuilder_ question_DevID(double question_DevID) {
             return super.extra(QUESTION_DEV_ID_EXTRA, question_DevID);
+        }
+
+        public AnswerActivity_.IntentBuilder_ station_code(int station_code) {
+            return super.extra(STATION_CODE_EXTRA, station_code);
         }
 
         public AnswerActivity_.IntentBuilder_ question(String question) {

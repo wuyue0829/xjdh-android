@@ -97,8 +97,8 @@ public final class MainActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        user_info = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.user_info));
         mMainGrid = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.main_gridview));
+        user_info = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.user_info));
         if (mMainGrid!= null) {
             mMainGrid.setOnItemClickListener(new OnItemClickListener() {
 
@@ -132,6 +132,20 @@ public final class MainActivity_
         injectExtras_();
     }
 
+    @Override
+    public void onLoginResult(final LoginResponse resp) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                MainActivity_.super.onLoginResult(resp);
+            }
+
+        }
+        );
+    }
+
     @SuppressWarnings({
         "deprecation"
     })
@@ -143,20 +157,6 @@ public final class MainActivity_
             @Override
             public void run() {
                 MainActivity_.super.onPreferenceLogoutClicked();
-            }
-
-        }
-        );
-    }
-
-    @Override
-    public void onLoginResult(final LoginResponse resp) {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                MainActivity_.super.onLoginResult(resp);
             }
 
         }

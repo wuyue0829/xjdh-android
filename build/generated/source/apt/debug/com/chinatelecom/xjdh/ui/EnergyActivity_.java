@@ -85,8 +85,8 @@ public final class EnergyActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        viewpager = ((ViewPager) hasViews.findViewById(id.viewpager));
         indicator = ((MyViewPagerIndicator) hasViews.findViewById(id.indicator));
+        viewpager = ((ViewPager) hasViews.findViewById(id.viewpager));
         initsClick();
     }
 

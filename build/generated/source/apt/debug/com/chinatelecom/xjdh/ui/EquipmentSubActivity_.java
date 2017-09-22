@@ -30,8 +30,8 @@ public final class EquipmentSubActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String ROOM_ID_EXTRA = "room_ID";
     public final static String STATION_ID_EXTRA = "Station_ID";
+    public final static String ROOM_ID_EXTRA = "room_ID";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,19 +88,19 @@ public final class EquipmentSubActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        indicator = ((MyViewPagerIndicators) hasViews.findViewById(id.indicator));
         viewpager = ((ViewPager) hasViews.findViewById(id.viewpager));
+        indicator = ((MyViewPagerIndicators) hasViews.findViewById(id.indicator));
         ShowView();
     }
 
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(ROOM_ID_EXTRA)) {
-                room_ID = extras_.getInt(ROOM_ID_EXTRA);
-            }
             if (extras_.containsKey(STATION_ID_EXTRA)) {
                 Station_ID = extras_.getInt(STATION_ID_EXTRA);
+            }
+            if (extras_.containsKey(ROOM_ID_EXTRA)) {
+                room_ID = extras_.getInt(ROOM_ID_EXTRA);
             }
         }
     }
@@ -150,12 +150,12 @@ public final class EquipmentSubActivity_
             }
         }
 
-        public EquipmentSubActivity_.IntentBuilder_ room_ID(int room_ID) {
-            return super.extra(ROOM_ID_EXTRA, room_ID);
-        }
-
         public EquipmentSubActivity_.IntentBuilder_ Station_ID(int Station_ID) {
             return super.extra(STATION_ID_EXTRA, Station_ID);
+        }
+
+        public EquipmentSubActivity_.IntentBuilder_ room_ID(int room_ID) {
+            return super.extra(ROOM_ID_EXTRA, room_ID);
         }
 
     }

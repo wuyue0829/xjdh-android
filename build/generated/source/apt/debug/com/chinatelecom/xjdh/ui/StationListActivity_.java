@@ -36,11 +36,11 @@ public final class StationListActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String LONGITUDE_EXTRA = "Longitude";
-    public final static String SUBSTATION_ID_EXTRA = "substation_id";
-    public final static String GROUPING_NAME_EXTRA = "groupingName";
-    public final static String STATION_NAME_EXTRA = "station_name";
     public final static String LATITUDE_EXTRA = "latitude";
+    public final static String STATION_NAME_EXTRA = "station_name";
+    public final static String SUBSTATION_ID_EXTRA = "substation_id";
+    public final static String LONGITUDE_EXTRA = "Longitude";
+    public final static String GROUPING_NAME_EXTRA = "groupingName";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -99,8 +99,8 @@ public final class StationListActivity_
     @Override
     public void onViewChanged(HasViews hasViews) {
         list_station_cache = ((ListView) hasViews.findViewById(id.list_station_cache));
-        ll_search = ((LinearLayout) hasViews.findViewById(id.ll_search));
         ll_confirm = ((LinearLayout) hasViews.findViewById(id.ll_confirm));
+        ll_search = ((LinearLayout) hasViews.findViewById(id.ll_search));
         et_station_name = ((EditText) hasViews.findViewById(id.et_station_name));
         {
             View view = hasViews.findViewById(id.btn_search_station);
@@ -123,20 +123,20 @@ public final class StationListActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(LONGITUDE_EXTRA)) {
-                Longitude = extras_.getDouble(LONGITUDE_EXTRA);
-            }
-            if (extras_.containsKey(SUBSTATION_ID_EXTRA)) {
-                substation_id = extras_.getString(SUBSTATION_ID_EXTRA);
-            }
-            if (extras_.containsKey(GROUPING_NAME_EXTRA)) {
-                groupingName = extras_.getString(GROUPING_NAME_EXTRA);
+            if (extras_.containsKey(LATITUDE_EXTRA)) {
+                latitude = extras_.getDouble(LATITUDE_EXTRA);
             }
             if (extras_.containsKey(STATION_NAME_EXTRA)) {
                 station_name = extras_.getString(STATION_NAME_EXTRA);
             }
-            if (extras_.containsKey(LATITUDE_EXTRA)) {
-                latitude = extras_.getDouble(LATITUDE_EXTRA);
+            if (extras_.containsKey(SUBSTATION_ID_EXTRA)) {
+                substation_id = extras_.getString(SUBSTATION_ID_EXTRA);
+            }
+            if (extras_.containsKey(LONGITUDE_EXTRA)) {
+                Longitude = extras_.getDouble(LONGITUDE_EXTRA);
+            }
+            if (extras_.containsKey(GROUPING_NAME_EXTRA)) {
+                groupingName = extras_.getString(GROUPING_NAME_EXTRA);
             }
         }
     }
@@ -145,20 +145,6 @@ public final class StationListActivity_
     public void setIntent(Intent newIntent) {
         super.setIntent(newIntent);
         injectExtras_();
-    }
-
-    @Override
-    public void ShowResponse(final ApiResponse apiResp) {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                StationListActivity_.super.ShowResponse(apiResp);
-            }
-
-        }
-        );
     }
 
     @SuppressWarnings({
@@ -172,6 +158,20 @@ public final class StationListActivity_
             @Override
             public void run() {
                 StationListActivity_.super.onPreferenceLogoutClicked();
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void ShowResponse(final ApiResponse apiResp) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                StationListActivity_.super.ShowResponse(apiResp);
             }
 
         }
@@ -235,24 +235,24 @@ public final class StationListActivity_
             }
         }
 
-        public StationListActivity_.IntentBuilder_ Longitude(double Longitude) {
-            return super.extra(LONGITUDE_EXTRA, Longitude);
-        }
-
-        public StationListActivity_.IntentBuilder_ substation_id(String substation_id) {
-            return super.extra(SUBSTATION_ID_EXTRA, substation_id);
-        }
-
-        public StationListActivity_.IntentBuilder_ groupingName(String groupingName) {
-            return super.extra(GROUPING_NAME_EXTRA, groupingName);
+        public StationListActivity_.IntentBuilder_ latitude(double latitude) {
+            return super.extra(LATITUDE_EXTRA, latitude);
         }
 
         public StationListActivity_.IntentBuilder_ station_name(String station_name) {
             return super.extra(STATION_NAME_EXTRA, station_name);
         }
 
-        public StationListActivity_.IntentBuilder_ latitude(double latitude) {
-            return super.extra(LATITUDE_EXTRA, latitude);
+        public StationListActivity_.IntentBuilder_ substation_id(String substation_id) {
+            return super.extra(SUBSTATION_ID_EXTRA, substation_id);
+        }
+
+        public StationListActivity_.IntentBuilder_ Longitude(double Longitude) {
+            return super.extra(LONGITUDE_EXTRA, Longitude);
+        }
+
+        public StationListActivity_.IntentBuilder_ groupingName(String groupingName) {
+            return super.extra(GROUPING_NAME_EXTRA, groupingName);
         }
 
     }

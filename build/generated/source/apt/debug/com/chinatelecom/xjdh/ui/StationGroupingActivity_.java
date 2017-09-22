@@ -34,10 +34,10 @@ public final class StationGroupingActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String LONGITUDE_EXTRA = "Longitude";
-    public final static String LATITUDE_EXTRA = "latitude";
-    public final static String SUBSTATION_ID_EXTRA = "substation_id";
     public final static String STATION_NAME_EXTRA = "station_name";
+    public final static String SUBSTATION_ID_EXTRA = "substation_id";
+    public final static String LATITUDE_EXTRA = "latitude";
+    public final static String LONGITUDE_EXTRA = "Longitude";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -87,8 +87,8 @@ public final class StationGroupingActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        tv_grouping_id = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tv_grouping_id));
         lv_grouping_name = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_grouping_name));
+        tv_grouping_id = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tv_grouping_id));
         tv_grouping_name = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tv_grouping_name));
         {
             View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.img_btn_reback);
@@ -123,17 +123,17 @@ public final class StationGroupingActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(LONGITUDE_EXTRA)) {
-                Longitude = extras_.getDouble(LONGITUDE_EXTRA);
-            }
-            if (extras_.containsKey(LATITUDE_EXTRA)) {
-                latitude = extras_.getDouble(LATITUDE_EXTRA);
+            if (extras_.containsKey(STATION_NAME_EXTRA)) {
+                station_name = extras_.getString(STATION_NAME_EXTRA);
             }
             if (extras_.containsKey(SUBSTATION_ID_EXTRA)) {
                 substation_id = extras_.getString(SUBSTATION_ID_EXTRA);
             }
-            if (extras_.containsKey(STATION_NAME_EXTRA)) {
-                station_name = extras_.getString(STATION_NAME_EXTRA);
+            if (extras_.containsKey(LATITUDE_EXTRA)) {
+                latitude = extras_.getDouble(LATITUDE_EXTRA);
+            }
+            if (extras_.containsKey(LONGITUDE_EXTRA)) {
+                Longitude = extras_.getDouble(LONGITUDE_EXTRA);
             }
         }
     }
@@ -232,20 +232,20 @@ public final class StationGroupingActivity_
             }
         }
 
-        public StationGroupingActivity_.IntentBuilder_ Longitude(double Longitude) {
-            return super.extra(LONGITUDE_EXTRA, Longitude);
-        }
-
-        public StationGroupingActivity_.IntentBuilder_ latitude(double latitude) {
-            return super.extra(LATITUDE_EXTRA, latitude);
+        public StationGroupingActivity_.IntentBuilder_ station_name(String station_name) {
+            return super.extra(STATION_NAME_EXTRA, station_name);
         }
 
         public StationGroupingActivity_.IntentBuilder_ substation_id(String substation_id) {
             return super.extra(SUBSTATION_ID_EXTRA, substation_id);
         }
 
-        public StationGroupingActivity_.IntentBuilder_ station_name(String station_name) {
-            return super.extra(STATION_NAME_EXTRA, station_name);
+        public StationGroupingActivity_.IntentBuilder_ latitude(double latitude) {
+            return super.extra(LATITUDE_EXTRA, latitude);
+        }
+
+        public StationGroupingActivity_.IntentBuilder_ Longitude(double Longitude) {
+            return super.extra(LONGITUDE_EXTRA, Longitude);
         }
 
     }

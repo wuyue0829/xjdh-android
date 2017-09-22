@@ -76,8 +76,8 @@ public final class SurveillanceActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        video_loading = hasViews.findViewById(id.video_loading);
         lly = ((LinearLayout) hasViews.findViewById(id.lly));
+        video_loading = hasViews.findViewById(id.video_loading);
         mVideoSurface = ((SurfaceView) hasViews.findViewById(id.mVideoSurface));
         {
             View view = hasViews.findViewById(id.back_img);

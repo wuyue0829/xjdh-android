@@ -1,10 +1,7 @@
 package com.chinatelecom.xjdh.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,7 +10,6 @@ import android.widget.TextView;
 
 import com.chinatelecom.xjdh.R;
 import com.chinatelecom.xjdh.bean.RtspUrl;
-import com.chinatelecom.xjdh.ui.RtspVideoPlayActivity;
 import com.chinatelecom.xjdh.ui.SurveillanceActivity_;
 import com.chinatelecom.xjdh.utils.L;
 
@@ -83,29 +79,9 @@ public class RstpAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
-//					playRstpByPhone();
-//					playRstpByVideoView();
 					SurveillanceActivity_.intent(context).URL(jsonList.get(getPosition()).getUrl()).start();
 				}
 			});
-		}
-
-		public void playRstpByVideoView(){
-			String url = jsonList.get(getPosition()).getUrl();
-			Log.v("URL:::::::::before", url);
-			Intent intent = new Intent(context, RtspVideoPlayActivity.class);
-			intent.putExtra("videoUrl", url);
-			context.startActivity(intent);
-		}
-		private void playRstpByPhone() {
-			//Uri uri = Uri.parse("rtsp://202.100.171.188:13504/ec321115763a7f5ce5e2");
-			String url = jsonList.get(getPosition()).getUrl();
-			Log.v("URL:::::::::", url);
-			Uri uri = Uri.parse(url);
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			Log.v("URI:::::::::", uri.toString());
-			intent.setDataAndType(uri, "video/*");
-			context.startActivity(intent);
 		}
 	}
 }

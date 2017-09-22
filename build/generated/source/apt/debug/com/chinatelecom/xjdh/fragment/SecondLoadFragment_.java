@@ -78,24 +78,10 @@ public final class SecondLoadFragment_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        devList = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.devList));
         mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
+        devList = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.devList));
         btnRefresh = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.btnRefresh));
         Show();
-    }
-
-    @Override
-    public void ShowData() {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                SecondLoadFragment_.super.ShowData();
-            }
-
-        }
-        );
     }
 
     @Override
@@ -106,6 +92,20 @@ public final class SecondLoadFragment_
             @Override
             public void run() {
                 SecondLoadFragment_.super.ShowMessage(msg);
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void ShowData() {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                SecondLoadFragment_.super.ShowData();
             }
 
         }

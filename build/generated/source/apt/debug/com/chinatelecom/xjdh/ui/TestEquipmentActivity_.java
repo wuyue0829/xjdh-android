@@ -90,10 +90,10 @@ public final class TestEquipmentActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        lvDevice = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lvDevice));
-        rd302A = ((RadioButton) hasViews.findViewById(com.chinatelecom.xjdh.R.id.rd302A));
         rd301E = ((RadioButton) hasViews.findViewById(com.chinatelecom.xjdh.R.id.rd301E));
+        lvDevice = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lvDevice));
         btn_scanning = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.btn_scanning));
+        rd302A = ((RadioButton) hasViews.findViewById(com.chinatelecom.xjdh.R.id.rd302A));
         if (btn_scanning!= null) {
             btn_scanning.setOnClickListener(new OnClickListener() {
 

@@ -67,11 +67,11 @@ public final class EnergyView_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        pt = ((TextView) hasViews.findViewById(id.pt));
-        pb = ((TextView) hasViews.findViewById(id.pb));
-        pa = ((TextView) hasViews.findViewById(id.pa));
-        name = ((TextView) hasViews.findViewById(id.name));
         pc = ((TextView) hasViews.findViewById(id.pc));
+        pa = ((TextView) hasViews.findViewById(id.pa));
+        pb = ((TextView) hasViews.findViewById(id.pb));
+        pt = ((TextView) hasViews.findViewById(id.pt));
+        name = ((TextView) hasViews.findViewById(id.name));
     }
 
 }

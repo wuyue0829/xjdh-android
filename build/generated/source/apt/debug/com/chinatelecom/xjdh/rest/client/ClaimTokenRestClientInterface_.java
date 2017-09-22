@@ -117,22 +117,22 @@ public final class ClaimTokenRestClientInterface_
     }
 
     @Override
-    public ClaimResoure get_basicUserInfo(MultiValueMap<String, Object> resource) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Content-Type", availableHeaders.get("Content-Type"));
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(resource, httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/OAuthCenter/v1/api/get_basicUserInfo"), HttpMethod.POST, requestEntity, ClaimResoure.class).getBody();
-        }
-    }
-
-    @Override
     public ApiResponse creationUser(LinkedHashMap<String, String> items) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Content-Type", availableHeaders.get("Content-Type"));
             HttpEntity<LinkedHashMap<String, String>> requestEntity = new HttpEntity<LinkedHashMap<String, String>>(items, httpHeaders);
             return restTemplate.exchange(rootUrl.concat("/creationUser"), HttpMethod.POST, requestEntity, ApiResponse.class).getBody();
+        }
+    }
+
+    @Override
+    public ClaimResoure get_basicUserInfo(MultiValueMap<String, Object> resource) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Content-Type", availableHeaders.get("Content-Type"));
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(resource, httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/OAuthCenter/v1/api/get_basicUserInfo"), HttpMethod.POST, requestEntity, ClaimResoure.class).getBody();
         }
     }
 

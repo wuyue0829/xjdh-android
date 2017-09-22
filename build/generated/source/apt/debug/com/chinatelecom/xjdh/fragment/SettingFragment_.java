@@ -74,6 +74,22 @@ public final class SettingFragment_
         super.addPreferencesFromResource(preferencesResId);
         spfBackground = ((SwitchPreference) this.findPreference(this.getString(string.new_message_background)));
         {
+            Preference preference = this.findPreference(this.getString(string.app_about));
+            if (preference!= null) {
+                preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        SettingFragment_.this.onPreferenceAboutClicked();
+                        return true;
+                    }
+
+                }
+                );
+            }
+        }
+        {
             Preference preference = this.findPreference(this.getString(string.logout));
             if (preference!= null) {
                 preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -98,22 +114,6 @@ public final class SettingFragment_
                     @Override
                     public boolean onPreferenceClick(Preference preference) {
                         SettingFragment_.this.onPreferenceExitClicked();
-                        return true;
-                    }
-
-                }
-                );
-            }
-        }
-        {
-            Preference preference = this.findPreference(this.getString(string.app_about));
-            if (preference!= null) {
-                preference.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-
-                    @Override
-                    public boolean onPreferenceClick(Preference preference) {
-                        SettingFragment_.this.onPreferenceAboutClicked();
                         return true;
                     }
 

@@ -114,14 +114,14 @@ public final class DoneStationFragment_
     }
 
     @Override
-    public void getUserInfo() {
+    public void getData(final int user_id, final int type, final int locatype) {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    DoneStationFragment_.super.getUserInfo();
+                    DoneStationFragment_.super.getData(user_id, type, locatype);
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }
@@ -132,14 +132,14 @@ public final class DoneStationFragment_
     }
 
     @Override
-    public void getData(final int user_id, final int type, final int locatype) {
+    public void getUserInfo() {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    DoneStationFragment_.super.getData(user_id, type, locatype);
+                    DoneStationFragment_.super.getUserInfo();
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }

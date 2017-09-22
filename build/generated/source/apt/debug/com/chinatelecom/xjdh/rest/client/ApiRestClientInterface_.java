@@ -105,12 +105,80 @@ public final class ApiRestClientInterface_
     }
 
     @Override
+    public ApiResponse getDevModelData() {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/getDevModelData"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse stationList() {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/stationList"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse VideoRecord(String data_id, String start_date, String end_start) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("data_id", data_id);
+            urlVariables.put("end_start", end_start);
+            urlVariables.put("start_date", start_date);
+            return restTemplate.exchange(rootUrl.concat("/VideoRecord?data_id={data_id}&start_date={start_date}&end_start={end_start}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse getMobileAuth() {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/getMobileAuth"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
+        }
+    }
+
+    @Override
     public ApiResponse getAlarmChartsData() {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
             return restTemplate.exchange(rootUrl.concat("/getAlarmChartsData"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse deleteStation(String station_id) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("station_id", station_id);
+            return restTemplate.exchange(rootUrl.concat("/deleteStation?station_id={station_id}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse getMessage(String msgType) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("msgType", msgType);
+            return restTemplate.exchange(rootUrl.concat("/getmessage?msgtype={msgType}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
         }
     }
 
@@ -138,34 +206,23 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponseUrl GetCameraUrl(String data_id) {
+    public Update getUpdateInfo() {
+        return restTemplate.exchange("http://jt3.jimglobal.com/app/checkupdate", HttpMethod.GET, null, Update.class).getBody();
+    }
+
+    @Override
+    public ApiResponse GetAppliedLocation(int checkType, int applyType, int userID, int subID, int roomID) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
             HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("data_id", data_id);
-            return restTemplate.exchange(rootUrl.concat("/GetCameraUrl?data_id={data_id}"), HttpMethod.GET, requestEntity, ApiResponseUrl.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public String getLatestAlarmId() {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/getLatestAlarmId"), HttpMethod.GET, requestEntity, String.class).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse stationList() {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/stationList"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
+            urlVariables.put("checkType", checkType);
+            urlVariables.put("applyType", applyType);
+            urlVariables.put("subID", subID);
+            urlVariables.put("userID", userID);
+            urlVariables.put("roomID", roomID);
+            return restTemplate.exchange(rootUrl.concat("/GetAppliedLocation?checkType={checkType}&applyType={applyType}&userID={userID}&subID={subID}&roomID={roomID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
         }
     }
 
@@ -184,15 +241,29 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponse newGrouping(String GroupingName, String substation_id) {
+    public ApiResponse GetLocation(int type, int id, int locationType) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
             HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("GroupingName", GroupingName);
-            urlVariables.put("substation_id", substation_id);
-            return restTemplate.exchange(rootUrl.concat("/newGrouping?GroupingName={GroupingName}&substation_id={substation_id}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+            urlVariables.put("locationType", locationType);
+            urlVariables.put("id", id);
+            urlVariables.put("type", type);
+            return restTemplate.exchange(rootUrl.concat("/GetLocation?type={type}&id={id}&locationType={locationType}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse getMemos(int userID, int subID) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("subID", subID);
+            urlVariables.put("userID", userID);
+            return restTemplate.exchange(rootUrl.concat("/getMemos?userID={userID}&subID={subID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
         }
     }
 
@@ -211,97 +282,15 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponse GetActiveLocas(int locationType, int locationID, int type) {
+    public ApiResponse getRoomDeviceList(String roomcode, String devtype) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
             HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("locationID", locationID);
-            urlVariables.put("locationType", locationType);
-            urlVariables.put("type", type);
-            return restTemplate.exchange(rootUrl.concat("/GetActiveLocas?locationType={locationType}&locationID={locationID}&type={type}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse GetCheckLocation(int type, int id) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("id", id);
-            urlVariables.put("type", type);
-            return restTemplate.exchange(rootUrl.concat("/GetCheckLocation?type={type}&id={id}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse getArrangeSubs(int userID) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("userID", userID);
-            return restTemplate.exchange(rootUrl.concat("/getArrangeSubs?userID={userID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public JsonResponse changepasswd(String txtPasswdold, String txtPasswdnew, String txtPasswdagain) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("txtPasswdnew", txtPasswdnew);
-            urlVariables.put("txtPasswdagain", txtPasswdagain);
-            urlVariables.put("txtPasswdold", txtPasswdold);
-            return restTemplate.exchange(rootUrl.concat("/ChangePasswd?txtPasswdold={txtPasswdold}&txtPasswdnew={txtPasswdnew}&txtPasswdagain={txtPasswdagain}"), HttpMethod.GET, requestEntity, JsonResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse getSignalNamelData() {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/getSignalNamelData"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse getMobileAuth() {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/getMobileAuth"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse getDevModelData() {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/getDevModelData"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse GetDoorStatus(String data_id) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("data_id", data_id);
-            return restTemplate.exchange(rootUrl.concat("/get_door_status?data_id={data_id}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+            urlVariables.put("devtype", devtype);
+            urlVariables.put("roomcode", roomcode);
+            return restTemplate.exchange(rootUrl.concat("/getRoomDeviceList?roomcode={roomcode}&devtype={devtype}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
         }
     }
 
@@ -320,41 +309,110 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponse getEditQuestions(int type, int id) {
+    public ApiResponse GetDoorStatus(String data_id) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
             HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("id", id);
-            urlVariables.put("type", type);
-            return restTemplate.exchange(rootUrl.concat("/getEditQuestions?type={type}&id={id}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+            urlVariables.put("data_id", data_id);
+            return restTemplate.exchange(rootUrl.concat("/get_door_status?data_id={data_id}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
         }
     }
 
     @Override
-    public ApiResponse GetQuestion(int type, int topicID) {
+    public JsonResponse changepasswd(String txtPasswdold, String txtPasswdnew, String txtPasswdagain) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
             HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("topicID", topicID);
-            urlVariables.put("type", type);
-            return restTemplate.exchange(rootUrl.concat("/GetQuestion?type={type}&topicID={topicID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+            urlVariables.put("txtPasswdnew", txtPasswdnew);
+            urlVariables.put("txtPasswdagain", txtPasswdagain);
+            urlVariables.put("txtPasswdold", txtPasswdold);
+            return restTemplate.exchange(rootUrl.concat("/ChangePasswd?txtPasswdold={txtPasswdold}&txtPasswdnew={txtPasswdnew}&txtPasswdagain={txtPasswdagain}"), HttpMethod.GET, requestEntity, JsonResponse.class, urlVariables).getBody();
         }
     }
 
     @Override
-    public ApiResponse getRoomDeviceList(String roomcode, String devtype) {
+    public SPDevResponse get_spdev_list() {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/get_spdev_list"), HttpMethod.GET, requestEntity, SPDevResponse.class).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse getMemoSubs(int userID) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
             HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("devtype", devtype);
-            urlVariables.put("roomcode", roomcode);
-            return restTemplate.exchange(rootUrl.concat("/getRoomDeviceList?roomcode={roomcode}&devtype={devtype}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+            urlVariables.put("userID", userID);
+            return restTemplate.exchange(rootUrl.concat("/getMemoSubs?userID={userID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse getUserInfo() {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/getuserinfo"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse getAreaData(String cityName, String stationName, String stationNames) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("cityName", cityName);
+            urlVariables.put("stationNames", stationNames);
+            urlVariables.put("stationName", stationName);
+            return restTemplate.exchange(rootUrl.concat("/getAreaData?cityName={cityName}&stationName={stationName}&stationNames={stationNames}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse GetActiveLocas(int locationType, int locationID, int type) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("locationID", locationID);
+            urlVariables.put("locationType", locationType);
+            urlVariables.put("type", type);
+            return restTemplate.exchange(rootUrl.concat("/GetActiveLocas?locationType={locationType}&locationID={locationID}&type={type}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse getLocations(int type) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("type", type);
+            return restTemplate.exchange(rootUrl.concat("/getLocations?type={type}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponseImage stationListImage() {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/stationList"), HttpMethod.GET, requestEntity, ApiResponseImage.class).getBody();
         }
     }
 
@@ -382,113 +440,12 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponse deleteStation(String station_id) {
+    public ApiResponse getSignalNamelData() {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("station_id", station_id);
-            return restTemplate.exchange(rootUrl.concat("/deleteStation?station_id={station_id}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse getUserInfo() {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/getuserinfo"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse GetLocation(int type, int id, int locationType) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("locationType", locationType);
-            urlVariables.put("id", id);
-            urlVariables.put("type", type);
-            return restTemplate.exchange(rootUrl.concat("/GetLocation?type={type}&id={id}&locationType={locationType}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public SPDevResponse get_spdev_list() {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/get_spdev_list"), HttpMethod.GET, requestEntity, SPDevResponse.class).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse getLocations(int type) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("type", type);
-            return restTemplate.exchange(rootUrl.concat("/getLocations?type={type}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public Update getUpdateInfo() {
-        return restTemplate.exchange("http://jt3.jimglobal.com/app/checkupdate", HttpMethod.GET, null, Update.class).getBody();
-    }
-
-    @Override
-    public ApiResponseImage stationListImage() {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/stationList"), HttpMethod.GET, requestEntity, ApiResponseImage.class).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse VideoRecord(String data_id, String start_date, String end_start) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("data_id", data_id);
-            urlVariables.put("end_start", end_start);
-            urlVariables.put("start_date", start_date);
-            return restTemplate.exchange(rootUrl.concat("/VideoRecord?data_id={data_id}&start_date={start_date}&end_start={end_start}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse getAreaData(String cityName, String stationName, String stationNames) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("cityName", cityName);
-            urlVariables.put("stationNames", stationNames);
-            urlVariables.put("stationName", stationName);
-            return restTemplate.exchange(rootUrl.concat("/getAreaData?cityName={cityName}&stationName={stationName}&stationNames={stationNames}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse getDevCategoryData() {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/getDevCategoryData"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
+            return restTemplate.exchange(rootUrl.concat("/getSignalNamelData"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
         }
     }
 
@@ -505,56 +462,27 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponse GetApplyInfo(int type, int locID) {
+    public ApiResponseUrl GetCameraUrl(String data_id) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
             HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("data_id", data_id);
+            return restTemplate.exchange(rootUrl.concat("/GetCameraUrl?data_id={data_id}"), HttpMethod.GET, requestEntity, ApiResponseUrl.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse GetCheckLocation(int type, int id) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("id", id);
             urlVariables.put("type", type);
-            urlVariables.put("locID", locID);
-            return restTemplate.exchange(rootUrl.concat("/GetApplyInfo?type={type}&locID={locID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse getMemos(int userID, int subID) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("subID", subID);
-            urlVariables.put("userID", userID);
-            return restTemplate.exchange(rootUrl.concat("/getMemos?userID={userID}&subID={subID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse getMessage(String msgType) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("msgType", msgType);
-            return restTemplate.exchange(rootUrl.concat("/getmessage?msgtype={msgType}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse GetAppliedLocation(int checkType, int applyType, int userID, int subID, int roomID) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
-            urlVariables.put("checkType", checkType);
-            urlVariables.put("applyType", applyType);
-            urlVariables.put("subID", subID);
-            urlVariables.put("userID", userID);
-            urlVariables.put("roomID", roomID);
-            return restTemplate.exchange(rootUrl.concat("/GetAppliedLocation?checkType={checkType}&applyType={applyType}&userID={userID}&subID={subID}&roomID={roomID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+            return restTemplate.exchange(rootUrl.concat("/GetCheckLocation?type={type}&id={id}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
         }
     }
 
@@ -572,14 +500,86 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponse getMemoSubs(int userID) {
+    public ApiResponse getEditQuestions(int type, int id) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("id", id);
+            urlVariables.put("type", type);
+            return restTemplate.exchange(rootUrl.concat("/getEditQuestions?type={type}&id={id}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse newGrouping(String GroupingName, String substation_id) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("GroupingName", GroupingName);
+            urlVariables.put("substation_id", substation_id);
+            return restTemplate.exchange(rootUrl.concat("/newGrouping?GroupingName={GroupingName}&substation_id={substation_id}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse GetApplyInfo(int type, int locID) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("type", type);
+            urlVariables.put("locID", locID);
+            return restTemplate.exchange(rootUrl.concat("/GetApplyInfo?type={type}&locID={locID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse getArrangeSubs(int userID) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
             HashMap<String, Object> urlVariables = new HashMap<String, Object>();
             urlVariables.put("userID", userID);
-            return restTemplate.exchange(rootUrl.concat("/getMemoSubs?userID={userID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+            return restTemplate.exchange(rootUrl.concat("/getArrangeSubs?userID={userID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse getDevCategoryData() {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/getDevCategoryData"), HttpMethod.GET, requestEntity, ApiResponse.class).getBody();
+        }
+    }
+
+    @Override
+    public String getLatestAlarmId() {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/getLatestAlarmId"), HttpMethod.GET, requestEntity, String.class).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse GetQuestion(int type, int topicID) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
+            HashMap<String, Object> urlVariables = new HashMap<String, Object>();
+            urlVariables.put("topicID", topicID);
+            urlVariables.put("type", type);
+            return restTemplate.exchange(rootUrl.concat("/GetQuestion?type={type}&topicID={topicID}"), HttpMethod.GET, requestEntity, ApiResponse.class, urlVariables).getBody();
         }
     }
 
@@ -597,13 +597,12 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponseUpLoad CheckUpload(MultiValueMap<String, Object> multiValueMap) {
+    public ApiResponse addFeedback(LinkedHashMap<String, String> items) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            httpHeaders.set("Content-Type", availableHeaders.get("Content-Type"));
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(multiValueMap, httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/CheckUpload"), HttpMethod.POST, requestEntity, ApiResponseUpLoad.class).getBody();
+            HttpEntity<LinkedHashMap<String, String>> requestEntity = new HttpEntity<LinkedHashMap<String, String>>(items, httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/addfeedback"), HttpMethod.POST, requestEntity, ApiResponse.class).getBody();
         }
     }
 
@@ -630,13 +629,55 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponse modifyuserimage(MultiValueMap<String, Object> multiValueMap) {
+    public ApiResponseUpLoad editQuestion(MultiValueMap<String, Object> multiValueMap) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             httpHeaders.set("Content-Type", availableHeaders.get("Content-Type"));
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(multiValueMap, httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/modifyuserimage"), HttpMethod.POST, requestEntity, ApiResponse.class).getBody();
+            return restTemplate.exchange(rootUrl.concat("/editQuestion"), HttpMethod.POST, requestEntity, ApiResponseUpLoad.class).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponseUpLoad StationImage(MultiValueMap<String, Object> multiValueMap) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            httpHeaders.set("Content-Type", availableHeaders.get("Content-Type"));
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(multiValueMap, httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/StationImage"), HttpMethod.POST, requestEntity, ApiResponseUpLoad.class).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponseUpLoad SaveUserWork(MultiValueMap<String, Object> multiValueMap) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            httpHeaders.set("Content-Type", availableHeaders.get("Content-Type"));
+            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(multiValueMap, httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/SaveUserWork"), HttpMethod.POST, requestEntity, ApiResponseUpLoad.class).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse OpenDoor(DoorOperation op) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<DoorOperation> requestEntity = new HttpEntity<DoorOperation>(op, httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/open_door"), HttpMethod.POST, requestEntity, ApiResponse.class).getBody();
+        }
+    }
+
+    @Override
+    public ApiResponse creationUser(LinkedHashMap<String, String> items) {
+        {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
+            HttpEntity<LinkedHashMap<String, String>> requestEntity = new HttpEntity<LinkedHashMap<String, String>>(items, httpHeaders);
+            return restTemplate.exchange(rootUrl.concat("/creationUser"), HttpMethod.POST, requestEntity, ApiResponse.class).getBody();
         }
     }
 
@@ -662,16 +703,6 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponse OpenDoor(DoorOperation op) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<DoorOperation> requestEntity = new HttpEntity<DoorOperation>(op, httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/open_door"), HttpMethod.POST, requestEntity, ApiResponse.class).getBody();
-        }
-    }
-
-    @Override
     public ApiResponseUpLoad updateMemo(MultiValueMap<String, Object> multiValueMap) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
@@ -683,34 +714,13 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponse creationUser(LinkedHashMap<String, String> items) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<LinkedHashMap<String, String>> requestEntity = new HttpEntity<LinkedHashMap<String, String>>(items, httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/creationUser"), HttpMethod.POST, requestEntity, ApiResponse.class).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponseUpLoad StationImage(MultiValueMap<String, Object> multiValueMap) {
+    public ApiResponseUpLoad CheckUpload(MultiValueMap<String, Object> multiValueMap) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             httpHeaders.set("Content-Type", availableHeaders.get("Content-Type"));
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(multiValueMap, httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/StationImage"), HttpMethod.POST, requestEntity, ApiResponseUpLoad.class).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponseUpLoad editQuestion(MultiValueMap<String, Object> multiValueMap) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            httpHeaders.set("Content-Type", availableHeaders.get("Content-Type"));
-            HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(multiValueMap, httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/editQuestion"), HttpMethod.POST, requestEntity, ApiResponseUpLoad.class).getBody();
+            return restTemplate.exchange(rootUrl.concat("/CheckUpload"), HttpMethod.POST, requestEntity, ApiResponseUpLoad.class).getBody();
         }
     }
 
@@ -725,23 +735,13 @@ public final class ApiRestClientInterface_
     }
 
     @Override
-    public ApiResponseUpLoad SaveUserWork(MultiValueMap<String, Object> multiValueMap) {
+    public ApiResponse modifyuserimage(MultiValueMap<String, Object> multiValueMap) {
         {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
             httpHeaders.set("Content-Type", availableHeaders.get("Content-Type"));
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<MultiValueMap<String, Object>>(multiValueMap, httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/SaveUserWork"), HttpMethod.POST, requestEntity, ApiResponseUpLoad.class).getBody();
-        }
-    }
-
-    @Override
-    public ApiResponse addFeedback(LinkedHashMap<String, String> items) {
-        {
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.set("Authorization", availableHeaders.get("Authorization"));
-            HttpEntity<LinkedHashMap<String, String>> requestEntity = new HttpEntity<LinkedHashMap<String, String>>(items, httpHeaders);
-            return restTemplate.exchange(rootUrl.concat("/addfeedback"), HttpMethod.POST, requestEntity, ApiResponse.class).getBody();
+            return restTemplate.exchange(rootUrl.concat("/modifyuserimage"), HttpMethod.POST, requestEntity, ApiResponse.class).getBody();
         }
     }
 

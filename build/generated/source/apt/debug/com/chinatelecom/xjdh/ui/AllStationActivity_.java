@@ -90,8 +90,8 @@ public final class AllStationActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        lv_bts_alarm = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_bts_alarm));
         mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.mSrlAlarm));
+        lv_bts_alarm = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_bts_alarm));
         if (lv_bts_alarm!= null) {
             lv_bts_alarm.setOnItemClickListener(new OnItemClickListener() {
 

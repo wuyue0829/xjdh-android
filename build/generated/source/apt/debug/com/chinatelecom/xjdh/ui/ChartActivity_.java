@@ -94,6 +94,20 @@ public final class ChartActivity_
         bindData();
     }
 
+    @Override
+    public void onResult(final boolean isSuccess, final AlarmChartsResp alarmChartsResp) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                ChartActivity_.super.onResult(isSuccess, alarmChartsResp);
+            }
+
+        }
+        );
+    }
+
     @SuppressWarnings({
         "deprecation"
     })
@@ -105,20 +119,6 @@ public final class ChartActivity_
             @Override
             public void run() {
                 ChartActivity_.super.onPreferenceLogoutClicked();
-            }
-
-        }
-        );
-    }
-
-    @Override
-    public void onResult(final boolean isSuccess, final AlarmChartsResp alarmChartsResp) {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                ChartActivity_.super.onResult(isSuccess, alarmChartsResp);
             }
 
         }

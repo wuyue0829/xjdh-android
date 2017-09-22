@@ -95,18 +95,18 @@ public final class PreAlarmActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
+        mSpCounty = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_county));
         mEtEndDatetime = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.et_end_datetime));
-        mSpCity = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_city));
-        mSpModel = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_model));
         mEtStartDatetime = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.et_start_datetime));
         mSpSubstation = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_substation));
-        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
-        mSvAlarmFilter = ((ScrollView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sv_alarm_filter));
-        mSpCounty = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_county));
         mSpSignal = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_signal));
+        mSpModel = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_model));
         mSpLevel = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_level));
-        mLvAlarm = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_alarm));
         mSpRoom = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_room));
+        mSpCity = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_city));
+        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
+        mLvAlarm = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_alarm));
+        mSvAlarmFilter = ((ScrollView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sv_alarm_filter));
         {
             View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.btn_confirm);
             if (view!= null) {

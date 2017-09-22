@@ -36,12 +36,12 @@ public final class ModifyActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String STATION_CODE_EXTRA = "station_code";
     public final static String QUESTION_EXTRA = "question";
-    public final static String EDITIMGPATH_EXTRA = "editimgpath";
-    public final static String TITLES_EXTRA = "Titles";
     public final static String QUESTION_ID_EXTRA = "question_ID";
     public final static String DEVICE_ID_EXTRA = "Device_id";
+    public final static String TITLES_EXTRA = "Titles";
+    public final static String EDITIMGPATH_EXTRA = "editimgpath";
+    public final static String STATION_CODE_EXTRA = "station_code";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -131,18 +131,6 @@ public final class ModifyActivity_
                 );
             }
         }
-        if (answer_gridview!= null) {
-            answer_gridview.setOnItemClickListener(new OnItemClickListener() {
-
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ModifyActivity_.this.seeImageClick(position);
-                }
-
-            }
-            );
-        }
         if (gridview!= null) {
             gridview.setOnItemClickListener(new OnItemClickListener() {
 
@@ -155,29 +143,41 @@ public final class ModifyActivity_
             }
             );
         }
+        if (answer_gridview!= null) {
+            answer_gridview.setOnItemClickListener(new OnItemClickListener() {
+
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ModifyActivity_.this.seeImageClick(position);
+                }
+
+            }
+            );
+        }
         ShowView();
     }
 
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(STATION_CODE_EXTRA)) {
-                station_code = extras_.getInt(STATION_CODE_EXTRA);
-            }
             if (extras_.containsKey(QUESTION_EXTRA)) {
                 question = extras_.getString(QUESTION_EXTRA);
-            }
-            if (extras_.containsKey(EDITIMGPATH_EXTRA)) {
-                editimgpath = extras_.getStringArray(EDITIMGPATH_EXTRA);
-            }
-            if (extras_.containsKey(TITLES_EXTRA)) {
-                Titles = extras_.getString(TITLES_EXTRA);
             }
             if (extras_.containsKey(QUESTION_ID_EXTRA)) {
                 question_ID = extras_.getInt(QUESTION_ID_EXTRA);
             }
             if (extras_.containsKey(DEVICE_ID_EXTRA)) {
                 Device_id = extras_.getString(DEVICE_ID_EXTRA);
+            }
+            if (extras_.containsKey(TITLES_EXTRA)) {
+                Titles = extras_.getString(TITLES_EXTRA);
+            }
+            if (extras_.containsKey(EDITIMGPATH_EXTRA)) {
+                editimgpath = extras_.getStringArray(EDITIMGPATH_EXTRA);
+            }
+            if (extras_.containsKey(STATION_CODE_EXTRA)) {
+                station_code = extras_.getInt(STATION_CODE_EXTRA);
             }
         }
     }
@@ -277,20 +277,8 @@ public final class ModifyActivity_
             }
         }
 
-        public ModifyActivity_.IntentBuilder_ station_code(int station_code) {
-            return super.extra(STATION_CODE_EXTRA, station_code);
-        }
-
         public ModifyActivity_.IntentBuilder_ question(String question) {
             return super.extra(QUESTION_EXTRA, question);
-        }
-
-        public ModifyActivity_.IntentBuilder_ editimgpath(String[] editimgpath) {
-            return super.extra(EDITIMGPATH_EXTRA, editimgpath);
-        }
-
-        public ModifyActivity_.IntentBuilder_ Titles(String Titles) {
-            return super.extra(TITLES_EXTRA, Titles);
         }
 
         public ModifyActivity_.IntentBuilder_ question_ID(int question_ID) {
@@ -299,6 +287,18 @@ public final class ModifyActivity_
 
         public ModifyActivity_.IntentBuilder_ Device_id(String Device_id) {
             return super.extra(DEVICE_ID_EXTRA, Device_id);
+        }
+
+        public ModifyActivity_.IntentBuilder_ Titles(String Titles) {
+            return super.extra(TITLES_EXTRA, Titles);
+        }
+
+        public ModifyActivity_.IntentBuilder_ editimgpath(String[] editimgpath) {
+            return super.extra(EDITIMGPATH_EXTRA, editimgpath);
+        }
+
+        public ModifyActivity_.IntentBuilder_ station_code(int station_code) {
+            return super.extra(STATION_CODE_EXTRA, station_code);
         }
 
     }

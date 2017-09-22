@@ -91,7 +91,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/instant-run-support" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/pre-dexed" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/multi-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/reload-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/res" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/restart-dex" />
@@ -106,7 +106,6 @@
     <orderEntry type="jdk" jdkName="Android API 25 Platform (3)" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Volley" level="project" />
-    <orderEntry type="library" exported="" name="baidumapapi_radar_v3_7_0" level="project" />
     <orderEntry type="library" exported="" name="classes" level="project" />
     <orderEntry type="library" exported="" name="spring-android-auth-1.0.1.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="picasso-2.4.0" level="project" />
@@ -114,24 +113,26 @@
     <orderEntry type="library" exported="" name="zxing" level="project" />
     <orderEntry type="library" exported="" name="ormlite-android-4.43" level="project" />
     <orderEntry type="library" exported="" name="constraint-layout-solver-1.0.0-alpha7" level="project" />
+    <orderEntry type="library" exported="" name="baidumapapi_base_v4_1_1" level="project" />
+    <orderEntry type="library" exported="" name="baidumapapi_radar_v4_1_1" level="project" />
     <orderEntry type="library" exported="" name="support-fragment-25.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-core-ui-25.0.0" level="project" />
     <orderEntry type="library" exported="" name="constraint-layout-1.0.0-alpha7" level="project" />
     <orderEntry type="library" exported="" name="xutils-3.5.0" level="project" />
+    <orderEntry type="library" exported="" name="baidumapapi_util_v4_1_1" level="project" />
+    <orderEntry type="library" exported="" name="baidumapapi_search_v4_1_1" level="project" />
     <orderEntry type="library" exported="" name="systembartint-1.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-core-utils-25.0.0" level="project" />
+    <orderEntry type="library" exported="" name="baidumapapi_cloud_v4_1_1" level="project" />
     <orderEntry type="library" exported="" name="locSDK_6.13" level="project" />
-    <orderEntry type="library" exported="" name="baidumapapi_util_v3_7_0" level="project" />
     <orderEntry type="library" exported="" name="mpchartlib" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-25.0.0" level="project" />
-    <orderEntry type="library" exported="" name="baidumapapi_map_v3_7_0" level="project" />
     <orderEntry type="library" exported="" name="android-support-v7-recyclerview-21" level="project" />
     <orderEntry type="library" exported="" name="jackson-core-asl-1.9.13" level="project" />
     <orderEntry type="library" exported="" name="spring-android-rest-template-1.0.1.RELEASE" level="project" />
-    <orderEntry type="library" exported="" name="baidumapapi_search_v3_7_0" level="project" />
     <orderEntry type="library" exported="" name="universal-image-loader-1.9.5" level="project" />
-    <orderEntry type="library" exported="" name="baidumapapi_cloud_v3_7_0" level="project" />
     <orderEntry type="library" exported="" name="eventbus-3.0.0" level="project" />
+    <orderEntry type="library" exported="" name="baidumapapi_map_v4_1_1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-25.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-media-compat-25.0.0" level="project" />
     <orderEntry type="library" exported="" name="androidannotations-api-3.3.1" level="project" />
@@ -141,7 +142,6 @@
     <orderEntry type="library" exported="" name="ormlite-core-4.43" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-25.0.0" level="project" />
     <orderEntry type="library" exported="" name="support-vector-drawable-25.0.0" level="project" />
-    <orderEntry type="library" exported="" name="baidumapapi_base_v3_7_0" level="project" />
     <orderEntry type="library" exported="" name="fastjson-1.1.40" level="project" />
     <orderEntry type="library" exported="" name="spring-android-core-1.0.1.RELEASE" level="project" />
     <orderEntry type="module" module-name="viepagerindicator_library" exported="" />

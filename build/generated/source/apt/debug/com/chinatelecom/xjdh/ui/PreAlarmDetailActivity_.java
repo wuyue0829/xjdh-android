@@ -91,19 +91,19 @@ public final class PreAlarmDetailActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        tvAlarmDetailRoom = ((TextView) hasViews.findViewById(id.tv_alarm_detail_room));
-        tvAlarmDetailCity = ((TextView) hasViews.findViewById(id.tv_alarm_detail_city));
-        tvAlarmDetailStatus = ((TextView) hasViews.findViewById(id.tv_alarm_detail_status));
-        tvAlarmDetailDevName = ((TextView) hasViews.findViewById(id.tv_alarm_detail_dev_name));
-        tvAlarmDetailAddDatetime = ((TextView) hasViews.findViewById(id.tv_alarm_detail_add_datetime));
-        tvAlarmDetailCounty = ((TextView) hasViews.findViewById(id.tv_alarm_detail_county));
-        tvAlarmDetailSubstation = ((TextView) hasViews.findViewById(id.tv_alarm_detail_substation));
-        tvAlarmDetailModel = ((TextView) hasViews.findViewById(id.tv_alarm_detail_model));
-        tvAlarmDetailSignalId = ((TextView) hasViews.findViewById(id.tv_alarm_signal_id));
         tvAlarmDetailSignalName = ((TextView) hasViews.findViewById(id.tv_alarm_signal_name));
-        tvAlarmDetailContent = ((TextView) hasViews.findViewById(id.tv_alarm_detail_content));
+        tvAlarmDetailSignalId = ((TextView) hasViews.findViewById(id.tv_alarm_signal_id));
+        tvAlarmDetailCity = ((TextView) hasViews.findViewById(id.tv_alarm_detail_city));
+        tvAlarmDetailRoom = ((TextView) hasViews.findViewById(id.tv_alarm_detail_room));
         tvAlarmDetailLevel = ((TextView) hasViews.findViewById(id.tv_alarm_detail_level));
+        tvAlarmDetailModel = ((TextView) hasViews.findViewById(id.tv_alarm_detail_model));
+        tvAlarmDetailCounty = ((TextView) hasViews.findViewById(id.tv_alarm_detail_county));
+        tvAlarmDetailContent = ((TextView) hasViews.findViewById(id.tv_alarm_detail_content));
+        tvAlarmDetailStatus = ((TextView) hasViews.findViewById(id.tv_alarm_detail_status));
+        tvAlarmDetailAddDatetime = ((TextView) hasViews.findViewById(id.tv_alarm_detail_add_datetime));
         btnMonitor = ((Button) hasViews.findViewById(id.btn_monitor));
+        tvAlarmDetailSubstation = ((TextView) hasViews.findViewById(id.tv_alarm_detail_substation));
+        tvAlarmDetailDevName = ((TextView) hasViews.findViewById(id.tv_alarm_detail_dev_name));
         {
             View view = hasViews.findViewById(id.btn_confirm_emergency);
             if (view!= null) {

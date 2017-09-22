@@ -94,13 +94,13 @@ public final class SPDevTestActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        tvSendData = ((TextView) hasViews.findViewById(id.tvSendData));
+        btnTest = ((Button) hasViews.findViewById(id.btnTest));
         spIndex = ((Spinner) hasViews.findViewById(id.spIndex));
         spModel = ((Spinner) hasViews.findViewById(id.spModel));
+        tvBanner = ((TextView) hasViews.findViewById(id.tvBanner));
         spRate = ((Spinner) hasViews.findViewById(id.spRate));
         tvResult = ((TextView) hasViews.findViewById(id.tvResult));
-        btnTest = ((Button) hasViews.findViewById(id.btnTest));
-        tvBanner = ((TextView) hasViews.findViewById(id.tvBanner));
+        tvSendData = ((TextView) hasViews.findViewById(id.tvSendData));
         tvRecvData = ((TextView) hasViews.findViewById(id.tvRecvData));
         if (btnTest!= null) {
             btnTest.setOnClickListener(new OnClickListener() {
@@ -161,14 +161,14 @@ public final class SPDevTestActivity_
     }
 
     @Override
-    public void getData() {
+    public void ReadResult() {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    SPDevTestActivity_.super.getData();
+                    SPDevTestActivity_.super.ReadResult();
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }
@@ -179,14 +179,14 @@ public final class SPDevTestActivity_
     }
 
     @Override
-    public void ReadResult() {
+    public void getData() {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    SPDevTestActivity_.super.ReadResult();
+                    SPDevTestActivity_.super.getData();
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }

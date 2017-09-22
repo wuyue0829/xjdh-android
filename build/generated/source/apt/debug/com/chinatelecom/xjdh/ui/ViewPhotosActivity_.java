@@ -34,9 +34,9 @@ public final class ViewPhotosActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
+    public final static String POSITION_EXTRA = "position";
     public final static String IMAGE_PATH_LIST_EXTRA = "imagePathList";
     public final static String IMAGE_LIST_EXTRA = "image_list";
-    public final static String POSITION_EXTRA = "position";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -130,14 +130,14 @@ public final class ViewPhotosActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
+            if (extras_.containsKey(POSITION_EXTRA)) {
+                position = extras_.getInt(POSITION_EXTRA);
+            }
             if (extras_.containsKey(IMAGE_PATH_LIST_EXTRA)) {
                 imagePathList = extras_.getStringArrayList(IMAGE_PATH_LIST_EXTRA);
             }
             if (extras_.containsKey(IMAGE_LIST_EXTRA)) {
                 image_list = extras_.getStringArrayList(IMAGE_LIST_EXTRA);
-            }
-            if (extras_.containsKey(POSITION_EXTRA)) {
-                position = extras_.getInt(POSITION_EXTRA);
             }
         }
     }
@@ -219,16 +219,16 @@ public final class ViewPhotosActivity_
             }
         }
 
+        public ViewPhotosActivity_.IntentBuilder_ position(int position) {
+            return super.extra(POSITION_EXTRA, position);
+        }
+
         public ViewPhotosActivity_.IntentBuilder_ imagePathList(ArrayList<String> imagePathList) {
             return super.extra(IMAGE_PATH_LIST_EXTRA, ((Serializable) imagePathList));
         }
 
         public ViewPhotosActivity_.IntentBuilder_ image_list(ArrayList<String> image_list) {
             return super.extra(IMAGE_LIST_EXTRA, ((Serializable) image_list));
-        }
-
-        public ViewPhotosActivity_.IntentBuilder_ position(int position) {
-            return super.extra(POSITION_EXTRA, position);
         }
 
     }

@@ -94,15 +94,15 @@ public final class WorkRealismActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        mSpRoom = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_room));
-        etMemo = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.etMemo));
-        gggridview = ((MyGridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.gggridview));
-        etPerson = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.etPerson));
         spCategory = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.spCategory));
+        gggridview = ((MyGridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.gggridview));
+        tvDate = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tvDate));
         mSpCounty = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_county));
+        etMemo = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.etMemo));
+        etPerson = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.etPerson));
+        mSpRoom = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_room));
         mSpCity = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_city));
         mSpSubstation = ((Spinner) hasViews.findViewById(com.chinatelecom.xjdh.R.id.sp_substation));
-        tvDate = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tvDate));
         {
             View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.saveMassage);
             if (view!= null) {

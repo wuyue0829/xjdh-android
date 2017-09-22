@@ -81,8 +81,8 @@ public final class DoingToolFragment_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        lv_stationName_grouping = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_stationName_grouping));
         mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
+        lv_stationName_grouping = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_stationName_grouping));
         if (lv_stationName_grouping!= null) {
             lv_stationName_grouping.setOnItemClickListener(new OnItemClickListener() {
 

@@ -88,9 +88,9 @@ public final class NetworkTestActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        sll = ((ScrollView) hasViews.findViewById(id.sll));
         tvMsg = ((TextView) hasViews.findViewById(id.tvMsg));
         etIP = ((DropEditText) hasViews.findViewById(id.etIP));
+        sll = ((ScrollView) hasViews.findViewById(id.sll));
         tvResult = ((TextView) hasViews.findViewById(id.tvResult));
         {
             View view = hasViews.findViewById(id.btnPing);

@@ -34,8 +34,8 @@ public final class RoomDevListActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String M_ROOM_CODE_EXTRA = "roomcode";
     public final static String M_ROOM_NAME_EXTRA = "roomname";
+    public final static String M_ROOM_CODE_EXTRA = "roomcode";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -113,11 +113,11 @@ public final class RoomDevListActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(M_ROOM_CODE_EXTRA)) {
-                mRoomCode = extras_.getString(M_ROOM_CODE_EXTRA);
-            }
             if (extras_.containsKey(M_ROOM_NAME_EXTRA)) {
                 mRoomName = extras_.getString(M_ROOM_NAME_EXTRA);
+            }
+            if (extras_.containsKey(M_ROOM_CODE_EXTRA)) {
+                mRoomCode = extras_.getString(M_ROOM_CODE_EXTRA);
             }
         }
     }
@@ -216,12 +216,12 @@ public final class RoomDevListActivity_
             }
         }
 
-        public RoomDevListActivity_.IntentBuilder_ mRoomCode(String mRoomCode) {
-            return super.extra(M_ROOM_CODE_EXTRA, mRoomCode);
-        }
-
         public RoomDevListActivity_.IntentBuilder_ mRoomName(String mRoomName) {
             return super.extra(M_ROOM_NAME_EXTRA, mRoomName);
+        }
+
+        public RoomDevListActivity_.IntentBuilder_ mRoomCode(String mRoomCode) {
+            return super.extra(M_ROOM_CODE_EXTRA, mRoomCode);
         }
 
     }

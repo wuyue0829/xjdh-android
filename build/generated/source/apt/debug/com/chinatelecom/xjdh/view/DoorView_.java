@@ -77,9 +77,9 @@ public final class DoorView_
     @Override
     public void onViewChanged(HasViews hasViews) {
         btnForceOpen = ((Button) hasViews.findViewById(id.btnForceOpen));
+        tvStatus = ((TextView) hasViews.findViewById(id.tvStatus));
         tvName = ((TextView) hasViews.findViewById(id.tvName));
         btnRemoteOpen = ((Button) hasViews.findViewById(id.btnRemoteOpen));
-        tvStatus = ((TextView) hasViews.findViewById(id.tvStatus));
         if (btnForceOpen!= null) {
             btnForceOpen.setOnClickListener(new OnClickListener() {
 
@@ -107,20 +107,6 @@ public final class DoorView_
     }
 
     @Override
-    public void ShowStatus(final String status) {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                DoorView_.super.ShowStatus(status);
-            }
-
-        }
-        );
-    }
-
-    @Override
     public void ShowResult(final int Ret) {
         handler_.post(new Runnable() {
 
@@ -128,6 +114,20 @@ public final class DoorView_
             @Override
             public void run() {
                 DoorView_.super.ShowResult(Ret);
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void ShowStatus(final String status) {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                DoorView_.super.ShowStatus(status);
             }
 
         }

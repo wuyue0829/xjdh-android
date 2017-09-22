@@ -39,12 +39,12 @@ public final class ToolUploadActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String POS_EXTRA = "pos";
-    public final static String QUESTION_EXTRA = "question";
-    public final static String QUESTION_DEV_ID_EXTRA = "question_DevID";
     public final static String DEV_TYPE_ITEM_EXTRA = "devTypeItem";
-    public final static String ROOM_ID_EXTRA = "room_ID";
+    public final static String POS_EXTRA = "pos";
+    public final static String QUESTION_DEV_ID_EXTRA = "question_DevID";
     public final static String STATION_CODE_EXTRA = "station_code";
+    public final static String ROOM_ID_EXTRA = "room_ID";
+    public final static String QUESTION_EXTRA = "question";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -103,21 +103,9 @@ public final class ToolUploadActivity_
     @Override
     public void onViewChanged(HasViews hasViews) {
         yes = ((CheckBox) hasViews.findViewById(com.chinatelecom.xjdh.R.id.yes));
-        submit = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.submit));
         question_name = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.question_name));
+        submit = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.submit));
         gridview = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.gridview));
-        if (submit!= null) {
-            submit.setOnClickListener(new OnClickListener() {
-
-
-                @Override
-                public void onClick(View view) {
-                    ToolUploadActivity_.this.submitClick();
-                }
-
-            }
-            );
-        }
         {
             View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.new_data);
             if (view!= null) {
@@ -132,6 +120,18 @@ public final class ToolUploadActivity_
                 }
                 );
             }
+        }
+        if (submit!= null) {
+            submit.setOnClickListener(new OnClickListener() {
+
+
+                @Override
+                public void onClick(View view) {
+                    ToolUploadActivity_.this.submitClick();
+                }
+
+            }
+            );
         }
         if (gridview!= null) {
             gridview.setOnItemClickListener(new OnItemClickListener() {
@@ -151,23 +151,23 @@ public final class ToolUploadActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
+            if (extras_.containsKey(DEV_TYPE_ITEM_EXTRA)) {
+                devTypeItem = extras_.getParcelable(DEV_TYPE_ITEM_EXTRA);
+            }
             if (extras_.containsKey(POS_EXTRA)) {
                 pos = extras_.getInt(POS_EXTRA);
-            }
-            if (extras_.containsKey(QUESTION_EXTRA)) {
-                question = extras_.getString(QUESTION_EXTRA);
             }
             if (extras_.containsKey(QUESTION_DEV_ID_EXTRA)) {
                 question_DevID = extras_.getString(QUESTION_DEV_ID_EXTRA);
             }
-            if (extras_.containsKey(DEV_TYPE_ITEM_EXTRA)) {
-                devTypeItem = extras_.getParcelable(DEV_TYPE_ITEM_EXTRA);
+            if (extras_.containsKey(STATION_CODE_EXTRA)) {
+                station_code = extras_.getInt(STATION_CODE_EXTRA);
             }
             if (extras_.containsKey(ROOM_ID_EXTRA)) {
                 room_ID = extras_.getInt(ROOM_ID_EXTRA);
             }
-            if (extras_.containsKey(STATION_CODE_EXTRA)) {
-                station_code = extras_.getInt(STATION_CODE_EXTRA);
+            if (extras_.containsKey(QUESTION_EXTRA)) {
+                question = extras_.getString(QUESTION_EXTRA);
             }
         }
     }
@@ -267,28 +267,28 @@ public final class ToolUploadActivity_
             }
         }
 
-        public ToolUploadActivity_.IntentBuilder_ pos(int pos) {
-            return super.extra(POS_EXTRA, pos);
+        public ToolUploadActivity_.IntentBuilder_ devTypeItem(DevTypeItem devTypeItem) {
+            return super.extra(DEV_TYPE_ITEM_EXTRA, devTypeItem);
         }
 
-        public ToolUploadActivity_.IntentBuilder_ question(String question) {
-            return super.extra(QUESTION_EXTRA, question);
+        public ToolUploadActivity_.IntentBuilder_ pos(int pos) {
+            return super.extra(POS_EXTRA, pos);
         }
 
         public ToolUploadActivity_.IntentBuilder_ question_DevID(String question_DevID) {
             return super.extra(QUESTION_DEV_ID_EXTRA, question_DevID);
         }
 
-        public ToolUploadActivity_.IntentBuilder_ devTypeItem(DevTypeItem devTypeItem) {
-            return super.extra(DEV_TYPE_ITEM_EXTRA, devTypeItem);
+        public ToolUploadActivity_.IntentBuilder_ station_code(int station_code) {
+            return super.extra(STATION_CODE_EXTRA, station_code);
         }
 
         public ToolUploadActivity_.IntentBuilder_ room_ID(int room_ID) {
             return super.extra(ROOM_ID_EXTRA, room_ID);
         }
 
-        public ToolUploadActivity_.IntentBuilder_ station_code(int station_code) {
-            return super.extra(STATION_CODE_EXTRA, station_code);
+        public ToolUploadActivity_.IntentBuilder_ question(String question) {
+            return super.extra(QUESTION_EXTRA, question);
         }
 
     }

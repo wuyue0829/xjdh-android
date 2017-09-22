@@ -41,9 +41,9 @@ public final class EditDevActivity_
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
     public final static String IMAGE_LIST_EXTRA = "imageList";
-    public final static String STATION_CODE_EXTRA = "station_code";
     public final static String ROOM_ID_EXTRA = "room_ID";
     public final static String DEV_QUESTION_EXTRA = "devQuestion";
+    public final static String STATION_CODE_EXTRA = "station_code";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -101,24 +101,12 @@ public final class EditDevActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        gridview = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.gridview));
         ll_content = ((LinearLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.ll_content));
-        new_data = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.new_data));
         name = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.name));
         answer_gridview = ((AutoGridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.answer_gridview));
+        new_data = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.new_data));
         submit = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.submit));
-        if (submit!= null) {
-            submit.setOnClickListener(new OnClickListener() {
-
-
-                @Override
-                public void onClick(View view) {
-                    EditDevActivity_.this.submitClick();
-                }
-
-            }
-            );
-        }
+        gridview = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.gridview));
         if (new_data!= null) {
             new_data.setOnClickListener(new OnClickListener() {
 
@@ -126,6 +114,18 @@ public final class EditDevActivity_
                 @Override
                 public void onClick(View view) {
                     EditDevActivity_.this.newDataClick();
+                }
+
+            }
+            );
+        }
+        if (submit!= null) {
+            submit.setOnClickListener(new OnClickListener() {
+
+
+                @Override
+                public void onClick(View view) {
+                    EditDevActivity_.this.submitClick();
                 }
 
             }
@@ -164,14 +164,14 @@ public final class EditDevActivity_
             if (extras_.containsKey(IMAGE_LIST_EXTRA)) {
                 imageList = extras_.getStringArray(IMAGE_LIST_EXTRA);
             }
-            if (extras_.containsKey(STATION_CODE_EXTRA)) {
-                station_code = extras_.getInt(STATION_CODE_EXTRA);
-            }
             if (extras_.containsKey(ROOM_ID_EXTRA)) {
                 room_ID = extras_.getInt(ROOM_ID_EXTRA);
             }
             if (extras_.containsKey(DEV_QUESTION_EXTRA)) {
                 devQuestion = extras_.getParcelable(DEV_QUESTION_EXTRA);
+            }
+            if (extras_.containsKey(STATION_CODE_EXTRA)) {
+                station_code = extras_.getInt(STATION_CODE_EXTRA);
             }
         }
     }
@@ -275,16 +275,16 @@ public final class EditDevActivity_
             return super.extra(IMAGE_LIST_EXTRA, imageList);
         }
 
-        public EditDevActivity_.IntentBuilder_ station_code(int station_code) {
-            return super.extra(STATION_CODE_EXTRA, station_code);
-        }
-
         public EditDevActivity_.IntentBuilder_ room_ID(int room_ID) {
             return super.extra(ROOM_ID_EXTRA, room_ID);
         }
 
         public EditDevActivity_.IntentBuilder_ devQuestion(DevQuestion devQuestion) {
             return super.extra(DEV_QUESTION_EXTRA, devQuestion);
+        }
+
+        public EditDevActivity_.IntentBuilder_ station_code(int station_code) {
+            return super.extra(STATION_CODE_EXTRA, station_code);
         }
 
     }

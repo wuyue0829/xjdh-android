@@ -34,8 +34,8 @@ public final class SeePhotosActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String IMAGE_LIST_EXTRA = "image_list";
     public final static String EDITIMGPATH_EXTRA = "editimgpath";
+    public final static String IMAGE_LIST_EXTRA = "image_list";
     public final static String POSITION_EXTRA = "position";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
@@ -94,19 +94,19 @@ public final class SeePhotosActivity_
     @Override
     public void onViewChanged(HasViews hasViews) {
         btnDone = ((Button) hasViews.findViewById(id.btnDone));
-        btnDelete = ((Button) hasViews.findViewById(id.btnDelete));
         vpGallery = ((ViewPagerFixed) hasViews.findViewById(id.vpGallery));
+        btnDelete = ((Button) hasViews.findViewById(id.btnDelete));
         ShowView();
     }
 
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(IMAGE_LIST_EXTRA)) {
-                image_list = extras_.getStringArrayList(IMAGE_LIST_EXTRA);
-            }
             if (extras_.containsKey(EDITIMGPATH_EXTRA)) {
                 editimgpath = extras_.getStringArray(EDITIMGPATH_EXTRA);
+            }
+            if (extras_.containsKey(IMAGE_LIST_EXTRA)) {
+                image_list = extras_.getStringArrayList(IMAGE_LIST_EXTRA);
             }
             if (extras_.containsKey(POSITION_EXTRA)) {
                 position = extras_.getInt(POSITION_EXTRA);
@@ -191,12 +191,12 @@ public final class SeePhotosActivity_
             }
         }
 
-        public SeePhotosActivity_.IntentBuilder_ image_list(ArrayList<String> image_list) {
-            return super.extra(IMAGE_LIST_EXTRA, ((Serializable) image_list));
-        }
-
         public SeePhotosActivity_.IntentBuilder_ editimgpath(String[] editimgpath) {
             return super.extra(EDITIMGPATH_EXTRA, editimgpath);
+        }
+
+        public SeePhotosActivity_.IntentBuilder_ image_list(ArrayList<String> image_list) {
+            return super.extra(IMAGE_LIST_EXTRA, ((Serializable) image_list));
         }
 
         public SeePhotosActivity_.IntentBuilder_ position(int position) {

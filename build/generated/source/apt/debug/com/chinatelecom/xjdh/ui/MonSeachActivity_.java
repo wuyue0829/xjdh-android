@@ -93,10 +93,10 @@ public final class MonSeachActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
+        btn_seach = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.btn_seach));
+        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
         mLvSubstation = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_items));
         et_search = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.et_search));
-        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
-        btn_seach = ((Button) hasViews.findViewById(com.chinatelecom.xjdh.R.id.btn_seach));
         if (btn_seach!= null) {
             btn_seach.setOnClickListener(new OnClickListener() {
 
@@ -124,6 +124,20 @@ public final class MonSeachActivity_
         bindData();
     }
 
+    @Override
+    public void notifldSeach() {
+        handler_.post(new Runnable() {
+
+
+            @Override
+            public void run() {
+                MonSeachActivity_.super.notifldSeach();
+            }
+
+        }
+        );
+    }
+
     @SuppressWarnings({
         "deprecation"
     })
@@ -135,20 +149,6 @@ public final class MonSeachActivity_
             @Override
             public void run() {
                 MonSeachActivity_.super.onPreferenceLogoutClicked();
-            }
-
-        }
-        );
-    }
-
-    @Override
-    public void notifldSeach() {
-        handler_.post(new Runnable() {
-
-
-            @Override
-            public void run() {
-                MonSeachActivity_.super.notifldSeach();
             }
 
         }

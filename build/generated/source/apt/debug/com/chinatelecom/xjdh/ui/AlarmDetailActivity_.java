@@ -91,19 +91,19 @@ public final class AlarmDetailActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        tvAlarmDetailAddDatetime = ((TextView) hasViews.findViewById(id.tv_alarm_detail_add_datetime));
         tvAlarmDetailModel = ((TextView) hasViews.findViewById(id.tv_alarm_detail_model));
-        tvAlarmDetailSubstation = ((TextView) hasViews.findViewById(id.tv_alarm_detail_substation));
-        tvAlarmDetailContent = ((TextView) hasViews.findViewById(id.tv_alarm_detail_content));
-        tvAlarmDetailStatus = ((TextView) hasViews.findViewById(id.tv_alarm_detail_status));
+        tvAlarmDetailCity = ((TextView) hasViews.findViewById(id.tv_alarm_detail_city));
         btnMonitor = ((Button) hasViews.findViewById(id.btn_monitor));
-        tvAlarmDetailSignalName = ((TextView) hasViews.findViewById(id.tv_alarm_signal_name));
-        tvAlarmDetailSignalId = ((TextView) hasViews.findViewById(id.tv_alarm_signal_id));
-        tvAlarmDetailRoom = ((TextView) hasViews.findViewById(id.tv_alarm_detail_room));
+        tvAlarmDetailAddDatetime = ((TextView) hasViews.findViewById(id.tv_alarm_detail_add_datetime));
         tvAlarmDetailLevel = ((TextView) hasViews.findViewById(id.tv_alarm_detail_level));
         tvAlarmDetailDevName = ((TextView) hasViews.findViewById(id.tv_alarm_detail_dev_name));
+        tvAlarmDetailContent = ((TextView) hasViews.findViewById(id.tv_alarm_detail_content));
+        tvAlarmDetailRoom = ((TextView) hasViews.findViewById(id.tv_alarm_detail_room));
+        tvAlarmDetailSubstation = ((TextView) hasViews.findViewById(id.tv_alarm_detail_substation));
+        tvAlarmDetailSignalName = ((TextView) hasViews.findViewById(id.tv_alarm_signal_name));
+        tvAlarmDetailSignalId = ((TextView) hasViews.findViewById(id.tv_alarm_signal_id));
+        tvAlarmDetailStatus = ((TextView) hasViews.findViewById(id.tv_alarm_detail_status));
         tvAlarmDetailCounty = ((TextView) hasViews.findViewById(id.tv_alarm_detail_county));
-        tvAlarmDetailCity = ((TextView) hasViews.findViewById(id.tv_alarm_detail_city));
         if (btnMonitor!= null) {
             btnMonitor.setOnClickListener(new OnClickListener() {
 

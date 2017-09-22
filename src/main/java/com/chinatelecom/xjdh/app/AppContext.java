@@ -6,7 +6,7 @@ import org.androidannotations.annotations.EApplication;
 import org.androidannotations.annotations.rest.RestService;
 import org.xutils.x;
 
-//import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.SDKInitializer;
 import com.chinatelecom.xjdh.rest.client.ApiRestClientInterface;
 import com.chinatelecom.xjdh.utils.L;
 import com.chinatelecom.xjdh.utils.PreferenceConstants;
@@ -64,7 +64,7 @@ public class AppContext extends Application {
 				x.Ext.init(this);
 		initImageLoader(getApplicationContext());
 //		Vitamio.isInitialized(this);
-		//SDKInitializer.initialize(this);
+		SDKInitializer.initialize(this);
 		//创建默认的ImageLoader配置参数
 		ImageLoaderConfiguration configuration = ImageLoaderConfiguration
 				.createDefault(this);
@@ -73,7 +73,6 @@ public class AppContext extends Application {
 		ImageLoader.getInstance().init(configuration);
 
 	}
-	
 
 	public static void initImageLoader(Context context) {
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context).threadPriority(Thread.NORM_PRIORITY - 2)

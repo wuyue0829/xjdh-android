@@ -16,12 +16,12 @@
         "source": "D:\\wyj\\xjdh-android\\src\\main\\res\\layout\\station_adapter_pattern.xml"
     },
     {
-        "merged": "D:\\wyj\\xjdh-android\\build\\intermediates\\res\\merged\\debug\\layout\\pwd_main.xml",
-        "source": "D:\\wyj\\xjdh-android\\src\\main\\res\\layout\\pwd_main.xml"
-    },
-    {
         "merged": "D:\\wyj\\xjdh-android\\build\\intermediates\\res\\merged\\debug\\layout\\data_list_view.xml",
         "source": "D:\\wyj\\xjdh-android\\src\\main\\res\\layout\\data_list_view.xml"
+    },
+    {
+        "merged": "D:\\wyj\\xjdh-android\\build\\intermediates\\res\\merged\\debug\\layout\\pwd_main.xml",
+        "source": "D:\\wyj\\xjdh-android\\src\\main\\res\\layout\\pwd_main.xml"
     },
     {
         "merged": "D:\\wyj\\xjdh-android\\build\\intermediates\\res\\merged\\debug\\layout\\activity_player.xml",

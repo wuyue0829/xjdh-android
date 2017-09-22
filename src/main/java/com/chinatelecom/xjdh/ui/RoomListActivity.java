@@ -1,21 +1,28 @@
 package com.chinatelecom.xjdh.ui;
 
-import java.net.URISyntaxException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.Click;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
-import org.androidannotations.annotations.ItemClick;
-import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.rest.RestService;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -34,28 +41,22 @@ import com.chinatelecom.xjdh.utils.PreferenceConstants;
 import com.chinatelecom.xjdh.utils.PreferenceUtils;
 import com.chinatelecom.xjdh.utils.SharedConst;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.ItemClick;
+import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.rest.RestService;
+
+import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author peter
  * 
@@ -85,7 +86,7 @@ public class RoomListActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		String token = PreferenceUtils.getPrefString(RoomListActivity.this, PreferenceConstants.ACCESSTOKEN, "");
 		mApiClient.setHeader(SharedConst.HTTP_AUTHORIZATION, token);
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -105,13 +106,16 @@ public class RoomListActivity extends BaseActivity {
 		}
 
 		Location location = locationManager.getLastKnownLocation(provider);
+		Log.i("wuyingjieLocation", "location=" + location + ",provider" + provider);
 		if (location != null) {
 			// 显示当前设备的位置信息
 			String firstInfo = "第一次请求的信息";
 			sLatLng = new LatLng(location.getLatitude(), location.getLongitude());
 		} else {
-			String info = "无法获得当前位置";
-			Toast.makeText(this, info, 1).show();
+			/*String info = "无法获得当前位置";
+			Toast.makeText(this, info, 1).show();*/
+			locationManager.requestLocationUpdates(provider, 10 * 1000, 1,
+					locationListener);
 		}
 
 		// 更新当前位置
@@ -119,7 +123,7 @@ public class RoomListActivity extends BaseActivity {
 				locationListener);
 	}
 	
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -225,6 +229,7 @@ public class RoomListActivity extends BaseActivity {
 			// 关闭程序时将监听器移除
 			locationManager.removeUpdates(locationListener);
 		}
+		finish();
 
 	};
 
@@ -245,6 +250,7 @@ public class RoomListActivity extends BaseActivity {
 		@Override
 		public void onLocationChanged(Location location) {
 			// 设备位置发生改变时，执行这里的代码
+			Log.i("wuyingjieLocation", "onLocationChanged" + location);
 			String changeInfo = "隔10秒刷新的提示：\n 时间：" + sdf.format(new Date())
 					+ ",\n当前的经度是：" + location.getLongitude() + ",\n 当前的纬度是："
 					+ location.getLatitude();
@@ -287,8 +293,7 @@ public class RoomListActivity extends BaseActivity {
 	        }
 
 	    }
-	
-	
+
 	    private void baidu(){
 	        //起点经纬度
 	    	
@@ -299,10 +304,10 @@ public class RoomListActivity extends BaseActivity {
 	        para.endName(substationItem.getName());//起点位置
 	        para.endPoint(eLatLng);
 
-	        try {  
+	        try {
 	            BaiduMapRoutePlan.openBaiduMapDrivingRoute(para, RoomListActivity.this);
-//	            BaiduMapNavigation.openBaiduMapNavi(para, RoomListActivity.this);  
-	        } catch (BaiduMapAppNotSupportNaviException e) {  
+//	            BaiduMapNavigation.openBaiduMapNavi(para, RoomListActivity.this);
+	        } catch (BaiduMapAppNotSupportNaviException e) {
 	            e.printStackTrace();  
 	            AlertDialog.Builder builder = new AlertDialog.Builder(RoomListActivity.this);  
 	            builder.setMessage("您尚未安装百度地图app或app版本过低，点击确认安装？");  
@@ -333,5 +338,5 @@ public class RoomListActivity extends BaseActivity {
 	        public void onReceiveLocation(BDLocation location) {
 	        	sLatLng= new LatLng(location.getLatitude(), location.getLongitude());
 	        }
-	      }	
+	    }
 }

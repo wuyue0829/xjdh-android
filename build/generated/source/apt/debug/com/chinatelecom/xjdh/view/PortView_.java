@@ -68,9 +68,9 @@ public final class PortView_
     @Override
     public void onViewChanged(HasViews hasViews) {
         tvPortValue = ((TextView) hasViews.findViewById(id.tvPortValue));
-        tvPortDisplay2 = ((TextView) hasViews.findViewById(id.tvPortDisplay2));
-        tvPortIndex = ((TextView) hasViews.findViewById(id.tvPortIndex));
         tvPortDisplay1 = ((TextView) hasViews.findViewById(id.tvPortDisplay1));
+        tvPortIndex = ((TextView) hasViews.findViewById(id.tvPortIndex));
+        tvPortDisplay2 = ((TextView) hasViews.findViewById(id.tvPortDisplay2));
     }
 
 }

@@ -86,8 +86,8 @@ public final class Door_Edit_ListActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        mWebviewIndicator = ((TitlePageIndicator) hasViews.findViewById(id.webview_indicator));
         mWebviewPager = ((ViewPager) hasViews.findViewById(id.webview_pager));
+        mWebviewIndicator = ((TitlePageIndicator) hasViews.findViewById(id.webview_indicator));
         bindData();
     }
 

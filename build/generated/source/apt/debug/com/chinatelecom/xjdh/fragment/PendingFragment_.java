@@ -82,8 +82,8 @@ public final class PendingFragment_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
         lv_stationName_grouping = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_stationName_grouping));
+        mSrlAlarm = ((SwipeRefreshLayout) hasViews.findViewById(com.chinatelecom.xjdh.R.id.srl_alarm));
         if (lv_stationName_grouping!= null) {
             lv_stationName_grouping.setOnItemClickListener(new OnItemClickListener() {
 
@@ -114,14 +114,14 @@ public final class PendingFragment_
     }
 
     @Override
-    public void getUserInfo() {
+    public void getData(final int type, final int user_id, final int locatype) {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    PendingFragment_.super.getUserInfo();
+                    PendingFragment_.super.getData(type, user_id, locatype);
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }
@@ -132,14 +132,14 @@ public final class PendingFragment_
     }
 
     @Override
-    public void getData(final int type, final int user_id, final int locatype) {
+    public void getUserInfo() {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    PendingFragment_.super.getData(type, user_id, locatype);
+                    PendingFragment_.super.getUserInfo();
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }

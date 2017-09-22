@@ -100,14 +100,14 @@ public class SurveillanceActivity extends Activity implements SurfaceHolder.Call
 			// 横屏
 			mIsFullScreen = true;
 			// 去掉系统通知栏
-//			lly.setVisibility(View.VISIBLE);
+			lly.setVisibility(View.GONE);
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 					WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setViewFullScreen();
 			// 调整mFlVideoGroup布局参数
 		} else {
 			mIsFullScreen = false;
-			lly.setVisibility(View.GONE);
+			lly.setVisibility(View.INVISIBLE);
 			// 清除flag,恢复显示系统状态栏
 			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             updateVideoSurfaces();
@@ -132,6 +132,7 @@ public class SurveillanceActivity extends Activity implements SurfaceHolder.Call
         boolean isPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
         //竖屏
         if(isPortrait){
+            lly.setVisibility(View.VISIBLE);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
             if(sw > sh){
                 //横屏以后再竖屏
@@ -140,6 +141,7 @@ public class SurveillanceActivity extends Activity implements SurfaceHolder.Call
                 mMediaPlayer.getVLCVout().setWindowSize(sw, sh);
             }
         }else{
+            lly.setVisibility(View.GONE);
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mMediaPlayer.getVLCVout().setWindowSize(sw, sh);
@@ -412,7 +414,6 @@ public class SurveillanceActivity extends Activity implements SurfaceHolder.Call
         if (videoHeight * videoWidth == 0) {
             return;
         }
-//        mMediaPlayer.getVLCVout().setWindowSize(videoWidth, videoHeight - lly.getHeight());
         mMediaPlayer.getVLCVout().setWindowSize(videoWidth, videoHeight);
         Log.i("windowSize", "width" + videoWidth + ",videoHeight" + videoHeight);
     }

@@ -87,8 +87,8 @@ public final class Real_Edit_timeActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        mWebviewPager = ((ViewPager) hasViews.findViewById(id.webview_pager));
         mWebviewIndicator = ((TitlePageIndicator) hasViews.findViewById(id.webview_indicator));
+        mWebviewPager = ((ViewPager) hasViews.findViewById(id.webview_pager));
         bindData();
     }
 

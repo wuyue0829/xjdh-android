@@ -90,8 +90,8 @@ public final class DevMonitorListActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        tvModel = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tvModel));
         lvDevMode = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lvDevMode));
+        tvModel = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.tvModel));
         if (lvDevMode!= null) {
             lvDevMode.setOnItemClickListener(new OnItemClickListener() {
 
@@ -137,24 +137,6 @@ public final class DevMonitorListActivity_
     }
 
     @Override
-    public void ReadData() {
-        BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
-
-
-            @Override
-            public void execute() {
-                try {
-                    DevMonitorListActivity_.super.ReadData();
-                } catch (Throwable e) {
-                    Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
-                }
-            }
-
-        }
-        );
-    }
-
-    @Override
     public void refresh() {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
@@ -181,6 +163,24 @@ public final class DevMonitorListActivity_
             public void execute() {
                 try {
                     DevMonitorListActivity_.super.refreshData();
+                } catch (Throwable e) {
+                    Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void ReadData() {
+        BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
+
+
+            @Override
+            public void execute() {
+                try {
+                    DevMonitorListActivity_.super.ReadData();
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }

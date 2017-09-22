@@ -52,14 +52,14 @@ public final class StationCollectActivity_
         OnViewChangedNotifier.registerOnViewChangedListener(this);
         databaseHelper_ = OpenHelperManager.getHelper(this, DatabaseHelper.class);
         try {
-            sDaoGps = databaseHelper_.getDao(FileNameGPSTable.class);
-        } catch (SQLException e) {
-            Log.e("StationCollectActivity_", "Could not create DAO sDaoGps", e);
-        }
-        try {
             sDao = databaseHelper_.getDao(StationTable.class);
         } catch (SQLException e) {
             Log.e("StationCollectActivity_", "Could not create DAO sDao", e);
+        }
+        try {
+            sDaoGps = databaseHelper_.getDao(FileNameGPSTable.class);
+        } catch (SQLException e) {
+            Log.e("StationCollectActivity_", "Could not create DAO sDaoGps", e);
         }
         injectExtras_();
     }
@@ -98,21 +98,6 @@ public final class StationCollectActivity_
     public void onViewChanged(HasViews hasViews) {
         lv_station_list = ((ListView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.lv_station_list));
         {
-            View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.img_btn_reback);
-            if (view!= null) {
-                view.setOnClickListener(new OnClickListener() {
-
-
-                    @Override
-                    public void onClick(View view) {
-                        StationCollectActivity_.this.rebackClicked();
-                    }
-
-                }
-                );
-            }
-        }
-        {
             View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.btn_add_station);
             if (view!= null) {
                 view.setOnClickListener(new OnClickListener() {
@@ -121,6 +106,21 @@ public final class StationCollectActivity_
                     @Override
                     public void onClick(View view) {
                         StationCollectActivity_.this.myAddStationClicked();
+                    }
+
+                }
+                );
+            }
+        }
+        {
+            View view = hasViews.findViewById(com.chinatelecom.xjdh.R.id.img_btn_reback);
+            if (view!= null) {
+                view.setOnClickListener(new OnClickListener() {
+
+
+                    @Override
+                    public void onClick(View view) {
+                        StationCollectActivity_.this.rebackClicked();
                     }
 
                 }

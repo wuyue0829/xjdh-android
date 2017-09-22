@@ -37,10 +37,10 @@ public final class SubmitFaultActivity_
 {
 
     private final OnViewChangedNotifier onViewChangedNotifier_ = new OnViewChangedNotifier();
-    public final static String ROOM_ID_EXTRA = "roomID";
     public final static String STATION_CODE_EXTRA = "station_code";
     public final static String DEVICE_ID_EXTRA = "deviceID";
     public final static String DEVICE_NAME_EXTRA = "deviceName";
+    public final static String ROOM_ID_EXTRA = "roomID";
     private Handler handler_ = new Handler(Looper.getMainLooper());
 
     @Override
@@ -98,8 +98,8 @@ public final class SubmitFaultActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        device_name = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.device_name));
         etRecord = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.etRecord));
+        device_name = ((TextView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.device_name));
         etMemo = ((EditText) hasViews.findViewById(com.chinatelecom.xjdh.R.id.etMemo));
         gridview = ((GridView) hasViews.findViewById(com.chinatelecom.xjdh.R.id.gridview));
         {
@@ -135,9 +135,6 @@ public final class SubmitFaultActivity_
     private void injectExtras_() {
         Bundle extras_ = getIntent().getExtras();
         if (extras_!= null) {
-            if (extras_.containsKey(ROOM_ID_EXTRA)) {
-                roomID = extras_.getInt(ROOM_ID_EXTRA);
-            }
             if (extras_.containsKey(STATION_CODE_EXTRA)) {
                 station_code = extras_.getInt(STATION_CODE_EXTRA);
             }
@@ -146,6 +143,9 @@ public final class SubmitFaultActivity_
             }
             if (extras_.containsKey(DEVICE_NAME_EXTRA)) {
                 deviceName = extras_.getString(DEVICE_NAME_EXTRA);
+            }
+            if (extras_.containsKey(ROOM_ID_EXTRA)) {
+                roomID = extras_.getInt(ROOM_ID_EXTRA);
             }
         }
     }
@@ -171,14 +171,14 @@ public final class SubmitFaultActivity_
     }
 
     @Override
-    public void DoWorkerUpload(final int userID, final int subID, final int roomID, final String deviceID, final String content, final String mRecord) {
+    public void getUserInfo() {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    SubmitFaultActivity_.super.DoWorkerUpload(userID, subID, roomID, deviceID, content, mRecord);
+                    SubmitFaultActivity_.super.getUserInfo();
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }
@@ -189,14 +189,14 @@ public final class SubmitFaultActivity_
     }
 
     @Override
-    public void getUserInfo() {
+    public void DoWorkerUpload(final int userID, final int subID, final int roomID, final String deviceID, final String content, final String mRecord) {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
 
             @Override
             public void execute() {
                 try {
-                    SubmitFaultActivity_.super.getUserInfo();
+                    SubmitFaultActivity_.super.DoWorkerUpload(userID, subID, roomID, deviceID, content, mRecord);
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }
@@ -245,10 +245,6 @@ public final class SubmitFaultActivity_
             }
         }
 
-        public SubmitFaultActivity_.IntentBuilder_ roomID(int roomID) {
-            return super.extra(ROOM_ID_EXTRA, roomID);
-        }
-
         public SubmitFaultActivity_.IntentBuilder_ station_code(int station_code) {
             return super.extra(STATION_CODE_EXTRA, station_code);
         }
@@ -259,6 +255,10 @@ public final class SubmitFaultActivity_
 
         public SubmitFaultActivity_.IntentBuilder_ deviceName(String deviceName) {
             return super.extra(DEVICE_NAME_EXTRA, deviceName);
+        }
+
+        public SubmitFaultActivity_.IntentBuilder_ roomID(int roomID) {
+            return super.extra(ROOM_ID_EXTRA, roomID);
         }
 
     }

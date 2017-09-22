@@ -51,9 +51,9 @@ public final class LoginActivity_
 
     private void init_(Bundle savedInstanceState) {
         OnViewChangedNotifier.registerOnViewChangedListener(this);
-        apiRestClientInterface = new ApiRestClientInterface_(this);
         mApiClient = new ClaimTokenRestClientInterface_(this);
         mOauthClient = new OauthRestClientInterface_(this);
+        apiRestClientInterface = new ApiRestClientInterface_(this);
     }
 
     @Override
@@ -96,11 +96,11 @@ public final class LoginActivity_
 
     @Override
     public void onViewChanged(HasViews hasViews) {
-        msg = ((TextView) hasViews.findViewById(id.msg));
         mPasswordEt = ((EditText) hasViews.findViewById(id.et_login_password));
-        btn_authorization = ((Button) hasViews.findViewById(id.btn_authorization));
         mAutoSavePasswordCK = ((CheckBox) hasViews.findViewById(id.cb_is_remeber));
         mAccountEt = ((EditText) hasViews.findViewById(id.et_login_user_name));
+        btn_authorization = ((Button) hasViews.findViewById(id.btn_authorization));
+        msg = ((TextView) hasViews.findViewById(id.msg));
         if (btn_authorization!= null) {
             btn_authorization.setOnClickListener(new OnClickListener() {
 
@@ -178,24 +178,6 @@ public final class LoginActivity_
     }
 
     @Override
-    public void doLogin() {
-        BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
-
-
-            @Override
-            public void execute() {
-                try {
-                    LoginActivity_.super.doLogin();
-                } catch (Throwable e) {
-                    Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
-                }
-            }
-
-        }
-        );
-    }
-
-    @Override
     public void claimToken() {
         BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
 
@@ -222,6 +204,24 @@ public final class LoginActivity_
             public void execute() {
                 try {
                     LoginActivity_.super.getUserInfo();
+                } catch (Throwable e) {
+                    Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+                }
+            }
+
+        }
+        );
+    }
+
+    @Override
+    public void doLogin() {
+        BackgroundExecutor.execute(new BackgroundExecutor.Task("", 0, "") {
+
+
+            @Override
+            public void execute() {
+                try {
+                    LoginActivity_.super.doLogin();
                 } catch (Throwable e) {
                     Thread.getDefaultUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
                 }

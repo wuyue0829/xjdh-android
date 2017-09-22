@@ -133,13 +133,13 @@ public final class UserDetailActivity_
     }
 
     @Override
-    public void updateView(final boolean isSuccess) {
+    public void onUserInfoChanged(final boolean isSuccess) {
         handler_.post(new Runnable() {
 
 
             @Override
             public void run() {
-                UserDetailActivity_.super.updateView(isSuccess);
+                UserDetailActivity_.super.onUserInfoChanged(isSuccess);
             }
 
         }
@@ -164,13 +164,13 @@ public final class UserDetailActivity_
     }
 
     @Override
-    public void onUserInfoChanged(final boolean isSuccess) {
+    public void updateView(final boolean isSuccess) {
         handler_.post(new Runnable() {
 
 
             @Override
             public void run() {
-                UserDetailActivity_.super.onUserInfoChanged(isSuccess);
+                UserDetailActivity_.super.updateView(isSuccess);
             }
 
         }
