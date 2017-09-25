@@ -1,7 +1,0 @@
-#Fri Sep 22 17:34:45 CST 2017
-base.0=D\:\\wyj\\xjdh-android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_e8ae516490247d4e8105ba8596b354eeaba8c596
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=D\:\\wyj\\xjdh-android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_583519948d26df52398d09023513ace2573fd6d5\\classes.dex
-base.1=D\:\\wyj\\xjdh-android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_583519948d26df52398d09023513ace2573fd6d5
-file.0=D\:\\wyj\\xjdh-android\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_e8ae516490247d4e8105ba8596b354eeaba8c596\\classes.dex
